@@ -2,18 +2,17 @@ use std::io::prelude::*;
 use std::fs::File;
 use std::path::Path;
 
+mod lexer;
+
 fn main()
 {
-	let file_contents = match read_file("lange.fir")
-	{
+	let file_contents = match read_file("lange.fir") {
 		Ok(contents) => contents,
 		Err(err) => panic!("failed reading file: {}", err)
 	};
+	let mut myToken = lexer::tokenize(file_contents);
 
-	for c in file_contents
-	{
-		println!("{}", c);
-	}
+	
 
 }
 
