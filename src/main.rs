@@ -4,20 +4,18 @@ use std::path::Path;
 
 mod lexer;
 
-fn main()
-{
+fn main() {
 	let file_contents = match read_file("lange.fir") {
 		Ok(contents) => contents,
 		Err(err) => panic!("failed reading file: {}", err)
 	};
-	let mut myToken = lexer::tokenize(file_contents);
+	let myToken = lexer::tokenize(file_contents);
 
 	
 
 }
 
-fn read_file<P: AsRef<Path>>(path: P) -> Result<Vec<char>, String>
-{	
+fn read_file<P: AsRef<Path>>(path: P) -> Result<Vec<char>, String> {	
 	File::open(path)
 		.map_err(|err| err.to_string())
 		.and_then(|mut file| {
