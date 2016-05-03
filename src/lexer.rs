@@ -1,18 +1,19 @@
 
 #[derive(Debug)]
-pub enum Token
+pub enum LanguageToken<'a>
 {
 	PrintStatement,
 	SemiColon,
-	String {value: String },
+	String(&'a str),
 	VariableDeclaration
 }
 
-pub fn tokenize(source_code: Vec<char>) -> Vec<Token> {
+/*
+pub fn tokenize<'a>(source_code: Vec<char>) -> Vec<Token<'a>> {
 	let mut tokens = Vec::new(); 
 	let mut token_buffer = String::new();
 
-	for mut index in 0..(source_code.len() - 1) {
+	for index in 0..(source_code.len() - 1) {
 		if source_code[index] == '\"' {
 			token_buffer = "\"".to_string();
 		}
@@ -26,7 +27,7 @@ pub fn tokenize(source_code: Vec<char>) -> Vec<Token> {
 				token_buffer = String::new();
 			},
 			"\"" => {
-				let stringTokenValue = parse_string(index, &source_code);
+				let stringTokenValue = parse_string(&index, &source_code);
 				tokens.push(Token::String { value : stringTokenValue });
 				token_buffer = String::new();
 			}
@@ -36,14 +37,13 @@ pub fn tokenize(source_code: Vec<char>) -> Vec<Token> {
 	}
 	return tokens;
 }
-
-fn parse_string<'a>(current_index: &'a usize, source_code: &'a Vec<char>) -> String {
-	let mut token_buffer = String::new();
-	loop {
-	    current_index = current_index + 1;
-	    token_buffer += source_code[current_index];
-	    if source_code[current_index] == '\"' && source_code[current_index - 1] != '\\' {
-    		return token_buffer;
-	    }
+*/
+pub fn tokenize_generic<'a>(source_code: &str) -> Vec<String>
+{
+	let mut string_tokens = vec![];
+	for word in regex!(r"\".+?\"|.+?(;| |\n)|;")) {
+	    unimplemented!();
 	}
+	return string_tokens;
+
 }
