@@ -9,7 +9,11 @@ fn main() {
 		Ok(contents) => contents,
 		Err(err) => panic!("failed reading file: {}", err)
 	};
-	let myToken = lexer::tokenize(file_contents);
+	let tokens = lexer::tokenize(file_contents);
+
+	for token in tokens {
+		println!("{:?}", token);
+	}
 
 	
 
