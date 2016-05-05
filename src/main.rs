@@ -12,7 +12,7 @@ fn main() {
     };
 	
     println!("{}", file_contents);
-    lexer::tokenize_generic(&file_contents);
+   // lexer::tokenize_generic(&file_contents);
 }
     
 fn read_file<P: AsRef<Path>>(path: P) -> Result<String, String> {	
