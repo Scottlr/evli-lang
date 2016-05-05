@@ -1,7 +1,8 @@
+extern crate regex;
+
 use std::io::prelude::*;
 use std::fs::File;
 use std::path::Path;
-
 mod lexer;
 
 fn main() {
@@ -10,6 +11,9 @@ fn main() {
 		Err(err) => panic!("failed reading file: {}", err)
 	};
 	
+	println!("{}", file_contents);
+	lexer::tokenize_generic(&file_contents);
+
 
 	
 

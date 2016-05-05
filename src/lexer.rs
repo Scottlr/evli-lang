@@ -1,4 +1,6 @@
+use regex::Regex;
 
+/*
 #[derive(Debug)]
 pub enum LanguageToken<'a>
 {
@@ -8,7 +10,7 @@ pub enum LanguageToken<'a>
 	VariableDeclaration
 }
 
-/*
+
 pub fn tokenize<'a>(source_code: Vec<char>) -> Vec<Token<'a>> {
 	let mut tokens = Vec::new(); 
 	let mut token_buffer = String::new();
@@ -38,12 +40,16 @@ pub fn tokenize<'a>(source_code: Vec<char>) -> Vec<Token<'a>> {
 	return tokens;
 }
 */
-pub fn tokenize_generic<'a>(source_code: &str) -> Vec<String>
+pub fn tokenize_generic<'a>(source_code: &'a str)
 {
-	let mut string_tokens = vec![];
-	for word in regex!(r"\".+?\"|.+?(;| |\n)|;")) {
-	    unimplemented!();
+	//let mut string_tokens = vec![];
+	let regex_exp = Regex::new("({|}|(|)|;)|\".+?\"|.+?(;| |(|)\\n)").unwrap();
+
+	for captured_token in regex_exp.captures_iter(source_code) {
+	 
+	    println!("Token captured: {:?}", captured_token);
+	    
 	}
-	return string_tokens;
+	//string_tokens
 
 }
