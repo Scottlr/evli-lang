@@ -40,12 +40,11 @@ pub fn tokenize<'a>(source_code: Vec<char>) -> Vec<Token<'a>> {
 	return tokens;
 }
 */
+
 pub fn tokenize_generic<'a>(source_code: &'a str)
 {
-	let regex_exp = Regex::new("({|}|(|)|;)|\".+?\"|.+?(;| |(|)\\n)").unwrap();
-	for captured_token in regex_exp.captures_iter(source_code) {
-	    println!("Token captured: {:?}", captured_token);
-	}
-	//string_tokens
-
+    let regex_exp = Regex::new("({|}|(|)|;)|\".+?\"|.+?(;| |(|)\\n)").unwrap();
+    for captured_token in regex_exp.captures_iter(source_code) {
+        println!("Token captured: {:?}", captured_token);
+    }
 }
