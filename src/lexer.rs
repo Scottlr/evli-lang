@@ -5,7 +5,7 @@ pub enum Token<'a>
     String(&'a str)
 }
 
-fn prase_to_token(captured_phrase: &str) -> Token {
+fn phrase_to_token(captured_phrase: &str) -> Token {
     unimplemented!();
 }
 
