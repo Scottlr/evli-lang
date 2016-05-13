@@ -5,8 +5,10 @@ use syntax;
 
 pub enum Token
 {
-    Operator,
-    Identifier
+    SemiColon,
+    OpenParen,
+    CloseParen,
+    Equals
 }
 
 fn phrase_to_token(captured_phrase: &str) -> Token {
@@ -21,9 +23,9 @@ pub fn tokenize(source_code: &str) -> Vec<Token> {
         match character {
             _ if syntax::OPERATORS.contains(&character) => {
                 slice_buffer.clear();
+                tokens.push(identify_syntax_token(&character.to_string()));
                 println!("Found a character: {}", character);
             }
-
             _ => slice_buffer.push(character)
         }
     }
@@ -31,5 +33,12 @@ pub fn tokenize(source_code: &str) -> Vec<Token> {
     tokens
 }
 
-
-
+fn identify_syntax_token(phrase: &str) -> Token {
+    match phrase {
+        ";" => Token::SemiColon,
+        "(" => Token::OpenParen,
+        ")" => Token::CloseParen,
+        "=" => Token::Equals,
+        _ => panic!("Didn't recognise phrase to parse to token...")
+    }
+} 
