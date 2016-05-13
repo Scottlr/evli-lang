@@ -1,1 +1,1 @@
-static operators: &'static [char] = &['=', '(', ')', '+', '-'];
+pub static OPERATORS: &'static [char] = &['=', '(', ')', '+', '-'];
