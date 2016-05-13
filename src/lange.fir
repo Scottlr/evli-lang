@@ -1,2 +1,2 @@
-print "Hello";
-"second string";
+print("Hello");
+var identifier = "second string";

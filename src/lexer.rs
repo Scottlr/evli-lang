@@ -1,32 +1,33 @@
 use regex::Regex;
 
-pub enum Token<'a>
+use syntax::*;
+
+
+pub enum Token
 {
-    String(&'a str)
+    Operator,
+    Identifier
 }
 
 fn phrase_to_token(captured_phrase: &str) -> Token {
     unimplemented!();
 }
 
-pub fn tokenize<'a>(source_code: &'a str) -> Vec<Token>
-{
-    let mut captured_tokens = vec![];
-    println!("In tokenize method... attempting to create regex object");
+pub fn tokenize(source_code: &str) -> Vec<Token> {
+    let mut tokens: Vec<Token>;
+    let mut slice_buffer = String::new();
 
-    let regex_exp = match Regex::new("(\\*)|\".+?\"|.+?\\*") {
-        Ok(res) => res,
-        Err(err) => panic!("{}", err)
-    };
+    for character in source_code.chars() {
+        match character {
+            _ if syntax::operators.contains(character) => {
+                slice_buffer.clear();
+            }
 
- 
-    println!("Created object...");
-    
-    for captured_token in regex_exp.captures_iter(source_code) {
-        println!("Token captured: {:?}", captured_token.at(0));
+            _ => slice_buffer.push(character)
+        }
     }
 
-    captured_tokens
+    tokens
 }
 
 
