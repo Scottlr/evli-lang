@@ -1,6 +1,38 @@
 pub static OPERATORS: &'static [char] = 
     &['=', '(', ')', '+', '-', '{', '}', ';', '>', '<', ',', ':', '*'];
 
+pub fn map_operator_token(phrase: &str) -> Option<Token> {
+    match phrase {
+        ";" => Token::SemiColon,
+        "(" => Token::OpenParen,
+        ")" => Token::CloseParen,
+        "=" => Token::Equals,
+        "{" => Token::OpenBrace,
+        "}" => Token::CloseBrace,
+        ">" => Token::RightAngle,
+        "<" => Token::LeftAngle,
+        "-" => Token::Hyphen,
+        "," => Token::Comma,
+        ":" => Token::Colon,
+        "*" => Token::Asterix,
+        "+" => Token::Plus,
+        "/" => Token::ForwardSlash,
+        "\\" => Token::BackSlash,
+        _ => panic!("Didn't recognise phrase to parse to token...")
+    }
+} 
+
+pub fn map_compound_operator_token(current_token: Token, next_token: Token) -> Token {
+    match (current_token, next_token) {
+        (Token::Plus, Token::Equals) => Token::PlusEquals,
+        (Token::Hyphen, Token::Equals) => Token::MinusEquals,
+        (Token::Asterix, Token::Equals) => Token::MultiplicationEquals,
+        (Token::BackSlx`ash, Token::Equals) => Token::DivideEquals,
+        _ => panic!("Unknown sequence of operators!")
+    }
+}
+
+
 pub enum Token
 {
     SemiColon,
@@ -17,30 +49,9 @@ pub enum Token
     Asterix,
     Plus,
     PlusEquals,
-}
-
-pub fn map_operator_token(phrase: &str) -> Token {
-    match phrase {
-        ";" => Token::SemiColon,
-        "(" => Token::OpenParen,
-        ")" => Token::CloseParen,
-        "=" => Token::Equals,
-        "{" => Token::OpenBrace,
-        "}" => Token::CloseBrace,
-        ">" => Token::RightAngle,
-        "<" => Token::LeftAngle,
-        "-" => Token::Hyphen,
-        "," => Token::Comma,
-        ":" => Token::Colon,
-        "*" => Token::Asterix,
-        "+" => Token::Plus,
-        _ => panic!("Didn't recognise phrase to parse to token...")
-    }
-} 
-
-pub fn map_compound_operator_token(current_token: Token, next_token: Token) -> Token {
-    match (current_token, next_token) {
-        (Token::Plus, Token::Equals) => Token::PlusEquals,
-        _ => panic!("Unknown sequence of operators!")
-    }
+    MinusEquals,
+    MultiplicationEquals,
+    DivideEquals,
+    BackSlash,
+    ForwardSlash,
 }
