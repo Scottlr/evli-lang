@@ -1,8 +1,7 @@
-extern crate regex;
-
 use std::io::prelude::*;
 use std::fs::File;
 use std::path::Path;
+
 mod lexer;
 mod syntax;
 
