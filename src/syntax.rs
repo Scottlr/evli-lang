@@ -1,7 +1,7 @@
 pub static OPERATORS: &'static [char] = 
     &['=', '(', ')', '+', '-', '{', '}', ';', '>', '<', ',', ':', '*'];
 
-pub fn map_operator_token(phrase: &str) -> Option<Token> {
+pub fn map_operator_token(phrase: &str) -> Token {
     match phrase {
         ";" => Token::SemiColon,
         "(" => Token::OpenParen,
@@ -22,16 +22,15 @@ pub fn map_operator_token(phrase: &str) -> Option<Token> {
     }
 } 
 
-pub fn map_compound_operator_token(current_token: Token, next_token: Token) -> Token {
+pub fn map_compound_operator_token(current_token: Token, next_token: Token) -> Option<Token> {
     match (current_token, next_token) {
-        (Token::Plus, Token::Equals) => Token::PlusEquals,
-        (Token::Hyphen, Token::Equals) => Token::MinusEquals,
-        (Token::Asterix, Token::Equals) => Token::MultiplicationEquals,
-        (Token::BackSlx`ash, Token::Equals) => Token::DivideEquals,
-        _ => panic!("Unknown sequence of operators!")
+        (Token::Plus, Token::Equals) => Some(Token::PlusEquals),
+        (Token::Hyphen, Token::Equals) => Some(Token::MinusEquals),
+        (Token::Asterix, Token::Equals) => Some(Token::MultiplicationEquals),
+        (Token::BackSlash, Token::Equals) => Some(Token::DivideEquals),
+        _ => None
     }
 }
-
 
 pub enum Token
 {
