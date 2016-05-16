@@ -11,7 +11,7 @@ fn main() {
         Err(err) => panic!("failed reading file: {}", err)
     };
 	
-    lexer::tokenize(&file_contents);
+    //lexer::tokenize(&file_contents);
 }
     
 fn read_file<P: AsRef<Path>>(path: P) -> Result<String, String> {	

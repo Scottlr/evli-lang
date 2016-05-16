@@ -1,11 +1,11 @@
 use syntax;
 
-
+/*
 pub fn tokenize(source_code: &str) -> Vec<syntax::Token> {
     let mut tokens = vec![];
     let mut slice_buffer = String::new();
-    let mut characters = source_code.chars().collect();
-    let characters_len = characters.len();
+ //   let mut characters = source_code.chars().collect();
+   // let characters_len = characters.len();
     
     for mut character_index in 0..characters_len {
         match characters[character_index] {
@@ -28,3 +28,4 @@ pub fn tokenize(source_code: &str) -> Vec<syntax::Token> {
     tokens
 }
 
+*/
