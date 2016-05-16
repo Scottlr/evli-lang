@@ -1,12 +1,12 @@
-struct SlidingWindowSourceCode {
+struct SlidingWindow {
     characters: Vec<char>;
     current_pos: i32;
     offset: i32;
     file_len: i32;
 }
 
-impl SlidingWindowSourceCode {
-    pub fn new(&str source_code) -> SlidingWindowSourceCode{
+impl SlidingWindow {
+    pub fn new(&str source_code) -> SlidingWindow {
         characters: source_code.chars().collect()
     }
 
@@ -20,4 +20,5 @@ impl SlidingWindowSourceCode {
         current_pos += 1;
     }
     
+
 }
