@@ -6,7 +6,7 @@ pub struct SlidingWindow {
 }
 
 impl SlidingWindow {
-    pub fn new(&self, source_code: &str) -> SlidingWindow {
+    pub fn new(source_code: &str) -> SlidingWindow {
      //   let chopped_source_code = source_code.chars().collect();
         SlidingWindow {
             characters: source_code.chars().collect(),
