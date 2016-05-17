@@ -1,4 +1,4 @@
-struct SlidingWindow {
+pub struct SlidingWindow {
     characters: Vec<char>,
     current_pos: usize,
     offset: usize,
@@ -16,17 +16,17 @@ impl SlidingWindow {
         }
     }
 
-    fn peek(&mut self) -> char {
+    pub fn peek(&mut self) -> char {
         self.offset += 1;
         self.characters[self.current_pos + self.offset].to_owned()
     }
 
-    fn advance_char(&mut self) {
+    pub fn advance_char(&mut self) {
         self.offset = 0;
         self.current_pos += 1;
     }
     
-    fn is_eof(&mut self) -> bool {
+    pub fn is_eof(&mut self) -> bool {
         self.current_pos == self.file_len
     }
 
