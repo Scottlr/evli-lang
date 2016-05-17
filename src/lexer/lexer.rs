@@ -12,8 +12,12 @@ impl Lexer {
         }
     }
 
-    pub fn tokenize(&self) -> Vec<Token> {
+    pub fn tokenize(&mut self) -> Vec<Token> {
         let tokens = vec![];
+
+        while !self.source_code_window.is_eof() {
+            break;
+        }
         tokens
     }
 }
