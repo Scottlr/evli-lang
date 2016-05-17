@@ -1,7 +1,7 @@
 pub static OPERATORS: &'static [char] = 
     &['=', '(', ')', '+', '-', '{', '}', ';', '>', '<', ',', ':', '*'];
 
-struct Syntax;
+pub struct Syntax;
 
 impl Syntax {
     pub fn map_operator_token(phrase: &str) -> Token {
