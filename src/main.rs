@@ -3,7 +3,6 @@ use std::fs::File;
 use std::path::Path;
 
 mod lexer;
-mod syntax;
 
 fn main() {
     let file_contents = match read_file("lange.fir") {
