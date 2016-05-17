@@ -10,6 +10,7 @@ fn main() {
         Err(err) => panic!("failed reading file: {}", err)
     };
 	
+    println!("{}", file_contents);
     //lexer::tokenize(&file_contents);
 }
     

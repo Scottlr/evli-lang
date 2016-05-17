@@ -7,26 +7,26 @@ struct SlidingWindow {
 
 impl SlidingWindow {
     pub fn new(&self, source_code: &str) -> SlidingWindow {
-        let chopped_source_code = source_code.chars().collect();
+     //   let chopped_source_code = source_code.chars().collect();
         SlidingWindow {
-            characters: chopped_source_code,
+            characters: source_code.chars().collect(),
             current_pos: 0,
             offset: 0,
-            file_len: chopped_source_code.len()
+            file_len: source_code.len()
         }
     }
 
-    fn peek(&self) -> char {
+    fn peek(&mut self) -> char {
         self.offset += 1;
         self.characters[self.current_pos + self.offset].to_owned()
     }
 
-    fn advance_char(&self) {
+    fn advance_char(&mut self) {
         self.offset = 0;
         self.current_pos += 1;
     }
     
-    fn is_eof(&self) -> bool {
+    fn is_eof(&mut self) -> bool {
         self.current_pos == self.file_len
     }
 
