@@ -26,7 +26,7 @@ impl Syntax {
         }
     } 
 
-    fn get_token_type(&self, token: Token) -> TokenType {
+    pub fn get_token_type(&self, token: Token) -> TokenType {
         match token {
             Token::Plus |
             Token::Hyphen |
@@ -40,26 +40,24 @@ impl Syntax {
         }
     }
 
-    pub fn is_operator(&self, token: Token) -> bool {
-        get_token_type(token) == TokenType::Operator
-    }
-    pub fn map_compound_operator_token(&self, current_token: Token, next_token: Token) -> Option<Token> {
+    pub fn map_compound_token(&self, current_token: Token, next_token: Token) -> Token {
         match (current_token, next_token) {
-            (Token::Plus, Token::Equals) => Some(Token::PlusEquals),
-            (Token::Hyphen, Token::Equals) => Some(Token::MinusEquals),
-            (Token::Asterix, Token::Equals) => Some(Token::MultiplicationEquals),
-            (Token::BackSlash, Token::Equals) => Some(Token::DivideEquals),
-            _ => None
+            (Token::Plus, Token::Equals) => Token::PlusEquals,
+            (Token::Hyphen, Token::Equals) => Token::MinusEquals,
+            (Token::Asterix, Token::Equals) => Token::MultiplicationEquals,
+            (Token::BackSlash, Token::Equals) => Token::DivideEquals,
+            _ => panic!("Unrecognised set of tokens!")
         }
     }
 }
 
-
+#[derive(PartialEq)]
 pub enum TokenType {
     Operator,
     CompoundOpeartor
 }
 
+#[derive(PartialEq)]
 pub enum Token {
     SemiColon,
     OpenParen,
