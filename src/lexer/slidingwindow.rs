@@ -10,7 +10,7 @@ impl SlidingWindow {
      //   let chopped_source_code = source_code.chars().collect();
         SlidingWindow {
             characters: source_code.chars().collect(),
-            current_pos: -1,
+            current_pos: 0,
             offset: 0,
             file_len: source_code.len()
         }

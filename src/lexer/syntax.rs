@@ -51,13 +51,13 @@ impl Syntax {
     }
 }
 
-#[derive(PartialEq)]
+#[derive(PartialEq, Copy, Clone)]
 pub enum TokenType {
     Operator,
     CompoundOpeartor
 }
 
-#[derive(PartialEq)]
+#[derive(PartialEq, Copy, Clone)]
 pub enum Token {
     SemiColon,
     OpenParen,
