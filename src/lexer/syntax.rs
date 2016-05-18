@@ -54,7 +54,9 @@ impl Syntax {
 #[derive(PartialEq, Copy, Clone)]
 pub enum TokenType {
     Operator,
-    CompoundOpeartor
+    CompoundOpeartor,
+    Word,
+    String
 }
 
 #[derive(PartialEq, Copy, Clone)]
