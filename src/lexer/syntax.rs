@@ -4,7 +4,8 @@ pub static OPERATORS: &'static [char] =
 pub struct Syntax;
 
 impl Syntax {
-    pub fn map_operator_token(phrase: &str) -> Token {
+
+    pub fn map_token(&self, phrase: &str) -> Token {
         match phrase {
             ";" => Token::SemiColon,
             "(" => Token::OpenParen,
@@ -25,7 +26,24 @@ impl Syntax {
         }
     } 
 
-    pub fn map_compound_operator_token(current_token: Token, next_token: Token) -> Option<Token> {
+    fn get_token_type(&self, token: Token) -> TokenType {
+        match token {
+            Token::Plus |
+            Token::Hyphen |
+            Token::RightAngle |
+            Token::LeftAngle |
+            Token::Asterix |
+            Token::ForwardSlash |
+            Token::BackSlash 
+                => TokenType::Operator,
+                _ => panic!("Unknown...")
+        }
+    }
+
+    pub fn is_operator(&self, token: Token) -> bool {
+        get_token_type(token) == TokenType::Operator
+    }
+    pub fn map_compound_operator_token(&self, current_token: Token, next_token: Token) -> Option<Token> {
         match (current_token, next_token) {
             (Token::Plus, Token::Equals) => Some(Token::PlusEquals),
             (Token::Hyphen, Token::Equals) => Some(Token::MinusEquals),

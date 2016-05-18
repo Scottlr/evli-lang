@@ -10,7 +10,7 @@ impl SlidingWindow {
      //   let chopped_source_code = source_code.chars().collect();
         SlidingWindow {
             characters: source_code.chars().collect(),
-            current_pos: 0,
+            current_pos: -1,
             offset: 0,
             file_len: source_code.len()
         }
@@ -21,9 +21,10 @@ impl SlidingWindow {
         self.characters[self.current_pos + self.offset].to_owned()
     }
 
-    pub fn advance_char(&mut self) {
+    pub fn advance_char(&mut self) -> char {
         self.offset = 0;
         self.current_pos += 1;
+        self.characters[self.current_pos].to_owned()
     }
     
     pub fn is_eof(&mut self) -> bool {

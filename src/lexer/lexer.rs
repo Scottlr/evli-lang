@@ -2,13 +2,15 @@ use super::slidingwindow::SlidingWindow;
 use super::syntax::*;
 
 struct Lexer {
-    source_code_window: SlidingWindow
+    source_code_window: SlidingWindow,
+    syntax: Syntax
 }
 
 impl Lexer {
     pub fn new(source_code: &str) -> Lexer {
         Lexer {
-            source_code_window: SlidingWindow::new(source_code)
+            source_code_window: SlidingWindow::new(source_code),
+            syntax: Syntax
         }
     }
 
@@ -16,7 +18,11 @@ impl Lexer {
         let tokens = vec![];
 
         while !self.source_code_window.is_eof() {
-            break;
+            let character = self.source_code_window.advance_char();
+            let token = self.syntax.map_token(&character.to_string());
+            if self.syntax.is_operator(token) {
+
+            }
         }
         tokens
     }
