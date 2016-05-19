@@ -1,7 +1,6 @@
 pub struct Syntax;
 
 impl Syntax {
-
     pub fn map_token(&self, phrase: &str) -> Token {
         match phrase {
             ";" => Token::SemiColon,    "(" => Token::OpenParen,
@@ -24,7 +23,8 @@ impl Syntax {
             Token::Asterix      | Token::ForwardSlash   |
             Token::BackSlash 
                 => TokenType::Operator,
-            _ if is_character( )
+            Token::Character
+                => TokenType::Identifier,
             _ => panic!("Unknown...")
 
         }

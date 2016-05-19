@@ -29,6 +29,9 @@ impl Lexer {
                         token = self.syntax.map_compound_token(token, next_token);
                     }
                 },
+                TokenType::Identifier => {
+                    //Loop logic to white space?
+                }
                 _ => {}
             }
             tokens.push(token);
