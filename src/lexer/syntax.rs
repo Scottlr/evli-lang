@@ -1,42 +1,32 @@
-pub static OPERATORS: &'static [char] = 
-    &['=', '(', ')', '+', '-', '{', '}', ';', '>', '<', ',', ':', '*'];
-
 pub struct Syntax;
 
 impl Syntax {
 
     pub fn map_token(&self, phrase: &str) -> Token {
         match phrase {
-            ";" => Token::SemiColon,
-            "(" => Token::OpenParen,
-            ")" => Token::CloseParen,
-            "=" => Token::Equals,
-            "{" => Token::OpenBrace,
-            "}" => Token::CloseBrace,
-            ">" => Token::RightAngle,
-            "<" => Token::LeftAngle,
-            "-" => Token::Hyphen,
-            "," => Token::Comma,
-            ":" => Token::Colon,
-            "*" => Token::Asterix,
-            "+" => Token::Plus,
-            "/" => Token::ForwardSlash,
+            ";" => Token::SemiColon,    "(" => Token::OpenParen,
+            ")" => Token::CloseParen,   "=" => Token::Equals,
+            "{" => Token::OpenBrace,    "}" => Token::CloseBrace,
+            ">" => Token::RightAngle,   "<" => Token::LeftAngle,
+            "-" => Token::Hyphen,       "," => Token::Comma,
+            ":" => Token::Colon,        "*" => Token::Asterix,
+            "+" => Token::Plus,         "/" => Token::ForwardSlash,
             "\\" => Token::BackSlash,
-            _ => panic!("Didn't recognise phrase to parse to token...")
+            _ if is_character(phrase) => Token::Character,
+            _ => panic!("Didn't recognise phrase to parse to token... {}", phrase)
         }
     } 
 
     pub fn get_token_type(&self, token: Token) -> TokenType {
         match token {
-            Token::Plus |
-            Token::Hyphen |
-            Token::RightAngle |
-            Token::LeftAngle |
-            Token::Asterix |
-            Token::ForwardSlash |
+            Token::Plus         | Token::Hyphen         |
+            Token::RightAngle   | Token::LeftAngle      |
+            Token::Asterix      | Token::ForwardSlash   |
             Token::BackSlash 
                 => TokenType::Operator,
-                _ => panic!("Unknown...")
+            _ if is_character( )
+            _ => panic!("Unknown...")
+
         }
     }
 
@@ -49,17 +39,24 @@ impl Syntax {
             _ => panic!("Unrecognised set of tokens!")
         }
     }
+
+    pub fn is_character(&self, character: char) -> bool {
+        let converted = character.to_digit(10);
+        match converted {
+            Some(_) => true,
+            None => false
+        }
+    }
 }
 
 #[derive(PartialEq, Copy, Clone)]
 pub enum TokenType {
     Operator,
-    CompoundOpeartor,
-    Word,
-    String
+    WhiteSpace,
+    Identifier
 }
 
-#[derive(PartialEq, Copy, Clone)]
+#[derive(PartialEq, Copy, Clone, Debug)]
 pub enum Token {
     SemiColon,
     OpenParen,
@@ -80,4 +77,5 @@ pub enum Token {
     DivideEquals,
     BackSlash,
     ForwardSlash,
+    Character
 }

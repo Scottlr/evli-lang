@@ -11,7 +11,12 @@ fn main() {
     };
 	
     println!("{}", file_contents);
-    //lexer::tokenize(&file_contents);
+    let mut lexer = lexer::Lexer::new(&file_contents);
+    let tokens = lexer.tokenize();
+
+    for token in tokens {
+        println!("{:?}", token);
+    }
 }
     
 fn read_file<P: AsRef<Path>>(path: P) -> Result<String, String> {	

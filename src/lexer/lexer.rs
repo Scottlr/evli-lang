@@ -28,7 +28,6 @@ impl Lexer {
                     if next_token == Token::Equals {
                         token = self.syntax.map_compound_token(token, next_token);
                     }
-
                 },
                 _ => {}
             }
