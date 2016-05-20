@@ -1,7 +1,11 @@
-pub struct Syntax;
+use super::token::*;
 
-impl Syntax {
-    pub fn map_token(&self, phrase: &str) -> Token {
+
+pub struct Syntax(Token, TokenType);
+pub struct SyntaxParser;
+
+impl SyntaxParser {
+    fn map_token(&self, phrase: &str) -> Token {
         match phrase {
             ";" => Token::SemiColon,    "(" => Token::OpenParen,
             ")" => Token::CloseParen,   "=" => Token::Equals,
@@ -10,13 +14,13 @@ impl Syntax {
             "-" => Token::Hyphen,       "," => Token::Comma,
             ":" => Token::Colon,        "*" => Token::Asterix,
             "+" => Token::Plus,         "/" => Token::ForwardSlash,
-            "\\" => Token::BackSlash,
+            "\\" => Token::BackSlash,   "\"" => Token::QoutationMark,
             _ if is_character(phrase) => Token::Character,
             _ => panic!("Didn't recognise phrase to parse to token... {}", phrase)
         }
     } 
 
-    pub fn get_token_type(&self, token: Token) -> TokenType {
+    fn get_token_type(&self, token: &Token) -> TokenType {
         match token {
             Token::Plus         | Token::Hyphen         |
             Token::RightAngle   | Token::LeftAngle      |
@@ -28,6 +32,12 @@ impl Syntax {
             _ => panic!("Unknown...")
 
         }
+    }
+
+    pub fn parse(&self, phrase: &str) -> Syntax {
+        let token = map_token(phrase);
+        let tokentype = get_token_type(&token);
+        Syntax(token, tokentype) 
     }
 
     pub fn map_compound_token(&self, current_token: Token, next_token: Token) -> Token {

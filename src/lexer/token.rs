@@ -26,5 +26,6 @@ pub enum Token {
     DivideEquals,
     BackSlash,
     ForwardSlash,
-    Character
+    Character,
+    QoutationMark
 }
