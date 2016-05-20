@@ -15,12 +15,12 @@ impl SyntaxParser {
             ":" => Token::Colon,        "*" => Token::Asterix,
             "+" => Token::Plus,         "/" => Token::ForwardSlash,
             "\\" => Token::BackSlash,   "\"" => Token::QoutationMark,
-            _ if is_character(phrase) => Token::Character,
+            _ if is_valid_identifier_character(phrase) => Token::Character,
             _ => panic!("Didn't recognise phrase to parse to token... {}", phrase)
         }
     } 
 
-    fn get_token_type(&self, token: &Token) -> TokenType {
+    fn get_token_type(&self, token: Token) -> TokenType {
         match token {
             Token::Plus         | Token::Hyphen         |
             Token::RightAngle   | Token::LeftAngle      |
@@ -36,7 +36,7 @@ impl SyntaxParser {
 
     pub fn parse(&self, phrase: &str) -> Syntax {
         let token = map_token(phrase);
-        let tokentype = get_token_type(&token);
+        let tokentype = get_token_type(token);
         Syntax(token, tokentype) 
     }
 
@@ -46,12 +46,12 @@ impl SyntaxParser {
             (Token::Hyphen, Token::Equals) => Token::MinusEquals,
             (Token::Asterix, Token::Equals) => Token::MultiplicationEquals,
             (Token::BackSlash, Token::Equals) => Token::DivideEquals,
-            _ => panic!("Unrecognised set of tokens!")
+            _ => panic!("Invalid combinations for compound token...")
         }
     }
 
-    pub fn is_character(&self, character: char) -> bool {
-        let converted = character.to_digit(10);
+    fn is_valid_identifier_character(&self, phrase: &str) -> bool {
+        let converted = phrase.char_at(0).to_digit(10);
         match converted {
             Some(_) => true,
             None => false

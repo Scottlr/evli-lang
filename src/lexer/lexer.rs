@@ -3,6 +3,8 @@ use super::syntax::SyntaxParser;
 use super::syntax::Syntax;
 use super::token::*;
 
+
+
 pub struct Lexer {
     source_code_window: SlidingWindow,
     syntax: SyntaxParser
@@ -12,7 +14,7 @@ impl Lexer {
     pub fn new(source_code: &str) -> Lexer {
         Lexer {
             source_code_window: SlidingWindow::new(source_code),
-            syntax: SyntaxParser
+            syntaxparser: SyntaxParser
         }
     }
 
@@ -20,8 +22,8 @@ impl Lexer {
         let mut tokens = vec![];
         while !self.source_code_window.is_eof() {
             let character = self.source_code_window.advance_char();
-            let mut token = self.syntax.map_token(&character.to_string());
-            let token_type = self.syntax.get_token_type(token);
+            let mut token = self.syntaxparser.map_token(&character.to_string());
+            let token_type = self.syntaxparser.get_token_type(token);
 
             match (token_type, token) {
                 (TokenType::Operator, Token::QoutationMark) => {
