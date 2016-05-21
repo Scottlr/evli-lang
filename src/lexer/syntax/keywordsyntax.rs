@@ -1,7 +1,7 @@
 use super::super::slidingwindow::SlidingWindow;
 
-pub struct KeywordSyntaxParser {
-    slidingwindow: &SlidingWindow
+pub struct KeywordSyntaxParser<'a> {
+    slidingwindow: &'a SlidingWindow
 }
 
 impl KeywordSyntaxParser {
