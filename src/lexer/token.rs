@@ -27,5 +27,14 @@ pub enum Token {
     BackSlash,
     ForwardSlash,
     Character,
-    QoutationMark
+    QoutationMark,
+
+    //Keywords
+    AwaitKeyword,
+    FuncKeyword,
+    PublicKeyword,
+    IntKeyword,
+    FloatKeyword,
+    StringKeyword
+
 }

@@ -10,7 +10,7 @@ pub struct Lexer {
     syntax: SyntaxParser
 }
 
-impl Lexer {
+impl Lexer {    
     pub fn new(source_code: &str) -> Lexer {
         Lexer {
             source_code_window: SlidingWindow::new(source_code),
@@ -25,6 +25,9 @@ impl Lexer {
             let mut token = self.syntaxparser.map_token(&character.to_string());
             let token_type = self.syntaxparser.get_token_type(token);
 
+
+            //matching on types and tokens gives us the ability to match specific tokens
+            //and still have the ability to neatly match all tokens of a specific 'type'
             match (token_type, token) {
                 (TokenType::Operator, Token::QoutationMark) => {
 
