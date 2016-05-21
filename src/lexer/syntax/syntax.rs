@@ -5,7 +5,7 @@ pub struct Syntax(Token, TokenType);
 pub struct SyntaxParser;
 
 impl SyntaxParser {
-    fn map_token(&self, phrase: &str) -> Token {
+    fn map_token(&self, phrase: &str,) -> Token {
         match phrase {
             ";" => Token::SemiColon,    "(" => Token::OpenParen,
             ")" => Token::CloseParen,   "=" => Token::Equals,
@@ -49,5 +49,9 @@ impl SyntaxParser {
         }
     }
 
+    fn is_valid_identifier_character(&self, phrase: &str) -> bool {
+        true
+        //TODO: need a clean way to identify [a-z|A-Z|0-9] etc.. without using regex!
+    }
 }
 

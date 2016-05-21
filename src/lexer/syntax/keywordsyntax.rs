@@ -1,16 +1,22 @@
 use super::super::slidingwindow::SlidingWindow;
+use super::super::token::*;
 
-pub struct KeywordSyntaxParser<'a> {
-    slidingwindow: &'a SlidingWindow
-}
+pub struct KeywordSyntaxParser;
 
 impl KeywordSyntaxParser {
+    pub fn parse_syntax(&self, source_code: &SlidingWindow) -> Token {
 
-    fn is_valid_identifier_character(&self, phrase: &str) -> bool {
-        let converted = phrase.char_at(0).to_digit(10);
-        match converted {
-            Some(_) => true,
-            None => false
+    }
+
+    fn map_keyword(phrase: &str) -> Option<Token> {
+        match phrase {
+            "await" => Token::AwaitKeyword,
+            "func" => Token::FuncKeyword,
+            "pub" => Token::PublicModifierKeyword,
+            "int" => Token::IntKeyword,
+            "float" => Token::FloatKeyword,
+            "string" => Token::StringKeyword,
+            _ => None
         }
     }
 }

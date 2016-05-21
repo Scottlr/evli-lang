@@ -5,7 +5,7 @@ pub enum TokenType {
     Identifier
 }
 
-#[derive(PartialEq, Copy, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug)]
 pub enum Token {
     SemiColon,
     OpenParen,
@@ -28,11 +28,11 @@ pub enum Token {
     ForwardSlash,
     Character,
     QoutationMark,
-
+    Identifier(String),
     //Keywords
     AwaitKeyword,
     FuncKeyword,
-    PublicKeyword,
+    PublicModifierKeyword,
     IntKeyword,
     FloatKeyword,
     StringKeyword
