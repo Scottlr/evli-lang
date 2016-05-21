@@ -1,4 +1,4 @@
-use super::token::*;
+use super::super::token::*;
 
 
 pub struct Syntax(Token, TokenType);
@@ -15,7 +15,6 @@ impl SyntaxParser {
             ":" => Token::Colon,        "*" => Token::Asterix,
             "+" => Token::Plus,         "/" => Token::ForwardSlash,
             "\\" => Token::BackSlash,   "\"" => Token::QoutationMark,
-            _ if is_valid_identifier_character(phrase) => Token::Character,
             _ => panic!("Didn't recognise phrase to parse to token... {}", phrase)
         }
     } 
@@ -50,12 +49,5 @@ impl SyntaxParser {
         }
     }
 
-    fn is_valid_identifier_character(&self, phrase: &str) -> bool {
-        let converted = phrase.char_at(0).to_digit(10);
-        match converted {
-            Some(_) => true,
-            None => false
-        }
-    }
 }
 

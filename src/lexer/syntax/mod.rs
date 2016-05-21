@@ -1,4 +1,5 @@
 mod keywordsyntax;
 mod syntax;
 
-pub use syntax::Syntax::*;
+pub use self::syntax::*;
+pub use self::keywordsyntax::KeywordSyntaxParser;
