@@ -7,7 +7,7 @@ use super::token::*;
 
 pub struct Lexer {
     source_code_window: SlidingWindow,
-    syntax: SyntaxParser
+    syntaxparser: SyntaxParser
 }
 
 impl Lexer {    
@@ -34,9 +34,9 @@ impl Lexer {
                 },
                 (TokenType::Operator, _) => {
                     let next_character = self.source_code_window.peek().to_string();
-                    let next_token = self.syntax.map_token(&next_character);
+                    let next_token = self.syntaxparser.map_token(&next_character);
                     if next_token == Token::Equals {
-                        token = self.syntax.map_compound_token(token, next_token);
+                        token = self.syntaxparser.map_compound_token(token, next_token);
                     }
                 },
                 (_, Token) => {

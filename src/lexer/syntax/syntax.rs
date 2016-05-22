@@ -5,7 +5,7 @@ pub struct Syntax(Token, TokenType);
 pub struct SyntaxParser;
 
 impl SyntaxParser {
-    fn map_token(&self, phrase: &str,) -> Token {
+    fn map_token(&self, phrase: &str) -> Token {
         match phrase {
             ";" => Token::SemiColon,    "(" => Token::OpenParen,
             ")" => Token::CloseParen,   "=" => Token::Equals,

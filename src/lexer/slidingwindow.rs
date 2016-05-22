@@ -31,7 +31,7 @@ impl SlidingWindow {
         self.current_pos == self.file_len
     }
 
-    pub fn get_slice(&self) -> &str {
+    pub fn get_slice(&mut self) -> &str {
         self.characters[self.current_pos..self.offset].to_owned()
     }
 
