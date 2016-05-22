@@ -1,3 +1,5 @@
+use std::iter::FromIterator;
+
 pub struct SlidingWindow {
     characters: Vec<char>,
     current_pos: usize,
@@ -32,7 +34,9 @@ impl SlidingWindow {
     }
 
     pub fn get_slice(&mut self) -> &str {
-        self.characters[self.current_pos..self.offset].to_owned()
+        let slice = self.characters[self.current_pos .. self.offset].to_owned();
+        let converted_slice = String::from_iter(slice);
+        &converted_slice
     }
 
 }

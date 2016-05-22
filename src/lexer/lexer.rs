@@ -39,7 +39,7 @@ impl Lexer {
                         token = self.syntaxparser.map_compound_token(token, next_token);
                     }
                 },
-                (_, Token) => {
+                (_, Token::Identifier(_)) => {
                     //Loop logic to white space?
                 },
                 (_, _) => {}
