@@ -21,6 +21,7 @@ impl Lexer {
         }
     }
 
+    //Produce a vector of tokens with a given source code obtained from the constructor.
     pub fn tokenize(&mut self) -> Vec<Token> {
         let mut tokens = vec![];
         while !self.source_code_window.is_eof() {
@@ -28,7 +29,7 @@ impl Lexer {
             let mut token = self.syntaxparser.map_token(&character.to_string());
          
             match token {
-
+                //Match potential compound tokens? if not just add the token...
                 Token::Plus | Token::Hyphen | Token::Asterix | Token::BackSlash => {
                     let next_character = self.source_code_window.peek().to_string();
                     let next_token = self.syntaxparser.map_token(&next_character);
