@@ -23,12 +23,12 @@ impl Lexer {
         while !self.source_code_window.is_eof() {
             let character = self.source_code_window.advance_char();
             let mut token = self.syntaxparser.map_token(&character.to_string());
-            let token_type = self.syntaxparser.get_token_type(&token);
+            let token_type = self.syntaxparser.get_token_type(token.clone());
 
 
             //matching on types and tokens gives us the ability to match specific tokens
             //and still have the ability to neatly match all tokens of a specific 'type'
-            match (token_type, token) {
+            match (token_type.clone(), token.clone()) {
                 (TokenType::Operator, Token::QoutationMark) => {
 
                 },
@@ -36,7 +36,7 @@ impl Lexer {
                     let next_character = self.source_code_window.peek().to_string();
                     let next_token = self.syntaxparser.map_token(&next_character);
                     if next_token == Token::Equals {
-                        token = self.syntaxparser.map_compound_token(&token, &next_token);
+                        token = self.syntaxparser.map_compound_token(token.clone(), next_token.clone());
                     }
                 },
                 (_, Token::Identifier(_)) => {

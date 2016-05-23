@@ -35,6 +35,5 @@ pub enum Token {
     PublicModifierKeyword,
     IntKeyword,
     FloatKeyword,
-    StringKeyword
-
+    StringKeyword,
 }
