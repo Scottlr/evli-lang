@@ -19,7 +19,7 @@ impl SyntaxParser {
         }
     } 
 
-    pub fn get_token_type(self, token: &Token) -> TokenType {
+    pub fn get_token_type(&self, token: &Token) -> TokenType {
         match *token {
             Token::Plus         | Token::Hyphen         |
             Token::RightAngle   | Token::LeftAngle      |
@@ -35,14 +35,15 @@ impl SyntaxParser {
 
   
 
-    pub fn map_compound_token(&self, current_token: &Token, next_token: &Token) -> Token {
-        match (*current_token, *next_token) {
+    pub fn map_compound_token(&self, current_token: &Token, next_token: Token) -> Token {
+        match (current_token, next_token) {
             (Token::Plus, Token::Equals) => Token::PlusEquals,
             (Token::Hyphen, Token::Equals) => Token::MinusEquals,
             (Token::Asterix, Token::Equals) => Token::MultiplicationEquals,
             (Token::BackSlash, Token::Equals) => Token::DivideEquals,
             _ => panic!("Invalid combinations for compound token...")
         }
+        
     }
 
     
