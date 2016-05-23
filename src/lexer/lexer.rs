@@ -26,12 +26,9 @@ impl Lexer {
         while !self.source_code_window.is_eof() {
             let character = self.source_code_window.advance_char();
             let mut token = self.syntaxparser.map_token(&character.to_string());
-            let token_type = self.syntaxparser.get_token_type(token.clone());
-
+         
             match token {
-                Token::QoutationMark => {
 
-                },
                 Token::Plus | Token::Hyphen | Token::Asterix | Token::BackSlash => {
                     let next_character = self.source_code_window.peek().to_string();
                     let next_token = self.syntaxparser.map_token(&next_character);
@@ -42,7 +39,15 @@ impl Lexer {
                 Token::StartOfIdentifier => {
                     //Loop logic to white space?
                 },
-                _ => {}
+                Token::QoutationMark => {
+                    //What's the difference between a string and identifier?
+                    //Just qoutations?
+                    //Does this warrant it's own string parser? this should be merged within
+                    //KeywordSyntaxParser - maybe rename this mod?
+                },
+                _ => {
+                     //Should be trivial tokens, or unrecognised??
+                }
 
             }
             tokens.push(token);

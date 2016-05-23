@@ -19,22 +19,6 @@ impl SyntaxParser {
         }
     } 
 
-    pub fn get_token_type(&self, token: Token) -> TokenType {
-        match token {
-            Token::Plus         | Token::Hyphen         |
-            Token::RightAngle   | Token::LeftAngle      |
-            Token::Asterix      | Token::ForwardSlash   |
-            Token::BackSlash 
-                => TokenType::Operator,
-            Token::Character
-                => TokenType::Identifier,
-            _ => panic!("Unknown...")
-
-        }
-    }
-
-  
-
     pub fn map_compound_token(&self, current_token: Token, next_token: Token) -> Token {
         match (current_token, next_token) {
             (Token::Plus, Token::Equals) => Token::PlusEquals,
