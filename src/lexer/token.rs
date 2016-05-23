@@ -28,6 +28,7 @@ pub enum Token {
     ForwardSlash,
     Character,
     QoutationMark,
+    StartOfIdentifier,
     Identifier(String),
     //Keywords
     AwaitKeyword,
