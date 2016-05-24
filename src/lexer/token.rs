@@ -28,8 +28,13 @@ pub enum Token {
     ForwardSlash,
     Character,
     QoutationMark,
-    StartOfIdentifier,
+
+    //Parse to identifier if keyword or identifier...
+    StartOfIdentifierOrKeyword,
+
+    //Identifier and it's value.
     Identifier(String),
+    
     //Keywords
     AwaitKeyword,
     FuncKeyword,

@@ -11,21 +11,26 @@ impl KeywordSyntaxParser {
 
     fn map_keyword(phrase: &str) -> Option<Token> {
         match phrase {
-            "await" => Some(Token::AwaitKeyword),
-            "func" => Some(Token::FuncKeyword),
-            "pub" => Some(Token::PublicModifierKeyword),
-            "int" => Some(Token::IntKeyword),
-            "float" => Some(Token::FloatKeyword),
+            "await" =>  Some(Token::AwaitKeyword),
+            "func" =>   Some(Token::FuncKeyword),
+            "pub" =>    Some(Token::PublicModifierKeyword),
+            "int" =>    Some(Token::IntKeyword),
+            "float" =>  Some(Token::FloatKeyword),
             "string" => Some(Token::StringKeyword),
             _ => None
         }
     }
 
     fn valid_character(&self, phrase: char) -> bool {
-        //let attempted_parse = phrase.to_digit(10);
-        //match attempted_parse {
-          //  Some(_) =>
-        //}
-        true
+        let lowered_phrase = phrase.to_lowercase().next().unwrap();
+        match lowered_phrase {
+             'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g' |
+             'h' | 'i' | 'j' | 'k' | 'l' | 'm' | 'n' |
+             'o' | 'p' | 'q' | 'r' | 's' | 't' | 'u' |
+             'v' | 'w' | 'x' | 'y' | 'z' | '-' | '_'
+                => true,
+            _   => false
+        }
+        
     }
 }

@@ -21,7 +21,7 @@ impl Lexer {
         }
     }
 
-    //Produce a vector of tokens with a given source code obtained from the constructor.
+    //Produce a vector of tokens with a given source code obtained from the constructor.u
     pub fn tokenize(&mut self) -> Vec<Token> {
         let mut tokens = vec![];
         while !self.source_code_window.is_eof() {
@@ -37,7 +37,7 @@ impl Lexer {
                         token = self.syntaxparser.map_compound_token(token.clone(), next_token.clone());
                     }
                 },
-                Token::StartOfIdentifier => {
+                Token::StartOfIdentifierOrKeyword => {
                     //Loop logic to white space?
                 },
                 Token::QoutationMark => {
