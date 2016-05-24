@@ -3,6 +3,7 @@ use super::super::token::*;
 
 pub struct KeywordSyntaxParser;
 
+//Review name
 impl KeywordSyntaxParser {
     pub fn parse_syntax(&self, source_code: &SlidingWindow) -> Token {
         while valid_character(*source_code.peek()) && !*source_code.is_eof() {
@@ -12,6 +13,7 @@ impl KeywordSyntaxParser {
        // while source_code.P
     }
 
+    
     fn map_keyword(self, phrase: &str) -> Option<Token> {
         match phrase {
             "await" =>  Some(Token::AwaitKeyword),
@@ -24,6 +26,9 @@ impl KeywordSyntaxParser {
         }
     }
 
+
+    //Needs rewrite to calculate if character or not rather that 
+    //matching on all characters. Will do for now.
     fn valid_character(self, phrase: char) -> bool {
         let lowered_phrase = phrase.to_lowercase().next().unwrap();
         match lowered_phrase {
