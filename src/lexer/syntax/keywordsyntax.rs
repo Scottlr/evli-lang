@@ -5,11 +5,14 @@ pub struct KeywordSyntaxParser;
 
 impl KeywordSyntaxParser {
     pub fn parse_syntax(&self, source_code: &SlidingWindow) -> Token {
+        while valid_character(*source_code.peek()) && !*source_code.is_eof() {
+
+        }
         Token::AwaitKeyword
-       // while source_code.
+       // while source_code.P
     }
 
-    fn map_keyword(phrase: &str) -> Option<Token> {
+    fn map_keyword(self, phrase: &str) -> Option<Token> {
         match phrase {
             "await" =>  Some(Token::AwaitKeyword),
             "func" =>   Some(Token::FuncKeyword),
@@ -21,7 +24,7 @@ impl KeywordSyntaxParser {
         }
     }
 
-    fn valid_character(&self, phrase: char) -> bool {
+    fn valid_character(self, phrase: char) -> bool {
         let lowered_phrase = phrase.to_lowercase().next().unwrap();
         match lowered_phrase {
              'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g' |
