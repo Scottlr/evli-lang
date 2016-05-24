@@ -5,8 +5,8 @@ pub struct KeywordSyntaxParser;
 
 //Review name
 impl KeywordSyntaxParser {
-    pub fn parse_syntax(&self, source_code: &SlidingWindow) -> Token {
-        while valid_character(*source_code.peek()) && !*source_code.is_eof() {
+    pub fn parse_syntax(&self, source_code: &mut SlidingWindow) -> Token {
+        while valid_character(source_code.peek()) && !source_code.is_eof() {
 
         }
         Token::AwaitKeyword
@@ -22,6 +22,12 @@ impl KeywordSyntaxParser {
             "int" =>    Some(Token::IntKeyword),
             "float" =>  Some(Token::FloatKeyword),
             "string" => Some(Token::StringKeyword),
+            "for" =>    Some(Token::ForKeyword),
+            "in" =>     Some(Token::InKeyword),
+            "is" =>     Some(Token::IsKeyword),
+            "where" =>  Some(Token::WhereKeyword),
+            "loop" =>   Some(Token::LoopKeyword),
+            "while" =>  Some(Token::WhileKeyword),
             _ => None
         }
     }
@@ -29,7 +35,7 @@ impl KeywordSyntaxParser {
 
     //Needs rewrite to calculate if character or not rather that 
     //matching on all characters. Will do for now.
-    fn valid_character(self, phrase: char) -> bool {
+    fn valid_character(&self, phrase: char) -> bool {
         let lowered_phrase = phrase.to_lowercase().next().unwrap();
         match lowered_phrase {
              'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g' |
