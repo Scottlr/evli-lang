@@ -37,9 +37,16 @@ pub enum Token {
     
     //Keywords
     AwaitKeyword,
+    AsyncKeyword,
     FuncKeyword,
     PublicModifierKeyword,
     IntKeyword,
     FloatKeyword,
     StringKeyword,
+    ForKeyword,
+    InKeyword,
+    IsKeyword,
+    WhereKeyword,
+    LoopKeyword,
+    WhileKeyword
 }

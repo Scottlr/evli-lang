@@ -34,7 +34,7 @@ impl SlidingWindow {
     }
 
     pub fn get_slice(&mut self) -> String {
-        let slice = self.characters[self.current_pos .. self.offset].to_owned();
+        let slice = self.characters[self.current_pos .. self.current_pos + self.offset].to_owned();
         let converted_slice = String::from_iter(slice);
         converted_slice
     }
