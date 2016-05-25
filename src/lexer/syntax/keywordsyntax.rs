@@ -28,6 +28,9 @@ impl KeywordSyntaxParser {
             "where" =>  Some(Token::WhereKeyword),
             "loop" =>   Some(Token::LoopKeyword),
             "while" =>  Some(Token::WhileKeyword),
+            "use" =>    Some(Token::UseKeyword),
+            "class" =>  Some(Token::ClassKeyword),
+            "struct" => Some(Token::StructKeyword),
             _ => None
         }
     }

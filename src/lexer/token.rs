@@ -48,5 +48,9 @@ pub enum Token {
     IsKeyword,
     WhereKeyword,
     LoopKeyword,
-    WhileKeyword
+    WhileKeyword,
+    StructKeyword,
+    ClassKeyword,
+    UseKeyword
+
 }

@@ -38,7 +38,7 @@ impl Lexer {
                     }
                 },
                 Token::StartOfIdentifierOrKeyword => {
-                    //Loop logic to white space?
+                    token = self.keywordparser.parse_syntax(&mut self.source_code_window);
                 },
                 Token::QoutationMark => {
                     //What's the difference between a string and identifier?
@@ -46,10 +46,7 @@ impl Lexer {
                     //Does this warrant it's own string parser? this should be merged within
                     //KeywordSyntaxParser - maybe rename this mod?
                 },
-                _ => {
-                     //Should be trivial tokens, or unrecognised??
-                }
-
+                _ => { /*Should be trivial tokens, or unrecognised??*/ } 
             }
             tokens.push(token);
         }
