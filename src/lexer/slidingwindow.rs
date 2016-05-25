@@ -23,6 +23,10 @@ impl SlidingWindow {
         self.characters[self.current_pos + self.offset].to_owned()
     }
 
+    pub fn current_character(self) -> char {
+        self.characters[self.current_pos].to_owned()
+    }
+
     pub fn advance_char(&mut self) -> char {
         self.offset = 0;
         self.current_pos += 1;

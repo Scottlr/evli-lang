@@ -1,19 +1,33 @@
 use super::super::slidingwindow::SlidingWindow;
 use super::super::token::*;
 
-pub struct KeywordSyntaxParser;
+pub struct ComplexTokenParser;
 
 //Review name
-impl KeywordSyntaxParser {
-    pub fn parse_syntax(&self, source_code: &mut SlidingWindow) -> Token {
-        while valid_character(source_code.peek()) && !source_code.is_eof() {
+impl ComplexTokenParser {
+    pub fn parse(&self, source_code: &mut SlidingWindow) -> Token {
+        match source_code.current_character() {
+            '\"' => {
+                //parse string
+            },
+            _ => {
+
+            }
 
         }
+      
         Token::AwaitKeyword
        // while source_code.P
     }
 
+    fn parse_keyword_or_identifier(self,source_code: &mut SlidingWindow) -> Token {
+        Token::AwaitKeyword
+    }
     
+    fn parse_string(self, source_code: &mut SlidingWindow, string_literal: bool) -> Token {
+        Token::StringKeyword
+    }
+
     fn map_keyword(self, phrase: &str) -> Option<Token> {
         match phrase {
             "await" =>  Some(Token::AwaitKeyword),

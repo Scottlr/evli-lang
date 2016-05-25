@@ -1,6 +1,6 @@
 use super::slidingwindow::SlidingWindow;
 use super::syntax::SyntaxParser;
-use super::syntax::KeywordSyntaxParser;
+use super::syntax::ComplexTokenParser;
 use super::syntax::Syntax;
 use super::token::*;
 
@@ -9,7 +9,7 @@ use super::token::*;
 pub struct Lexer {
     source_code_window: SlidingWindow,
     syntaxparser: SyntaxParser,
-    keywordparser: KeywordSyntaxParser
+    complextokenparser: ComplexTokenParser
 }
 
 impl Lexer {    
@@ -17,7 +17,7 @@ impl Lexer {
         Lexer {
             source_code_window: SlidingWindow::new(source_code),
             syntaxparser: SyntaxParser,
-            keywordparser: KeywordSyntaxParser
+            complextokenparser: ComplexTokenParser
         }
     }
 
@@ -37,14 +37,8 @@ impl Lexer {
                         token = self.syntaxparser.map_compound_token(token.clone(), next_token.clone());
                     }
                 },
-                Token::StartOfIdentifierOrKeyword => {
-                    token = self.keywordparser.parse_syntax(&mut self.source_code_window);
-                },
-                Token::QoutationMark => {
-                    //What's the difference between a string and identifier?
-                    //Just qoutations?
-                    //Does this warrant it's own string parser? this should be merged within
-                    //KeywordSyntaxParser - maybe rename this mod?
+                Token::StartOfIdentifierOrKeyword | Token::QoutationMark => {
+                    token = self.complextokenparser.parse(&mut self.source_code_window);
                 },
                 _ => { /*Should be trivial tokens, or unrecognised??*/ } 
             }

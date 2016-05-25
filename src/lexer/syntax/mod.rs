@@ -1,5 +1,5 @@
-mod keywordsyntax;
+mod complextokenparser;
 mod syntax;
 
 pub use self::syntax::*;
-pub use self::keywordsyntax::KeywordSyntaxParser;
+pub use self::complextokenparser::ComplexTokenParser;
