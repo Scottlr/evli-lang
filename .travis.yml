@@ -6,6 +6,8 @@ rust:
 notifications:
   email:
     - scott.rangeley@hotmail.com
+script: 
+     - cargo test
 before_script:
   - rustc --version
   - cargo --version
