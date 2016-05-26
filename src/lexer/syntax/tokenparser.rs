@@ -1,10 +1,10 @@
 use super::super::token::*;
-
+use super::syntaxparser::Parser;
 
 pub struct Syntax(Token, TokenType);
-pub struct SyntaxParser;
+pub struct TokenParser;
 
-impl SyntaxParser {
+impl TokenParser for Parser {
     pub fn map_token(&self, phrase: &str) -> Token {
         match phrase {
             ";" => Token::SemiColon,    "(" => Token::OpenParen,

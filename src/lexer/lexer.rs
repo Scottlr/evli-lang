@@ -1,6 +1,5 @@
 use super::slidingwindow::SlidingWindow;
 use super::syntax::SyntaxParser;
-use super::syntax::ComplexTokenParser;
 use super::syntax::Syntax;
 use super::token::*;
 
@@ -17,7 +16,6 @@ impl Lexer {
         Lexer {
             source_code_window: SlidingWindow::new(source_code),
             syntaxparser: SyntaxParser,
-            complextokenparser: ComplexTokenParser
         }
     }
 
@@ -38,7 +36,7 @@ impl Lexer {
                     }
                 },
                 Token::StartOfIdentifierOrKeyword | Token::QoutationMark => {
-                    token = self.complextokenparser.parse(&mut self.source_code_window);
+                   
                 },
                 _ => { /*Should be trivial tokens, or unrecognised??*/ } 
             }

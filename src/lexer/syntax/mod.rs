@@ -1,5 +1,5 @@
 mod complextokenparser;
-mod syntax;
+mod tokenparser;
+mod syntaxparser;
 
-pub use self::syntax::*;
-pub use self::complextokenparser::ComplexTokenParser;
+pub use self::syntaxparser::SyntaxParser;
