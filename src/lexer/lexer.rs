@@ -1,6 +1,5 @@
 use super::slidingwindow::SlidingWindow;
-use super::syntax::SyntaxParser;
-use super::syntax::Syntax;
+use super::syntax::syntaxparser::SyntaxParser;
 use super::token::*;
 
 
@@ -8,7 +7,6 @@ use super::token::*;
 pub struct Lexer {
     source_code_window: SlidingWindow,
     syntaxparser: SyntaxParser,
-    complextokenparser: ComplexTokenParser
 }
 
 impl Lexer {    
@@ -21,7 +19,7 @@ impl Lexer {
 
     //Produce a vector of tokens with a given source code obtained from the constructor.u
     pub fn tokenize(&mut self) -> Vec<Token> {
-        let mut tokens = vec![];
+      /*  let mut tokens = vec![];
         while !self.source_code_window.is_eof() {
             let character = self.source_code_window.advance_char();
             let mut token = self.syntaxparser.map_token(&character.to_string());
@@ -43,6 +41,8 @@ impl Lexer {
             tokens.push(token);
         }
         tokens
+*/
+vec![]
     }
     
 }

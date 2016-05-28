@@ -1,11 +1,12 @@
 use super::super::slidingwindow::SlidingWindow;
 use super::super::token::*;
+use super::syntaxparser::Parser;
 
 pub struct ComplexTokenParser;
 
 //Review name
-impl ComplexTokenParser {
-    pub fn parse(&self, source_code: &mut SlidingWindow) -> Token {
+impl Parser for ComplexTokenParser {
+    fn parse(source_code: &mut SlidingWindow) -> Token {
         match source_code.current_character() {
             '\"' => {
                 //parse string
@@ -19,6 +20,10 @@ impl ComplexTokenParser {
         Token::AwaitKeyword
        // while source_code.P
     }
+
+}
+
+impl ComplexTokenParser {
 
     fn parse_keyword_or_identifier(self,source_code: &mut SlidingWindow) -> Token {
         Token::AwaitKeyword
