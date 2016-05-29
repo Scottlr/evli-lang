@@ -1,6 +1,6 @@
 use super::slidingwindow::SlidingWindow;
 use super::syntax::syntaxparser::SyntaxParser;
-use super::token::*;
+use super::token::Token;
 
 
 
@@ -13,7 +13,7 @@ impl Lexer {
     pub fn new(source_code: &str) -> Lexer {
         Lexer {
             source_code_window: SlidingWindow::new(source_code),
-            syntaxparser: SyntaxParser,
+            syntaxparser: SyntaxParser
         }
     }
 
