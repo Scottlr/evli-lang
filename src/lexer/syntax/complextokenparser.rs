@@ -6,7 +6,7 @@ pub struct ComplexTokenParser;
 
 //Review name
 impl Parser for ComplexTokenParser {
-    fn parse(source_code: &mut SlidingWindow) -> Token {
+    fn parse(&self, source_code: &mut SlidingWindow) -> Token {
         match source_code.current_character() {
             '\"' => {
                 //parse string

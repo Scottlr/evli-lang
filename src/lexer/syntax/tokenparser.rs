@@ -4,22 +4,22 @@ use super::syntaxparser::Parser;
 pub struct TokenParser;
 
 impl Parser for TokenParser {
-    fn parse(self, source_code: &mut SlidingWindow) -> Token {
+    fn parse(&self, source_code: &mut SlidingWindow) -> Token {
         let phrase = source_code.current_character();
-        let token = map_token(&phrase);
+        let mut token = self.map_token(&phrase);
 
         match token {
             Token::Plus | Token::Hyphen |
             Token::BackSlash | Token::Asterix => {
-                let next_character = source_code.peek().to_string();
+                let next_character = source_code.peek();
                 let next_token = self.map_token(&next_character);
+                if next_token == Token::Equals {
+                    token = self.map_compound_token(token, next_token);
+                }
             }
-
         }
-
-
+        token
     } 
- 
 }
 
 

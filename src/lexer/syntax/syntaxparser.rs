@@ -3,7 +3,7 @@ use super::super::token::Token;
 
 
 pub trait Parser {
-    fn parse(sliding_window: &mut SlidingWindow) -> Token;
+    fn parse(&self, sliding_window: &mut SlidingWindow) -> Token;
 }
 
 
