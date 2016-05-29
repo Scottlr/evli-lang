@@ -19,6 +19,9 @@ impl Lexer {
 
     //Produce a vector of tokens with a given source code obtained from the constructor.u
     pub fn tokenize(&mut self) -> Vec<Token> {
+        while !self.source_code_window.is_eof() {
+            self.syntaxparser.parse(&source_code_window);
+        }
       /*  let mut tokens = vec![];
         while !self.source_code_window.is_eof() {
             let character = self.source_code_window.advance_char();
