@@ -22,30 +22,7 @@ impl Lexer {
         while !self.source_code_window.is_eof() {
             self.syntaxparser.parse(&source_code_window);
         }
-      /*  let mut tokens = vec![];
-        while !self.source_code_window.is_eof() {
-            let character = self.source_code_window.advance_char();
-            let mut token = self.syntaxparser.map_token(&character.to_string());
-         
-            match token {
-                //Match potential compound tokens? if not just add the token...
-                Token::Plus | Token::Hyphen | Token::Asterix | Token::BackSlash => {
-                    let next_character = self.source_code_window.peek().to_string();
-                    let next_token = self.syntaxparser.map_token(&next_character);
-                    if next_token == Token::Equals {
-                        token = self.syntaxparser.map_compound_token(token.clone(), next_token.clone());
-                    }
-                },
-                Token::StartOfIdentifierOrKeyword | Token::QoutationMark => {
-                   
-                },
-                _ => { /*Should be trivial tokens, or unrecognised??*/ } 
-            }
-            tokens.push(token);
-        }
-        tokens
-*/
-vec![]
+        vec![]
     }
     
 }

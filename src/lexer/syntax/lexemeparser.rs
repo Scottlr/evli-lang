@@ -7,19 +7,19 @@ pub trait Parser {
     fn parse(&self, sliding_window: &mut SlidingWindow) -> Token;
 }
 
-pub struct SyntaxParser {
+pub struct LexemeParser {
     token_parser: TokenParser,
     complex_token_parser: ComplexTokenParser
 }
 
-impl Parser for SyntaxParser {
+impl Parser for LexemeParser {
     fn parse(&self, sliding_window: &mut SlidingWindow) -> Token {
         Token::AwaitKeyword
     }
 }
 
 
-impl SyntaxParser {
+impl LexemeParser {
     pub fn parse_complex(sliding_window: &SlidingWindow) -> Token{
 
     }
