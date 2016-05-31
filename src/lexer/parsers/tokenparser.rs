@@ -19,6 +19,7 @@ impl Parser for TokenParser {
                     token = self.map_compound_token(token, next_token);
                 }
             }
+            _ => {}
         }
         token
     } 
