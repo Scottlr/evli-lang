@@ -27,11 +27,11 @@ impl LexemeParser {
         }
     }
     fn parse_complex(sliding_window: &SlidingWindow) -> Token{
-
-    }
+        Token::AwaitKeyword
+    }   
 
     fn is_complex(token: Token) -> Token {
-
+        Token::AwaitKeyword
     }
 }
 
