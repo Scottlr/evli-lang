@@ -1,6 +1,8 @@
 use super::super::token::Token;
 use super::super::slidingwindow::SlidingWindow;
 use super::lexemeparser::Parser;
+
+
 pub struct TokenParser;
 
 impl Parser for TokenParser {
@@ -9,7 +11,7 @@ impl Parser for TokenParser {
         let mut token = self.map_token(&phrase);
 
         match token {
-            Token::Plus | Token::Hyphen |
+            Token::Plus | Token::Hyphen | 
             Token::BackSlash | Token::Asterix => {
                 let next_character = source_code.peek();
                 let next_token = self.map_token(&next_character);
@@ -26,10 +28,10 @@ impl Parser for TokenParser {
 impl TokenParser {
     pub fn map_compound_token(&self, current_token: Token, next_token: Token) -> Token {
         match (current_token, next_token) {
-            (Token::Plus, Token::Equals) => Token::PlusEquals,
-            (Token::Hyphen, Token::Equals) => Token::MinusEquals,
-            (Token::Asterix, Token::Equals) => Token::MultiplicationEquals,
-            (Token::BackSlash, Token::Equals) => Token::DivideEquals,
+            (Token::Plus, Token::Equals) =>         Token::PlusEquals,
+            (Token::Hyphen, Token::Equals) =>       Token::MinusEquals,
+            (Token::Asterix, Token::Equals) =>      Token::MultiplicationEquals,
+            (Token::BackSlash, Token::Equals) =>    Token::DivideEquals,
             _ => panic!("Invalid combinations for compound token...")
         }
     }

@@ -33,7 +33,7 @@ impl SlidingWindow {
         self.characters[self.current_pos].to_owned()
     }
     
-    pub fn is_eof(&mut self) -> bool {
+    pub fn is_eof(&self) -> bool {
         self.current_pos == self.file_len
     }
 
