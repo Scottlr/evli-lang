@@ -13,7 +13,7 @@ pub struct LexemeParser {
 }
 
 impl Parser for LexemeParser {
-    pub fn parse(&self, sliding_window: &mut SlidingWindow) -> Token {
+    fn parse(&self, sliding_window: &mut SlidingWindow) -> Token {
         Token::AwaitKeyword
     }
 }
