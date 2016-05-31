@@ -1,5 +1,5 @@
 mod complextokenparser;
 mod tokenparser;
-mod syntaxparser;
+mod lexemeparser;
 
 pub use self::lexemeparser::LexemeParser;   

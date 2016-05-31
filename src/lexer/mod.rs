@@ -1,5 +1,5 @@
 mod slidingwindow;
-mod syntax;
+mod parsers;
 mod lexer;
 mod token;
 

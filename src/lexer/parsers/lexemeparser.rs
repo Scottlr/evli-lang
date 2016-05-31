@@ -13,18 +13,24 @@ pub struct LexemeParser {
 }
 
 impl Parser for LexemeParser {
-    fn parse(&self, sliding_window: &mut SlidingWindow) -> Token {
+    pub fn parse(&self, sliding_window: &mut SlidingWindow) -> Token {
         Token::AwaitKeyword
     }
 }
 
 
 impl LexemeParser {
-    pub fn parse_complex(sliding_window: &SlidingWindow) -> Token{
+    pub fn new() -> LexemeParser {
+        LexemeParser {
+            token_parser: TokenParser,
+            complex_token_parser: ComplexTokenParser
+        }
+    }
+    fn parse_complex(sliding_window: &SlidingWindow) -> Token{
 
     }
 
-    pub fn is_complex(token: Token) -> Token {
+    fn is_complex(token: Token) -> Token {
 
     }
 }

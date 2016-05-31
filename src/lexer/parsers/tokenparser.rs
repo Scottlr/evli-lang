@@ -1,6 +1,6 @@
 use super::super::token::Token;
 use super::super::slidingwindow::SlidingWindow;
-use super::syntaxparser::Parser;
+use super::lexemeparser::Parser;
 pub struct TokenParser;
 
 impl Parser for TokenParser {
