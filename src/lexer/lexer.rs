@@ -1,6 +1,5 @@
 use super::slidingwindow::SlidingWindow;
 use super::parsers::LexemeParser;
-use super::parsers::Parser;
 use super::token::Token;
 
 pub struct Lexer {

@@ -7,7 +7,7 @@ pub struct TokenParser;
 
 impl Parser for TokenParser {
     fn parse(&self, source_code: &mut SlidingWindow) -> Token {
-        let phrase = source_code.current_character();
+      /*  let phrase = source_code.current_character();
         let mut token = self.map_token(&phrase);
 
         match token {
@@ -21,7 +21,8 @@ impl Parser for TokenParser {
             }
             _ => {}
         }
-        token
+        token*/
+        Token::AwaitKeyword
     } 
 }
 

@@ -7,16 +7,16 @@ pub struct ComplexTokenParser;
 //Review name
 impl Parser for ComplexTokenParser {
     fn parse(&self, source_code: &mut SlidingWindow) -> Token {
-        match source_code.current_character() {
+      /*  let current_char = source_code.current_character();
+        match current_char {
             '\"' => {
                 //parse string
             },
             _ => {
 
             }
-
         }
-      
+      */
         Token::AwaitKeyword
        // while source_code.P
     }
