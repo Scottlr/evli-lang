@@ -1,5 +1,6 @@
 use std::iter::FromIterator;
 
+
 pub struct SlidingWindow {
     characters: Vec<char>,
     current_pos: usize,
@@ -23,7 +24,7 @@ impl SlidingWindow {
         self.characters[self.current_pos + self.offset].to_owned()
     }
 
-    pub fn current_character(self) -> char {
+    pub fn current_character(&self) -> char {
         self.characters[self.current_pos].to_owned()
     }
 

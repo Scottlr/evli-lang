@@ -7,9 +7,8 @@ pub struct TokenParser;
 
 impl Parser for TokenParser {
     fn parse(&self, source_code: &mut SlidingWindow) -> Token {
-      /*  let phrase = source_code.current_character();
+        let mut phrase = source_code.current_character();
         let mut token = self.map_token(&phrase);
-
         match token {
             Token::Plus | Token::Hyphen | 
             Token::BackSlash | Token::Asterix => {
@@ -21,8 +20,7 @@ impl Parser for TokenParser {
             }
             _ => {}
         }
-        token*/
-        Token::AwaitKeyword
+        token
     } 
 }
 

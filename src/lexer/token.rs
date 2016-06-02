@@ -1,11 +1,5 @@
-#[derive(PartialEq, Copy, Clone)]
-pub enum TokenType {
-    Operator,
-    WhiteSpace,
-    Identifier
-}
-
 #[derive(PartialEq, Clone, Debug)]
+#[allow(dead_code)]
 pub enum Token {
     SemiColon,
     OpenParen,
