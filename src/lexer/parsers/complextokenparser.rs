@@ -7,16 +7,17 @@ pub struct ComplexTokenParser;
 //Review name
 impl Parser for ComplexTokenParser {
     fn parse(&self, source_code: &mut SlidingWindow) -> Token {
-      /*  let current_char = source_code.current_character();
+        let current_char = source_code.current_character();
         match current_char {
             '\"' => {
-                //parse string
+                self.parse_string(source_code, false);
+
             },
             _ => {
-
+                self.parse_keyword_or_identifier(source_code);
             }
         }
-      */
+      
         Token::AwaitKeyword
        // while source_code.P
     }
@@ -25,15 +26,15 @@ impl Parser for ComplexTokenParser {
 
 impl ComplexTokenParser {
 
-    fn parse_keyword_or_identifier(self,source_code: &mut SlidingWindow) -> Token {
+    fn parse_keyword_or_identifier(&self, source_code: &mut SlidingWindow) -> Token {
         Token::AwaitKeyword
     }
     
-    fn parse_string(self, source_code: &mut SlidingWindow, string_literal: bool) -> Token {
+    fn parse_string(&self, source_code: &mut SlidingWindow, string_literal: bool) -> Token {
         Token::StringKeyword
     }
 
-    fn map_keyword(self, phrase: &str) -> Option<Token> {
+    fn map_keyword(&self, phrase: &str) -> Option<Token> {
         match phrase {
             "await" =>  Some(Token::AwaitKeyword),
             "func" =>   Some(Token::FuncKeyword),
