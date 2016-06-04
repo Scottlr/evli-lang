@@ -28,6 +28,7 @@ pub enum Token {
 
     //Identifier and it's value.
     Identifier(String),
+    StringValue(String),
     
     //Keywords
     AwaitKeyword,

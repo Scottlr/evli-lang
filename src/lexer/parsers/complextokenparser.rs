@@ -1,27 +1,22 @@
 use super::super::slidingwindow::SlidingWindow;
-use super::super::token::*;
+use super::super::token::Token;
 use super::lexemeparser::Parser;
 
 pub struct ComplexTokenParser;
 
-//Review name
 impl Parser for ComplexTokenParser {
     fn parse(&self, source_code: &mut SlidingWindow) -> Token {
         let current_char = source_code.current_character();
         match current_char {
             '\"' => {
                 self.parse_string(source_code, false);
-
             },
             _ => {
                 self.parse_keyword_or_identifier(source_code);
             }
         }
-      
         Token::AwaitKeyword
-       // while source_code.P
     }
-
 }
 
 impl ComplexTokenParser {
@@ -31,7 +26,10 @@ impl ComplexTokenParser {
     }
     
     fn parse_string(&self, source_code: &mut SlidingWindow, string_literal: bool) -> Token {
-        Token::StringKeyword
+        while !source_code.is_eof() || !self.valid_character(source_code.peek()) {
+            source_code.advance_char();
+        }
+        Token::StringValue(source_code.get_slice())
     }
 
     fn map_keyword(&self, phrase: &str) -> Option<Token> {

@@ -20,8 +20,7 @@ impl SlidingWindow {
     }
 
     pub fn peek(&mut self) -> char {
-        self.offset += 1;
-        self.characters[self.current_pos + self.offset].to_owned()
+        self.characters[self.current_pos + 1].to_owned()
     }
 
     pub fn current_character(&self) -> char {
