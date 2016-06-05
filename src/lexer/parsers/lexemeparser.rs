@@ -32,7 +32,7 @@ impl LexemeParser {
         self.complex_token_parser.parse(sliding_window)
     }   
 
-    fn is_complex(&self, token: &Token) -> bool {
+    fn is_complex(&self,token: &Token) -> bool {
         match *token {
             Token::QoutationMark | Token::StartOfIdentifierOrKeyword 
                 => true,
