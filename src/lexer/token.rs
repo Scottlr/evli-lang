@@ -22,7 +22,7 @@ pub enum Token {
     ForwardSlash,
     Character,
     QoutationMark,
-
+    Whitespace,
     //Parse to identifier if keyword or identifier...
     StartOfIdentifierOrKeyword,
 

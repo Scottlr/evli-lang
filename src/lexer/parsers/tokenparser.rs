@@ -45,6 +45,7 @@ impl TokenParser {
             ':' => Token::Colon,        '*' => Token::Asterix,
             '+' => Token::Plus,         '/' => Token::ForwardSlash,
             '\\' => Token::BackSlash,   '\"' => Token::QoutationMark,
+            ' ' => Token::Whitespace,
             _ => { panic!("ERROR")}
         }
     }
@@ -61,10 +62,10 @@ mod tests {
     #[test]
     fn test_parser_plustoken() {
         let parser = TokenParser;
-        let mut phrase = SlidingWindow::new("+");
+        let mut phrase = SlidingWindow::new("++");
 
         let token = parser.parse(&mut phrase);
 
-        assert_eq!(token, Token::Plus);;
+        assert_eq!(token, Token::Plus);
     }
 }
