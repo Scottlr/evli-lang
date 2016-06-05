@@ -20,9 +20,16 @@ impl Parser for ComplexTokenParser {
 }
 
 impl ComplexTokenParser {
-
+    //this might tie into parsing types
     fn parse_keyword_or_identifier(&self, source_code: &mut SlidingWindow) -> Token {
-        Token::AwaitKeyword
+        while !source_code.is_eof() || !self.valid_character(source_code.peek()) {
+            source_code.peek_offset_advance();
+        }
+        let phrase = source_code.get_slice();
+        match self.map_keyword(&phrase) {
+            Some(value) => value,
+            None        => Token::Identifier(phrase)
+        }
     }
     
     fn parse_string(&self, source_code: &mut SlidingWindow, string_literal: bool) -> Token {

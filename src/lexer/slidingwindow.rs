@@ -23,6 +23,11 @@ impl SlidingWindow {
         self.characters[self.current_pos + 1].to_owned()
     }
 
+    pub fn peek_offset_advance(&mut self) -> char {
+        self.offset += 1;
+        self.characters[self.current_pos + self.offset].to_owned()
+    }
+
     pub fn current_character(&self) -> char {
         self.characters[self.current_pos].to_owned()
     }
@@ -41,6 +46,7 @@ impl SlidingWindow {
     pub fn get_slice(&mut self) -> String {
         let slice = self.characters[self.current_pos .. self.current_pos + self.offset].to_owned();
         let converted_slice = String::from_iter(slice);
+        self.current_pos += self.offset;
         converted_slice
     }
 
