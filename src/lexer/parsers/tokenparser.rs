@@ -11,7 +11,7 @@ impl Parser for TokenParser {
         let mut token = self.map_token(phrase);
         match token {
             Token::Plus | Token::Hyphen | 
-            Token::BackSlash | Token::Asterix => {
+            Token::ForwardSlash | Token::Asterix | Token::Equals => {
                 let next_character = source_code.peek();
                 let next_token = self.map_token(next_character);
                 if next_token == Token::Equals {
@@ -30,7 +30,8 @@ impl TokenParser {
             (Token::Plus, Token::Equals) =>         Token::PlusEquals,
             (Token::Hyphen, Token::Equals) =>       Token::MinusEquals,
             (Token::Asterix, Token::Equals) =>      Token::MultiplicationEquals,
-            (Token::BackSlash, Token::Equals) =>    Token::DivideEquals,
+            (Token::ForwardSlash, Token::Equals) => Token::DivideEquals,
+            (Token::Equals, Token::Equals) =>       Token::ConditionalEquals,
             _ => panic!("Invalid combinations for compound token...")
         }
     }
@@ -59,13 +60,30 @@ mod tests {
     use super::super::super::slidingwindow::SlidingWindow;
     use super::super::super::token::Token;
 
-    #[test]
-    fn test_parser_plustoken() {
+    fn parser_helper(source: &str) -> Token {
         let parser = TokenParser;
-        let mut phrase = SlidingWindow::new("++");
+        let mut phrase = SlidingWindow::new(source);
+        parser.parse(&mut phrase)
+    }
+    #[test]
+    fn test_parser_singletokens() {
+        assert_eq!(parser_helper("++"), Token::Plus);
+        assert_eq!(parser_helper("--"), Token::Hyphen);
+        assert_eq!(parser_helper("**"), Token::Asterix);
+        assert_eq!(parser_helper("{{"), Token::OpenBrace);
+        assert_eq!(parser_helper("}}"), Token::CloseBrace);
+    }
 
-        let token = parser.parse(&mut phrase);
+    #[test]
+    fn test_parser_compoundtokens() {
+        assert_eq!(parser_helper("+="), Token::PlusEquals);
+        assert_eq!(parser_helper("-="), Token::MinusEquals);
+        assert_eq!(parser_helper("*="), Token::MultiplicationEquals);
+        assert_eq!(parser_helper("/="), Token::DivideEquals);
+        assert_eq!(parser_helper("=="), Token::ConditionalEquals);
+    }
 
-        assert_eq!(token, Token::Plus);
+    fn test_parser_startofidentifier() {
+
     }
 }

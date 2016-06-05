@@ -46,6 +46,8 @@ pub enum Token {
     WhileKeyword,
     StructKeyword,
     ClassKeyword,
-    UseKeyword
+    UseKeyword,
 
+    //Conditionals
+    ConditionalEquals
 }
