@@ -21,15 +21,23 @@ impl LexemeParser {
     }
 
     pub fn parse(&self, sliding_window: &mut SlidingWindow) -> Token {
-        Token::AwaitKeyword
+        let mut token = self.token_parser.parse(sliding_window);
+        if self.is_complex(&token) {
+            token = self.parse_complex(sliding_window);
+        }
+        token
     }
 
-    fn parse_complex(sliding_window: &SlidingWindow) -> Token{
-        Token::AwaitKeyword
+    fn parse_complex(&self, sliding_window: &mut SlidingWindow) -> Token {
+        self.complex_token_parser.parse(sliding_window)
     }   
 
-    fn is_complex(token: Token) -> Token {
-        Token::AwaitKeyword
+    fn is_complex(&self, token: &Token) -> bool {
+        match *token {
+            Token::QoutationMark | Token::StartOfIdentifierOrKeyword 
+                => true,
+            _   => false
+        }
     }
 }
 

@@ -8,15 +8,11 @@ impl Parser for ComplexTokenParser {
     fn parse(&self, source_code: &mut SlidingWindow) -> Token {
         let current_char = source_code.current_character();
         match current_char {
-            '\"' => {
-                self.parse_string(source_code, false);
-            },
-            _ => {
-                self.parse_keyword_or_identifier(source_code);
-            }
+            '\"'    => self.parse_string(source_code, false),
+            _       => self.parse_keyword_or_identifier(source_code)
         }
-        Token::AwaitKeyword
     }
+
 }
 
 impl ComplexTokenParser {

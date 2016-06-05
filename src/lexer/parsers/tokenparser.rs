@@ -8,12 +8,12 @@ pub struct TokenParser;
 impl Parser for TokenParser {
     fn parse(&self, source_code: &mut SlidingWindow) -> Token {
         let mut phrase = source_code.current_character();
-        let mut token = self.map_token(&phrase);
+        let mut token = self.map_token(phrase);
         match token {
             Token::Plus | Token::Hyphen | 
             Token::BackSlash | Token::Asterix => {
                 let next_character = source_code.peek();
-                let next_token = self.map_token(&next_character);
+                let next_token = self.map_token(next_character);
                 if next_token == Token::Equals {
                     token = self.map_compound_token(token, next_token);
                 }
@@ -36,8 +36,8 @@ impl TokenParser {
         }
     }
 
-    pub fn map_token(&self, character: &char) -> Token {
-         match *character {
+    pub fn map_token(&self, character: char) -> Token {
+         match character {
             ';' => Token::SemiColon,    '(' => Token::OpenParen,
             ')' => Token::CloseParen,   '=' => Token::Equals,
             '{' => Token::OpenBrace,    '}' => Token::CloseBrace,
