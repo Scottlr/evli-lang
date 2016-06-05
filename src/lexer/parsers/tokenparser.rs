@@ -24,7 +24,6 @@ impl Parser for TokenParser {
     } 
 }
 
-
 impl TokenParser {
     pub fn map_compound_token(&self, current_token: Token, next_token: Token) -> Token {
         match (current_token, next_token) {
@@ -50,4 +49,22 @@ impl TokenParser {
         }
     }
 
+}
+
+#[cfg(test)]
+mod tests {
+    use super::TokenParser;
+    use super::super::lexemeparser::Parser;
+    use super::super::super::slidingwindow::SlidingWindow;
+    use super::super::super::token::Token;
+
+    #[test]
+    fn test_parser_plustoken() {
+        let parser = TokenParser;
+        let mut phrase = SlidingWindow::new("+");
+
+        let token = parser.parse(&mut phrase);
+
+        assert_eq!(token, Token::Plus);;
+    }
 }
