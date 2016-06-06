@@ -16,6 +16,10 @@ impl Parser for ComplexTokenParser {
 }
 
 impl ComplexTokenParser {
+
+    pub fn is_complex(&self, current_character: char) -> bool {
+        self.valid_character(current_character) || current_character == '\"'
+    }
     //this might tie into parsing types
     fn parse_keyword_or_identifier(&self, source_code: &mut SlidingWindow) -> Token {
         while !source_code.is_eof() || !self.valid_character(source_code.peek()) {
@@ -73,3 +77,21 @@ impl ComplexTokenParser {
     }
 }
 
+#[cfg(test)]
+mod tests {
+    use super::TokenParser;
+    use super::super::lexemeparser::Parser;
+    use super::super::super::slidingwindow::SlidingWindow;
+    use super::super::super::token::Token;
+
+    fn parser_helper(source: &str) -> Token {
+        let parser = TokenParser;
+        let mut phrase = SlidingWindow::new(source);
+        parser.parse(&mut phrase)
+    }
+    #[test]
+    fn test_parser_singletokens() {
+
+    }
+
+}

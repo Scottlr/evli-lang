@@ -86,6 +86,6 @@ mod tests {
     }
 
     fn test_parser_startofidentifier() {
-
+        
     }
 }
