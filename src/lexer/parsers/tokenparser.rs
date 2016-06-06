@@ -9,17 +9,19 @@ impl Parser for TokenParser {
     fn parse(&self, source_code: &mut SlidingWindow) -> Token {
         let mut phrase = source_code.current_character();
         let mut token = self.map_token(phrase);
-        match token {
-            Token::Plus | Token::Hyphen | 
-            Token::ForwardSlash | Token::Asterix | Token::Equals => {
-                let next_character = source_code.peek();
-                let next_token = self.map_token(next_character);
-                if next_token == Token::Equals {
-                    token = self.map_compound_token(token, next_token);
+        if !source_code.is_eof() {
+            match token {
+                Token::Plus | Token::Hyphen | 
+                Token::ForwardSlash | Token::Asterix | Token::Equals => {
+                    let next_character = source_code.peek();
+                    let next_token = self.map_token(next_character);
+                    if next_token == Token::Equals {
+                        token = self.map_compound_token(token, next_token);
+                    }
                 }
+                _ => {}
             }
-            _ => {}
-        }
+        }   
         token
     } 
 }
@@ -67,11 +69,11 @@ mod tests {
     }
     #[test]
     fn test_parser_singletokens() {
-        assert_eq!(parser_helper("++"), Token::Plus);
-        assert_eq!(parser_helper("--"), Token::Hyphen);
-        assert_eq!(parser_helper("**"), Token::Asterix);
-        assert_eq!(parser_helper("{{"), Token::OpenBrace);
-        assert_eq!(parser_helper("}}"), Token::CloseBrace);
+        assert_eq!(parser_helper("+"), Token::Plus);
+        assert_eq!(parser_helper("-"), Token::Hyphen);
+        assert_eq!(parser_helper("*"), Token::Asterix);
+        assert_eq!(parser_helper("{"), Token::OpenBrace);
+        assert_eq!(parser_helper("}"), Token::CloseBrace);
     }
 
     #[test]

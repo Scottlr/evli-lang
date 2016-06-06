@@ -20,7 +20,7 @@ impl SlidingWindow {
     }
 
     pub fn peek(&mut self) -> char {
-        self.characters[self.current_pos + 1].to_owned()
+       self.characters[self.current_pos + 1].to_owned()
     }
 
     pub fn peek_offset_advance(&mut self) -> char {
@@ -39,7 +39,7 @@ impl SlidingWindow {
     }
     
     pub fn is_eof(&self) -> bool {
-        self.current_pos == self.file_len
+        self.current_pos == (self.file_len - 1)
     }
 
     //Needs rewrite to potentially return reference to slice instead of a newly assigned String?
