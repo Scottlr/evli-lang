@@ -8,8 +8,7 @@ pub struct TokenParser;
 impl Parser for TokenParser {
     fn parse(&self, source_code: &mut SlidingWindow) -> Token {
         println!("Parsing simple token...");
-        let mut phrase = source_code.current_character();
-        let mut token = self.map_token(phrase);
+        let mut token = self.map_token(source_code.current_character());
         if !source_code.is_eof() {
             match token {
                 Token::Plus | Token::Hyphen | 
@@ -68,7 +67,7 @@ mod tests {
         let mut phrase = SlidingWindow::new(source);
         parser.parse(&mut phrase)
     }
-    
+
     #[test]
     fn test_parser_singletokens() {
         assert_eq!(parser_helper("+"), Token::Plus);

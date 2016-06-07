@@ -18,13 +18,10 @@ impl Parser for ComplexTokenParser {
 
 impl ComplexTokenParser {
 
-    pub fn is_complex(&self, current_character: char) -> bool {
-        self.valid_character(current_character) || current_character == '\"'
-    }
     //this might tie into parsing types
     fn parse_keyword_or_identifier(&self, source_code: &mut SlidingWindow) -> Token {
-        while !source_code.is_eof() || !self.valid_character(source_code.peek()) {
-            source_code.peek_offset_advance();
+        while !source_code.is_eof() && !self.valid_character(source_code.peek()) {
+            source_code.increase_offset();
         }
         let phrase = source_code.get_slice();
         match self.map_keyword(&phrase) {
@@ -33,13 +30,19 @@ impl ComplexTokenParser {
         }
     }
     
+    #[allow(unused_variables)]
     fn parse_string(&self, source_code: &mut SlidingWindow, string_literal: bool) -> Token {
-        while !source_code.is_eof() || !self.valid_character(source_code.peek()) {
-            source_code.advance_char();
+        while !source_code.is_eof() && !self.valid_character(source_code.peek()) {
+
+            source_code.increase_offset();
         }
         Token::StringValue(source_code.get_slice())
     }
 
+    pub fn is_complex(&self, current_character: char) -> bool {
+        self.valid_character(current_character) || current_character == '\"'
+    }
+    
     fn map_keyword(&self, phrase: &str) -> Option<Token> {
         match phrase {
             "await" =>  Some(Token::AwaitKeyword),
@@ -93,6 +96,7 @@ mod tests {
     
     #[test]
     fn test_parser_keywords() {
+
         assert_eq!(parser_helper("pub"), Token::PublicModifierKeyword);
     }
 
