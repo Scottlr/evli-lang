@@ -6,6 +6,7 @@ pub struct ComplexTokenParser;
 
 impl Parser for ComplexTokenParser {
     fn parse(&self, source_code: &mut SlidingWindow) -> Token {
+        println!("Parsing a complex token...");
         let current_char = source_code.current_character();
         match current_char {
             '\"'    => self.parse_string(source_code, false),
@@ -79,6 +80,20 @@ impl ComplexTokenParser {
 
 #[cfg(test)]
 mod tests {
+    use super::ComplexTokenParser;
+    use super::super::lexemeparser::Parser;
+    use super::super::super::slidingwindow::SlidingWindow;
+    use super::super::super::token::Token;
+
+    fn parser_helper(source: &str) -> Token {
+        let parser = ComplexTokenParser;
+        let mut phrase = SlidingWindow::new(source);
+        parser.parse(&mut phrase)
+    }
     
+    #[test]
+    fn test_parser_keywords() {
+        assert_eq!(parser_helper("pub"), Token::PublicModifierKeyword);
+    }
 
 }

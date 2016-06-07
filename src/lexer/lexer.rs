@@ -19,7 +19,9 @@ impl Lexer {
     pub fn tokenize(&mut self) -> Vec<Token> {
         let mut tokens = vec![];
         while !self.source_code_window.is_eof() {
-            tokens.push(self.lexparser.parse(&mut self.source_code_window));
+            let lexed_token = self.lexparser.parse(&mut self.source_code_window);
+            println!("{:?}", lexed_token);
+            tokens.push(lexed_token);
         }
         tokens
     }

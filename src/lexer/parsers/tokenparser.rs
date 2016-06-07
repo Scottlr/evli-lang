@@ -7,13 +7,14 @@ pub struct TokenParser;
 
 impl Parser for TokenParser {
     fn parse(&self, source_code: &mut SlidingWindow) -> Token {
+        println!("Parsing simple token...");
         let mut phrase = source_code.current_character();
         let mut token = self.map_token(phrase);
         if !source_code.is_eof() {
             match token {
                 Token::Plus | Token::Hyphen | 
                 Token::ForwardSlash | Token::Asterix | Token::Equals => {
-                    let next_character = source_code.peek();
+                    let next_character = source_code.advance_char();
                     let next_token = self.map_token(next_character);
                     if next_token == Token::Equals {
                         token = self.map_compound_token(token, next_token);
@@ -61,12 +62,13 @@ mod tests {
     use super::super::lexemeparser::Parser;
     use super::super::super::slidingwindow::SlidingWindow;
     use super::super::super::token::Token;
-
+   
     fn parser_helper(source: &str) -> Token {
         let parser = TokenParser;
         let mut phrase = SlidingWindow::new(source);
         parser.parse(&mut phrase)
     }
+    
     #[test]
     fn test_parser_singletokens() {
         assert_eq!(parser_helper("+"), Token::Plus);
