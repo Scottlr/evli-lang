@@ -20,7 +20,7 @@ impl ComplexTokenParser {
 
     //this might tie into parsing types
     fn parse_keyword_or_identifier(&self, source_code: &mut SlidingWindow) -> Token {
-        while !source_code.is_eof() && !self.valid_character(source_code.peek()) {
+        while !source_code.is_eof() && !self.valid_character(source_code.offset_peek()) {
             source_code.increase_offset();
         }
         let phrase = source_code.get_slice();
@@ -32,8 +32,7 @@ impl ComplexTokenParser {
     
     #[allow(unused_variables)]
     fn parse_string(&self, source_code: &mut SlidingWindow, string_literal: bool) -> Token {
-        while !source_code.is_eof() && !self.valid_character(source_code.peek()) {
-
+        while !source_code.is_eof() && !self.valid_character(source_code.offset_peek()) {
             source_code.increase_offset();
         }
         Token::StringValue(source_code.get_slice())
@@ -96,8 +95,7 @@ mod tests {
     
     #[test]
     fn test_parser_keywords() {
-
-        assert_eq!(parser_helper("pub"), Token::PublicModifierKeyword);
+        assert_eq!(parser_helper("pub "), Token::PublicModifierKeyword);
     }
 
 }
