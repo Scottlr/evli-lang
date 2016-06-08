@@ -47,7 +47,7 @@ impl ComplexTokenParser {
             "await" =>  Some(Token::AwaitKeyword),
             "func" =>   Some(Token::FuncKeyword),
             "pub" =>    Some(Token::PublicModifierKeyword),
-            "int" =>    Some(Token::IntKeyword),
+            "i32" =>    Some(Token::IntKeyword),
             "float" =>  Some(Token::FloatKeyword),
             "string" => Some(Token::StringKeyword),
             "for" =>    Some(Token::ForKeyword),
@@ -56,7 +56,7 @@ impl ComplexTokenParser {
             "where" =>  Some(Token::WhereKeyword),
             "loop" =>   Some(Token::LoopKeyword),
             "while" =>  Some(Token::WhileKeyword),
-            "use" =>    Some(Token::UseKeyword),
+            "uses" =>    Some(Token::UseKeyword),
             "class" =>  Some(Token::ClassKeyword),
             "struct" => Some(Token::StructKeyword),
             _ => None
@@ -72,7 +72,9 @@ impl ComplexTokenParser {
              'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g' |
              'h' | 'i' | 'j' | 'k' | 'l' | 'm' | 'n' |
              'o' | 'p' | 'q' | 'r' | 's' | 't' | 'u' |
-             'v' | 'w' | 'x' | 'y' | 'z' | '-' | '_'
+             'v' | 'w' | 'x' | 'y' | 'z' | '-' | '_' |
+             '0' | '1' | '2' | '3' | '4' | '5' | '6' |
+             '7' | '8' | '9'
                 => true,
             _   => false
         }
@@ -98,6 +100,11 @@ mod tests {
     fn test_parser_keywords() {
         //fuck off by one errors, is_eof doesn't seem to like offsets... so a space is npueeded to terminate
         assert_eq!(parser_helper("pub "), Token::PublicModifierKeyword);
+        assert_eq!(parser_helper("i32 "), Token::IntKeyword);
+        assert_eq!(parser_helper("for "), Token::ForKeyword);
+        assert_eq!(parser_helper("await "), Token::AwaitKeyword);
+        assert_eq!(parser_helper("string "), Token::StringKeyword);
+        assert_eq!(parser_helper("uses "), Token::UseKeyword);
     }
 
 }
