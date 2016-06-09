@@ -54,11 +54,11 @@ impl ComplexTokenParser {
             "in" =>     Some(Token::InKeyword),
             "is" =>     Some(Token::IsKeyword),
             "where" =>  Some(Token::WhereKeyword),
-            "loop" =>   Some(Token::LoopKeyword),
             "while" =>  Some(Token::WhileKeyword),
-            "uses" =>    Some(Token::UseKeyword),
+            "uses" =>   Some(Token::UseKeyword),
             "class" =>  Some(Token::ClassKeyword),
             "struct" => Some(Token::StructKeyword),
+            "async" =>  Some(Token::AsyncKeyword),
             _ => None
         }
     }
@@ -105,6 +105,12 @@ mod tests {
         assert_eq!(parser_helper("await "), Token::AwaitKeyword);
         assert_eq!(parser_helper("string "), Token::StringKeyword);
         assert_eq!(parser_helper("uses "), Token::UseKeyword);
+        assert_eq!(parser_helper("while "), Token::WhileKeyword);
+        assert_eq!(parser_helper("class "), Token::ClassKeyword);
+        assert_eq!(parser_helper("where "), Token::WhereKeyword);
+        assert_eq!(parser_helper("async "), Token::AsyncKeyword);
+        assert_eq!(parser_helper("in "), Token::InKeyword);  
+        assert_eq!(parser_helper("struct "), Token::StructKeyword);
     }
 
 }
