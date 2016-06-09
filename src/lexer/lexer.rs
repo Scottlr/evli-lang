@@ -39,7 +39,7 @@ mod tests {
             i32++
         }";
             
-        let text_lexer = Lexer::new(source_code);
+        let mut text_lexer = Lexer::new(source_code);
         let tokens = text_lexer.tokenize();
     }
 
