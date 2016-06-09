@@ -75,6 +75,9 @@ mod tests {
         assert_eq!(parser_helper("*"), Token::Asterix);
         assert_eq!(parser_helper("{"), Token::OpenBrace);
         assert_eq!(parser_helper("}"), Token::CloseBrace);
+        assert_eq!(parser_helper("\\"), Token::BackSlash);
+        assert_eq!(parser_helper("\""), Token::QoutationMark);
+        assert_eq!(parser_helper(" "), Token::Whitespace);
     }
 
     #[test]
@@ -84,9 +87,5 @@ mod tests {
         assert_eq!(parser_helper("*="), Token::MultiplicationEquals);
         assert_eq!(parser_helper("/="), Token::DivideEquals);
         assert_eq!(parser_helper("=="), Token::ConditionalEquals);
-    }
-
-    fn test_parser_startofidentifier() {
-        
     }
 }
