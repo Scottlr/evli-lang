@@ -47,6 +47,6 @@ mod tests {
         assert_eq!(parser_helper("async "), Token::AsyncKeyword);
         assert_eq!(parser_helper("{"), Token::OpenBrace);
         assert_eq!(parser_helper("Customer "), Token::Identifier("Customer".to_string()));
-        //assert_eq!(parser_helper("\"some string value\""), Token::StringValue("some string value".to_string()));
+        assert_eq!(parser_helper("\"some string value\""), Token::StringValue("some string value".to_string()));
     }
 }

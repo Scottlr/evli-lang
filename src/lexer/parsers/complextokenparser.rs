@@ -32,9 +32,9 @@ impl ComplexTokenParser {
     
     #[allow(unused_variables)]
     fn parse_string(&self, source_code: &mut SlidingWindow, string_literal: bool) -> Token {
+        source_code.advance_char();
         while !source_code.is_eof() 
-            && source_code.offset_peek() != '\"'
-            && self.valid_character(source_code.offset_peek())  
+            && self.valid_string_sequence(source_code.offset_peek())
         {
             source_code.increase_offset();
         }
@@ -45,6 +45,12 @@ impl ComplexTokenParser {
         self.valid_character(current_character) || current_character == '\"'
     }
     
+    fn valid_string_sequence(&self, current_character: char) -> bool {
+        current_character != '\"' 
+            && current_character == ' '
+            || self.valid_character(current_character)
+    }
+
     fn map_keyword(&self, phrase: &str) -> Option<Token> {
         match phrase {
             "await" =>  Some(Token::AwaitKeyword),
@@ -116,6 +122,7 @@ mod tests {
         assert_eq!(parser_helper("struct "), Token::StructKeyword);
     }
 
+    #[test]
     fn test_parser_stringvalues() {
         assert_eq!(parser_helper("\"some string value\""), Token::StringValue("some string value".to_string()));
     }
