@@ -40,7 +40,7 @@ impl Lexer {
 }
 
 
-/*
+
 #[cfg(test)]
 mod tests {
     use super::Lexer;
@@ -56,8 +56,7 @@ mod tests {
         let mut text_lexer = Lexer::new(source_code);
         let tokens = text_lexer.tokenize();
 
-        assert_eq!(tokens.len(), 12);
+        assert_eq!(tokens.len(), 8);
 
     }
 }
-*/
