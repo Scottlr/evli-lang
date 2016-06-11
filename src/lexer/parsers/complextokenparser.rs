@@ -6,7 +6,6 @@ pub struct ComplexTokenParser;
 
 impl Parser for ComplexTokenParser {
     fn parse(&self, source_code: &mut SlidingWindow) -> Token {
-        println!("Parsing a complex token...");
         let current_char = source_code.current_character();
         match current_char {
             '\"'    => self.parse_string(source_code, false),
@@ -33,9 +32,8 @@ impl ComplexTokenParser {
     #[allow(unused_variables)]
     fn parse_string(&self, source_code: &mut SlidingWindow, string_literal: bool) -> Token {
         source_code.advance_char();
-        while !source_code.is_eof() 
-            && self.valid_string_sequence(source_code.offset_peek())
-        {
+        while !source_code.is_eof()  && self.valid_string_sequence(source_code.offset_peek()) {
+        
             source_code.increase_offset();
         }
         Token::StringValue(source_code.get_slice())

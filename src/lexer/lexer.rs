@@ -20,24 +20,31 @@ impl Lexer {
         let mut tokens = vec![];
         while !self.source_code_window.is_eof() {
             let lexed_token = self.lexparser.parse(&mut self.source_code_window);
+            self.source_code_window.advance_char();
+            if self.is_ignorable(&lexed_token) {
+                continue;
+            }
             println!("{:?}", lexed_token);
             tokens.push(lexed_token);
         }
         tokens
     }
-    
+
+    fn is_ignorable(&self, token: &Token) -> bool {
+        match *token {
+            Token::Whitespace | Token::NewLine | Token::CarraigeReturn
+                => true,
+            _   => false
+        }
+    }
 }
 
+
+/*
 #[cfg(test)]
 mod tests {
     use super::Lexer;
     use super::super::token::Token;
-   
-
-/*
-
-    ### so this crashes my computer... ###
-
 
     #[test]
     fn test_parser_keywords() {
@@ -52,7 +59,5 @@ mod tests {
         assert_eq!(tokens.len(), 12);
 
     }
-*/
-
-
 }
+*/

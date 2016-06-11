@@ -23,6 +23,8 @@ pub enum Token {
     Character,
     QoutationMark,
     Whitespace,
+    NewLine,
+    CarraigeReturn,
     //Parse to identifier if keyword or identifier...
     StartOfIdentifierOrKeyword,
 

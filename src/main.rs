@@ -1,10 +1,11 @@
+
 use std::io::prelude::*;
 use std::fs::File;
 use std::path::Path;
 
 mod lexer;
 
-#[cfg(not(test))]
+//#[cfg(not(test))]
 fn main() {
     let file_contents = match read_file("lange.fir") {
         Ok(contents) => contents,
@@ -15,11 +16,14 @@ fn main() {
     let mut lexer = lexer::Lexer::new(&file_contents);
     let tokens = lexer.tokenize();
 
-    for token in tokens {
+    for token in tokens.clone() {
         println!("{:?}", token);
     }
+    println!("Parsed tokens: {}", tokens.clone().len());
+   
 }
-    
+
+
 fn read_file<P: AsRef<Path>>(path: P) -> Result<String, String> {	
     File::open(path)
         .map_err(|err| err.to_string())

@@ -7,7 +7,6 @@ pub struct TokenParser;
 
 impl Parser for TokenParser {
     fn parse(&self, source_code: &mut SlidingWindow) -> Token {
-        println!("Parsing simple token...");
         let mut token = self.map_token(source_code.current_character());
         if !source_code.is_eof() {
             match token {
@@ -48,8 +47,9 @@ impl TokenParser {
             ':' => Token::Colon,        '*' => Token::Asterix,
             '+' => Token::Plus,         '/' => Token::ForwardSlash,
             '\\' => Token::BackSlash,   '\"' => Token::QoutationMark,
-            ' ' => Token::Whitespace,
-            _ => { panic!("ERROR")}
+            ' ' => Token::Whitespace,   '\n' => Token::NewLine,
+            '\r' => Token::CarraigeReturn,
+            _ => panic!("Error trying to parse character: {} second time:{}", character, character)
         }
     }
 
