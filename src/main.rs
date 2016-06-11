@@ -4,6 +4,7 @@ use std::path::Path;
 
 mod lexer;
 
+#[cfg(not(test))]
 fn main() {
     let file_contents = match read_file("lange.fir") {
         Ok(contents) => contents,

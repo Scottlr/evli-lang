@@ -46,5 +46,6 @@ mod tests {
     fn test_trivialtoken_successful() {
         assert_eq!(parser_helper("async "), Token::AsyncKeyword);
         assert_eq!(parser_helper("{"), Token::OpenBrace);
+        assert_eq!(parser_helper("Customer "), Token::Identifier("Customer".to_string()));
     }
 }
