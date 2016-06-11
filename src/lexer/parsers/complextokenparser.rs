@@ -32,7 +32,10 @@ impl ComplexTokenParser {
     
     #[allow(unused_variables)]
     fn parse_string(&self, source_code: &mut SlidingWindow, string_literal: bool) -> Token {
-        while !source_code.is_eof() && self.valid_character(source_code.offset_peek()) {
+        while !source_code.is_eof() 
+            && source_code.offset_peek() != '\"'
+            && self.valid_character(source_code.offset_peek())  
+        {
             source_code.increase_offset();
         }
         Token::StringValue(source_code.get_slice())
@@ -111,6 +114,10 @@ mod tests {
         assert_eq!(parser_helper("async "), Token::AsyncKeyword);
         assert_eq!(parser_helper("in "), Token::InKeyword);  
         assert_eq!(parser_helper("struct "), Token::StructKeyword);
+    }
+
+    fn test_parser_stringvalues() {
+        assert_eq!(parser_helper("\"some string value\""), Token::StringValue("some string value".to_string()));
     }
 
 }

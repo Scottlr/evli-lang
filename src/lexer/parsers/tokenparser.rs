@@ -88,4 +88,12 @@ mod tests {
         assert_eq!(parser_helper("/="), Token::DivideEquals);
         assert_eq!(parser_helper("=="), Token::ConditionalEquals);
     }
+
+    #[test]
+    #[should_panic]
+    fn test_compoundtokensparser_invalidsequenceshouldfail() {
+        let parser = TokenParser;
+        parser.map_compound_token(Token::AsyncKeyword, Token::AwaitKeyword);
+        assert!(false);
+    }
 }
