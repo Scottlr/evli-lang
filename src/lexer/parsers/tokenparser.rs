@@ -49,7 +49,7 @@ impl TokenParser {
             '\\' => Token::BackSlash,   '\"' => Token::QoutationMark,
             ' ' => Token::Whitespace,   '\n' => Token::NewLine,
             '\r' => Token::CarraigeReturn,
-            _ => panic!("Error trying to parse character: {} second time:{}", character, character)
+            _ => panic!("Error trying to parse character: {}", character)
         }
     }
 
@@ -78,6 +78,10 @@ mod tests {
         assert_eq!(parser_helper("\\"), Token::BackSlash);
         assert_eq!(parser_helper("\""), Token::QoutationMark);
         assert_eq!(parser_helper(" "), Token::Whitespace);
+        assert_eq!(parser_helper("\r"), Token::CarraigeReturn);
+        assert_eq!(parser_helper("\n"), Token::NewLine);
+        
+           
     }
 
     #[test]
@@ -94,6 +98,15 @@ mod tests {
     fn test_compoundtokensparser_invalidsequenceshouldfail() {
         let parser = TokenParser;
         parser.map_compound_token(Token::AsyncKeyword, Token::AwaitKeyword);
+        assert!(false);
+    }
+
+
+    #[test]
+    #[should_panic]
+    fn test_maptokenparser_invalidsequenceshouldfail() {
+        let parser = TokenParser;
+        parser.map_token('f');;
         assert!(false);
     }
 }
