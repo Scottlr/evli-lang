@@ -29,3 +29,22 @@ impl LexemeParser {
     }
 }
 
+
+#[cfg(test)]
+mod tests {
+    use super::LexemeParser;
+    use super::super::super::token::Token;
+    use super::super::super::slidingwindow::SlidingWindow;
+
+    fn parser_helper(source: &str) -> Token {
+        let parser = LexemeParser::new();
+        let mut phrase = SlidingWindow::new(source);
+        parser.parse(&mut phrase)
+    }
+
+    #[test]
+    fn test_trivialtoken_successful() {
+        assert_eq!(parser_helper("async "), Token::AsyncKeyword);
+        assert_eq!(parser_helper("{"), Token::OpenBrace);
+    }
+}
