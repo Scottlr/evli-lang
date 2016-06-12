@@ -12,10 +12,12 @@ impl Parser for TokenParser {
             match token {
                 Token::Plus | Token::Hyphen | 
                 Token::ForwardSlash | Token::Asterix | Token::Equals => {
-                    let next_character = source_code.advance_char();
+                    source_code.increase_offset();
+                    let next_character = source_code.offset_peek();
                     let next_token = self.map_token(next_character);
                     if next_token == Token::Equals {
                         token = self.map_compound_token(token, next_token);
+                        source_code.advance();
                     }
                 }
                 _ => {}

@@ -31,7 +31,7 @@ impl SlidingWindow {
         self.characters[self.current_pos].to_owned()
     }
 
-    pub fn advance_char(&mut self) -> char {
+    pub fn advance(&mut self) -> char {
         self.offset = 0;
         self.current_pos += 1;
         self.characters[self.current_pos].to_owned()
@@ -42,7 +42,6 @@ impl SlidingWindow {
         self.offset >= (self.file_len - 1)
     }
 
-    //Needs rewrite to potentially return reference to slice instead of a newly assigned String?
     pub fn get_slice(&mut self) -> String {
         let slice = self.characters[self.current_pos .. (self.current_pos + self.offset)].to_owned();
         let converted_slice = String::from_iter(slice);

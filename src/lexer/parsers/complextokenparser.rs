@@ -16,8 +16,6 @@ impl Parser for ComplexTokenParser {
 }
 
 impl ComplexTokenParser {
-
-    //this might tie into parsing types
     fn parse_keyword_or_identifier(&self, source_code: &mut SlidingWindow) -> Token {
         while !source_code.is_eof() && self.valid_character(source_code.offset_peek()) {
             source_code.increase_offset();
@@ -31,7 +29,7 @@ impl ComplexTokenParser {
     
     #[allow(unused_variables)]
     fn parse_string(&self, source_code: &mut SlidingWindow, string_literal: bool) -> Token {
-        source_code.advance_char();
+        source_code.advance();
         while !source_code.is_eof()  && self.valid_string_sequence(source_code.offset_peek()) {
         
             source_code.increase_offset();
