@@ -107,7 +107,7 @@ mod tests {
     #[test]
     fn test_parser_keywords() {
         //fuck off by one errors, is_eof doesn't seem to like offsets... so a space is npueeded to terminate
-        assert_eq!(parser_helper("pub"), Token::PublicModifierKeyword);
+        assert_eq!(parser_helper("pub "), Token::PublicModifierKeyword);
         assert_eq!(parser_helper("i32 "), Token::IntKeyword);
         assert_eq!(parser_helper("for "), Token::ForKeyword);
         assert_eq!(parser_helper("await "), Token::AwaitKeyword);
