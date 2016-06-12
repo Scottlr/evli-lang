@@ -39,12 +39,12 @@ impl SlidingWindow {
     
     pub fn is_eof(&self) -> bool {
         self.current_pos >= (self.file_len - 1) ||
-        self.offset >= (self.file_len -1)
+        self.offset >= (self.file_len - 1)
     }
 
     //Needs rewrite to potentially return reference to slice instead of a newly assigned String?
     pub fn get_slice(&mut self) -> String {
-        let slice = self.characters[self.current_pos .. self.current_pos + self.offset].to_owned();
+        let slice = self.characters[self.current_pos .. (self.current_pos + self.offset)].to_owned();
         let converted_slice = String::from_iter(slice);
         self.current_pos += self.offset;
         self.offset = 0;

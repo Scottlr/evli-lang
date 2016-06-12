@@ -24,7 +24,6 @@ impl Lexer {
             if self.is_ignorable(&lexed_token) {
                 continue;
             }
-            println!("{:?}", lexed_token);
             tokens.push(lexed_token);
         }
         tokens

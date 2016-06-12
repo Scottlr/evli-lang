@@ -25,8 +25,6 @@ pub enum Token {
     Whitespace,
     NewLine,
     CarraigeReturn,
-    //Parse to identifier if keyword or identifier...
-    StartOfIdentifierOrKeyword,
 
     //Identifier and it's value.
     Identifier(String),
@@ -48,7 +46,7 @@ pub enum Token {
     StructKeyword,
     ClassKeyword,
     UseKeyword,
-
+    LetKeyword,
     //Conditionals
     ConditionalEquals
 }
