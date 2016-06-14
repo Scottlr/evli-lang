@@ -7,20 +7,17 @@ pub struct TokenParser;
 
 impl Parser for TokenParser {
     fn parse(&self, source_code: &mut SlidingWindow) -> Token {
-        let mut token = self.map_token(source_code.current_character());
+        //A token should always be returned... wishful thinking?
+        let mut token = self.map_token(source_code.current_character()).unwrap();
         if !source_code.is_eof() {
-            match token {
-                Token::Plus | Token::Hyphen | 
-                Token::ForwardSlash | Token::Asterix | Token::Equals => {
-                    source_code.increase_offset();
-                    let next_character = source_code.offset_peek();
-                    let next_token = self.map_token(next_character);
-                    if next_token == Token::Equals {
-                        token = self.map_compound_token(token, next_token);
-                        source_code.advance();
-                    }
+            source_code.increase_offset();
+            let next_character = source_code.offset_peek();
+           
+            if let Some(parsed_next_token) = self.map_token(next_character) {
+                if let Some(parsed_compound_token) = self.map_compound_token(token.clone(), parsed_next_token) {
+                    token = parsed_compound_token;
+                    source_code.advance();
                 }
-                _ => {}
             }
         }   
         token
@@ -28,30 +25,33 @@ impl Parser for TokenParser {
 }
 
 impl TokenParser {
-    pub fn map_compound_token(&self, current_token: Token, next_token: Token) -> Token {
+    pub fn map_compound_token(&self, current_token: Token, next_token: Token) -> Option<Token> {
         match (current_token, next_token) {
-            (Token::Plus, Token::Equals) =>         Token::PlusEquals,
-            (Token::Hyphen, Token::Equals) =>       Token::MinusEquals,
-            (Token::Asterix, Token::Equals) =>      Token::MultiplicationEquals,
-            (Token::ForwardSlash, Token::Equals) => Token::DivideEquals,
-            (Token::Equals, Token::Equals) =>       Token::ConditionalEquals,
-            _ => panic!("Invalid combinations for compound token...")
+            (Token::Plus, Token::Equals) =>         Some(Token::PlusEquals),
+            (Token::Hyphen, Token::Equals) =>       Some(Token::MinusEquals),
+            (Token::Asterix, Token::Equals) =>      Some(Token::MultiplicationEquals),
+            (Token::ForwardSlash, Token::Equals) => Some(Token::DivideEquals),
+            (Token::Equals, Token::Equals) =>       Some(Token::ConditionalEquals),
+            (Token::Plus, Token::Plus) =>           Some(Token::IncrementOperator),
+            (Token::Hyphen, Token::Hyphen) =>       Some(Token::DecrementOperator),
+            (Token::Hyphen, Token::RightAngle) =>   Some(Token::PointerArrow),
+            _ => None
         }
     }
 
-    pub fn map_token(&self, character: char) -> Token {
+    pub fn map_token(&self, character: char) -> Option<Token> {
          match character {
-            ';' => Token::SemiColon,    '(' => Token::OpenParen,
-            ')' => Token::CloseParen,   '=' => Token::Equals,
-            '{' => Token::OpenBrace,    '}' => Token::CloseBrace,
-            '>' => Token::RightAngle,   '<' => Token::LeftAngle,
-            '-' => Token::Hyphen,       ',' => Token::Comma,
-            ':' => Token::Colon,        '*' => Token::Asterix,
-            '+' => Token::Plus,         '/' => Token::ForwardSlash,
-            '\\' => Token::BackSlash,   '\"' => Token::QoutationMark,
-            ' ' => Token::Whitespace,   '\n' => Token::NewLine,
-            '\r' => Token::CarraigeReturn,
-            _ => panic!("Error trying to parse character: {}", character)
+            ';' =>  Some(Token::SemiColon),    '(' => Some(Token::OpenParen),
+            ')' =>  Some(Token::CloseParen),   '=' => Some(Token::Equals),
+            '{' =>  Some(Token::OpenBrace),    '}' => Some(Token::CloseBrace),
+            '>' =>  Some(Token::RightAngle),   '<' => Some(Token::LeftAngle),
+            '-' =>  Some(Token::Hyphen),       ',' => Some(Token::Comma),
+            ':' =>  Some(Token::Colon),        '*' => Some(Token::Asterix),
+            '+' =>  Some(Token::Plus),         '/' => Some(Token::ForwardSlash),
+            '\\' => Some(Token::BackSlash),   '\"' => Some(Token::QoutationMark),
+            ' ' =>  Some(Token::Whitespace),   '\n' => Some(Token::NewLine),
+            '\r' => Some(Token::CarraigeReturn),
+            _ => None
         }
     }
 

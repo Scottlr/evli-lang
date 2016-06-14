@@ -22,9 +22,15 @@ pub enum Token {
     ForwardSlash,
     Character,
     QoutationMark,
+    IncrementOperator,
+    DecrementOperator,
+    PointerArrow,
+
+    //Travia
     Whitespace,
     NewLine,
     CarraigeReturn,
+
 
     //Identifier and it's value.
     Identifier(String),
