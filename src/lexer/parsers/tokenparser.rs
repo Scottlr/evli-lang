@@ -85,8 +85,6 @@ mod tests {
         assert_eq!(parser_helper(" "), Token::Whitespace);
         assert_eq!(parser_helper("\r"), Token::CarraigeReturn);
         assert_eq!(parser_helper("\n"), Token::NewLine);
-        
-           
     }
 
     #[test]

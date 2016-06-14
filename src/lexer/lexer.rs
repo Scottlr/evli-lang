@@ -48,14 +48,25 @@ mod tests {
     #[test]
     fn test_parser_keywords() {
         let source_code = 
-        "pub fn() -> i32 {
-            i32++
+        "pub func() -> i32 {
+            i32++;
         }";
             
         let mut text_lexer = Lexer::new(source_code);
         let tokens = text_lexer.tokenize();
-
-        assert_eq!(tokens.len(), 8);
+        assert_eq!(tokens.len(), 9);
+       /* assert_eq!(tokens, [
+            Token::PublicModifierKeyword,
+            Token::FuncKeyword,
+            Token::OpenParen,
+            Token::CloseParen,
+            Token::PointerArrow,
+            Token::IntKeyword,
+            Token::OpenBrace,
+            Token::IntKeyword,
+            Token::IncrementOperator,
+            Token::SemiColon,
+            Token::CloseBrace]);*/
 
     }
 }
