@@ -17,7 +17,7 @@ impl Parser for ComplexTokenParser {
 
 impl ComplexTokenParser {
     fn parse_keyword_or_identifier(&self, source_code: &mut SlidingWindow) -> Token {
-        while !source_code.is_eof() && self.valid_character(source_code.offset_peek()) {
+        while source_code.can_offset_peek() && self.valid_character(source_code.offset_peek()) {
             println!("Value from offset_peek(): {}", source_code.offset_peek());
             source_code.increase_offset();
         }
@@ -43,10 +43,10 @@ impl ComplexTokenParser {
     }
     
     fn valid_string_sequence(&self, current_character: char) -> bool {
-        current_character != '\"' 
-            && current_character == ' '
-            || self.valid_character(current_character)
+        current_character != '\"' && (current_character == ' '  || self.valid_character(current_character))
     }
+
+
 
     fn map_keyword(&self, phrase: &str) -> Option<Token> {
         match phrase {
@@ -79,7 +79,7 @@ impl ComplexTokenParser {
              'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g' |
              'h' | 'i' | 'j' | 'k' | 'l' | 'm' | 'n' |
              'o' | 'p' | 'q' | 'r' | 's' | 't' | 'u' |
-             'v' | 'w' | 'x' | 'y' | 'z' | '-' | '_' |
+             'v' | 'w' | 'x' | 'y' | 'z' | '_' |
              '0' | '1' | '2' | '3' | '4' | '5' | '6' |
              '7' | '8' | '9'
                 => true,

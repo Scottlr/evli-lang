@@ -39,17 +39,17 @@ impl SlidingWindow {
         self.current_pos += 1;
     }
     
+    //REWRITE! more meaningful name which applies to peeking & eof
     pub fn is_eof(&self) -> bool {
-        self.current_pos >= (self.file_len - 1) || (self.current_pos + self.offset) >= (self.file_len - 1)
+        !self.can_peek()
     }
 
     pub fn can_peek(&self) -> bool {
-        println!("## Current pos: {}, file length: {}", self.current_pos, self.file_len);
         self.current_pos != self.file_len - 1
     }
 
     pub fn can_offset_peek(&self) -> bool {
-        self.current_pos != self.file_len
+        self.current_pos + self.offset != self.file_len - 1
     }
 
     pub fn get_slice(&mut self) -> String {
