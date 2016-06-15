@@ -10,8 +10,8 @@ impl Parser for TokenParser {
 
         //A token should always be returned... wishful thinking?
         let mut token = self.map_token(source_code.current_character()).unwrap();
-
-        if !source_code.is_eof() {
+        if source_code.can_peek() {
+            println!("Current Pos: {}, File Length: {}", source_code.current_pos, source_code.file_len);
             let next_character = source_code.peek();
             if let Some(parsed_next_token) = self.map_token(next_character) {
                 if let Some(parsed_compound_token) = self.map_compound_token(token.clone(), parsed_next_token) {

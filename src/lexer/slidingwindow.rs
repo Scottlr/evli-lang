@@ -5,7 +5,7 @@ pub struct SlidingWindow {
     characters: Vec<char>,
     pub current_pos: usize,
     pub offset: usize,
-    file_len: usize
+    pub file_len: usize
 }
 
 impl SlidingWindow {
@@ -31,22 +31,25 @@ impl SlidingWindow {
         self.offset += 1;
     }
     pub fn current_character(&self) -> char {
-        if self.characters[self.current_pos] == '+' {
-            println!("Current token: {:?} | Next character: {}",
-                self.characters[self.current_pos],
-                self.characters[self.current_pos + 1]);
-        }
         self.characters[self.current_pos].to_owned()
     }
 
-    pub fn advance(&mut self) -> char {
+    pub fn advance(&mut self)  {
         self.offset = 0;
         self.current_pos += 1;
-        self.characters[self.current_pos].to_owned()
     }
     
     pub fn is_eof(&self) -> bool {
         self.current_pos >= (self.file_len - 1) || (self.current_pos + self.offset) >= (self.file_len - 1)
+    }
+
+    pub fn can_peek(&self) -> bool {
+        println!("## Current pos: {}, file length: {}", self.current_pos, self.file_len);
+        self.current_pos != self.file_len - 1
+    }
+
+    pub fn can_offset_peek(&self) -> bool {
+        self.current_pos != self.file_len
     }
 
     pub fn get_slice(&mut self) -> String {
