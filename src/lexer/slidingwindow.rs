@@ -45,6 +45,7 @@ impl SlidingWindow {
     }
 
     pub fn can_peek(&self) -> bool {
+        println!("## Current pos: {}, file length: {}", self.current_pos, self.file_len);
         self.current_pos != self.file_len - 1
     }
 

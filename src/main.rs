@@ -13,8 +13,8 @@ fn main() {
     };
 	
     println!("{}", file_contents);
-    let mut lexer = lexer::Lexer::new(&file_contents);
-    let tokens = lexer.tokenize();
+    let mut lexer = lexer::Lexer;
+    let tokens = lexer.tokenize(&file_contents);
 
     for token in tokens.clone() {
         println!("{:?}", token);
