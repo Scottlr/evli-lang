@@ -45,7 +45,7 @@ mod tests {
     use super::super::token::Token;
 
     #[test]
-    fn test_parser_keywords() {
+    fn lexer_tokenize_standardcode() {
         let source_code = 
         "pub func() -> i32 {
             i32++;
@@ -53,8 +53,8 @@ mod tests {
             
         let mut text_lexer = Lexer::new(source_code);
         let tokens = text_lexer.tokenize();
-       // assert_eq!(tokens.len(), 11);
-       /* assert_eq!(tokens, [
+        assert_eq!(tokens.len(), 10);
+        assert_eq!(tokens, [
             Token::PublicModifierKeyword,
             Token::FuncKeyword,
             Token::OpenParen,
@@ -64,8 +64,22 @@ mod tests {
             Token::OpenBrace,
             Token::IntKeyword,
             Token::IncrementOperator,
-            Token::SemiColon,
-            Token::CloseBrace]);*/
+            Token::SemiColon]);
+    }
 
+    #[test]
+    fn lexer_tokenize_standardtokensaftercomplex() {
+        let source_code = 
+        "pub func++;()";
+            
+        let mut text_lexer = Lexer::new(source_code);
+        let tokens = text_lexer.tokenize();
+        assert_eq!(tokens.len(), 5);
+        assert_eq!(tokens, [
+            Token::PublicModifierKeyword,
+            Token::FuncKeyword,
+            Token::IncrementOperator,
+            Token::SemiColon,
+            Token::OpenParen]);
     }
 }

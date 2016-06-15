@@ -17,7 +17,7 @@ impl Parser for ComplexTokenParser {
 
 impl ComplexTokenParser {
     fn parse_keyword_or_identifier(&self, source_code: &mut SlidingWindow) -> Token {
-        while source_code.can_offset_peek() && self.valid_character(source_code.offset_peek()) {
+        while source_code.can_offset_peek() && self.valid_keyword_identifier_character(source_code.offset_peek()) {
             println!("Value from offset_peek(): {}", source_code.offset_peek());
             source_code.increase_offset();
         }
@@ -31,23 +31,18 @@ impl ComplexTokenParser {
     #[allow(unused_variables)]
     fn parse_string(&self, source_code: &mut SlidingWindow, string_literal: bool) -> Token {
         source_code.advance();
-        while !source_code.is_eof()  && self.valid_string_sequence(source_code.offset_peek()) {
-        
+        while source_code.can_offset_peek() && source_code.offset_peek() != '\"' {
             source_code.increase_offset();
         }
         Token::StringValue(source_code.get_slice())
     }
 
-    pub fn is_complex(&self, current_character: char) -> bool {
-        self.valid_character(current_character) || current_character == '\"'
+    pub fn is_complex(&self, character: char) -> bool {
+        self.valid_alphabetical_character(character)    //Is a type/identifier/keyword
+        || self.valid_numerical_character(character)    //Is numerical type
+        || character == '\"'                            //Is a string
     }
     
-    fn valid_string_sequence(&self, current_character: char) -> bool {
-        current_character != '\"' && (current_character == ' '  || self.valid_character(current_character))
-    }
-
-
-
     fn map_keyword(&self, phrase: &str) -> Option<Token> {
         match phrase {
             "await" =>  Some(Token::AwaitKeyword),
@@ -70,23 +65,35 @@ impl ComplexTokenParser {
         }
     }
 
+    // Returns a boolean flag indicating whether or not the passed character is
+    // a valid character allowed in types/identifiers/keywords
+    fn valid_keyword_identifier_character(&self, character: char) -> bool {
+        self.valid_alphabetical_character(character) || 
+        self.valid_numerical_character(character) || 
+        character == '_' || character == '-'
+    }
 
     //Needs rewrite to calculate if character or not rather that 
     //matching on all characters. Will do for now.
-    fn valid_character(&self, phrase: char) -> bool {
-        let lowered_phrase = phrase.to_lowercase().next().unwrap();
-        match lowered_phrase {
+    fn valid_alphabetical_character(&self, character: char) -> bool {
+        let lowered_phrase = character.to_lowercase().next().unwrap();
+         match lowered_phrase {
              'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g' |
              'h' | 'i' | 'j' | 'k' | 'l' | 'm' | 'n' |
              'o' | 'p' | 'q' | 'r' | 's' | 't' | 'u' |
-             'v' | 'w' | 'x' | 'y' | 'z' | '_' |
-             '0' | '1' | '2' | '3' | '4' | '5' | '6' |
-             '7' | '8' | '9'
+             'v' | 'w' | 'x' | 'y' | 'z' 
                 => true,
             _   => false
         }
-        
     }
+    fn valid_numerical_character(&self, character: char) -> bool {
+        match character {
+            '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'
+                => true,
+            _   => false
+        }
+    }
+
 }
 
 
