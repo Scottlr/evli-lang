@@ -38,9 +38,9 @@ impl ComplexTokenParser {
     }
 
     pub fn is_complex(&self, character: char) -> bool {
-        self.valid_alphabetical_character(character)    //Is a type/identifier/keyword
-        || self.valid_numerical_character(character)    //Is numerical type
-        || character == '\"'                            //Is a string
+        self.valid_alphabetical_character(character) || //Is a type/identifier/keyword
+        self.valid_numerical_character(character) ||    //Is numerical type
+        character == '\"'                               //Is a string
     }
     
     fn map_keyword(&self, phrase: &str) -> Option<Token> {
