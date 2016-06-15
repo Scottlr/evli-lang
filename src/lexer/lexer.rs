@@ -20,7 +20,6 @@ impl Lexer {
         let mut tokens = vec![];
         while !self.source_code_window.is_eof() {
             let lexed_token = self.lexparser.parse(&mut self.source_code_window);
-            self.source_code_window.advance();
             if self.is_ignorable(&lexed_token) {
                 continue;
             }

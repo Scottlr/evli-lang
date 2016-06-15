@@ -18,6 +18,7 @@ impl Parser for ComplexTokenParser {
 impl ComplexTokenParser {
     fn parse_keyword_or_identifier(&self, source_code: &mut SlidingWindow) -> Token {
         while !source_code.is_eof() && self.valid_character(source_code.offset_peek()) {
+            println!("Value from offset_peek(): {}", source_code.offset_peek());
             source_code.increase_offset();
         }
         let phrase = source_code.get_slice();

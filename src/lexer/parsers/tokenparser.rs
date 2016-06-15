@@ -13,11 +13,6 @@ impl Parser for TokenParser {
 
         if !source_code.is_eof() {
             let next_character = source_code.peek();
-
-            if token == Token::Plus {
-                
-            }
-
             if let Some(parsed_next_token) = self.map_token(next_character) {
                 if let Some(parsed_compound_token) = self.map_compound_token(token.clone(), parsed_next_token) {
                     token = parsed_compound_token;
@@ -25,6 +20,7 @@ impl Parser for TokenParser {
                 }
             }
         }   
+        source_code.advance();
         token
     } 
 }
