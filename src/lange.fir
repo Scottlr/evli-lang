@@ -1,6 +1,6 @@
 let myVariable = myVariaable++; 
 {
-    
+    ->
 }
 
 {}

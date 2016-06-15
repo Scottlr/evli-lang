@@ -7,13 +7,17 @@ pub struct TokenParser;
 
 impl Parser for TokenParser {
     fn parse(&self, source_code: &mut SlidingWindow) -> Token {
+
         //A token should always be returned... wishful thinking?
         let mut token = self.map_token(source_code.current_character()).unwrap();
+
         if !source_code.is_eof() {
-            source_code.increase_offset();
-            let next_character = source_code.offset_peek();
-           
-            //TODO: Really shouldn't clone the token, revise
+            let next_character = source_code.peek();
+
+            if token == Token::Plus {
+                
+            }
+
             if let Some(parsed_next_token) = self.map_token(next_character) {
                 if let Some(parsed_compound_token) = self.map_compound_token(token.clone(), parsed_next_token) {
                     token = parsed_compound_token;

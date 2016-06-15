@@ -22,12 +22,10 @@ impl LexemeParser {
 
     pub fn parse(&self, sliding_window: &mut SlidingWindow) -> Token {
         let is_complex = self.complex_token_parser.is_complex(sliding_window.current_character());
-        let token = match is_complex {
+        match is_complex {
             true => self.complex_token_parser.parse(sliding_window),
             false => self.token_parser.parse(sliding_window)
-        };
-        println!("Parsed token: {:?}", token);
-        token   
+        }
     }
 }
 
