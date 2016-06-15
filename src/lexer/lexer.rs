@@ -43,8 +43,8 @@ mod tests {
             i32++;
         }";
             
-        let mut text_lexer = Lexer::new(source_code);
-        let tokens = text_lexer.tokenize();
+        let mut text_lexer = Lexer;
+        let tokens = text_lexer.tokenize(&source_code);
         assert_eq!(tokens.len(), 10);
         assert_eq!(tokens, [
             Token::PublicModifierKeyword,
@@ -64,8 +64,8 @@ mod tests {
         let source_code = 
         "pub func++;()";
             
-        let mut text_lexer = Lexer::new(source_code);
-        let tokens = text_lexer.tokenize();
+        let mut text_lexer = Lexer;
+        let tokens = text_lexer.tokenize(&source_code);
         assert_eq!(tokens.len(), 5);
         assert_eq!(tokens, [
             Token::PublicModifierKeyword,
