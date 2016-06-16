@@ -3,9 +3,11 @@ use std::iter::FromIterator;
 
 pub struct SlidingWindow {
     characters: Vec<char>,
-    pub current_pos: usize,
-    pub offset: usize,
-    pub file_len: usize
+    current_pos: usize,
+    offset: usize,
+    file_len: usize,
+    pub mut current_line: usize,
+    pub mut relative_line_pos: usize
 }
 
 impl SlidingWindow {
@@ -15,7 +17,9 @@ impl SlidingWindow {
             characters: source_code.chars().collect(),
             current_pos: 0,
             offset: 0,
-            file_len: source_code.len()
+            file_len: source_code.len(),
+            current_line: 0,
+            relative_line_pos: 0
         }
     }
 
@@ -31,7 +35,13 @@ impl SlidingWindow {
         self.offset += 1;
     }
     pub fn current_character(&self) -> char {
-        self.characters[self.current_pos].to_owned()
+        let current_char = self.characters[self.current_pos].to_owned();
+        if current_char == '\n' {
+            self.current_line += 1;
+            self.relative_line_pos = 0;
+        }
+        current_char
+        
     }
 
     pub fn advance(&mut self)  {
@@ -39,7 +49,7 @@ impl SlidingWindow {
         self.current_pos += 1;
     }
     
-    //REWRITE! more meaningful name which applies to peeking & eof
+    //REWRITE, more meaningful name which applies to peeking & eof
     pub fn is_eof(&self) -> bool {
         !self.can_peek()
     }

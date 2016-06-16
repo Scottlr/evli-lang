@@ -33,7 +33,7 @@ impl LexemeParser {
 #[cfg(test)]
 mod tests {
     use super::LexemeParser;
-    use super::super::super::token::Token;
+    use super::super::super::TokenKind::Token;
     use super::super::super::slidingwindow::SlidingWindow;
 
     fn parser_helper(source: &str) -> Token {
@@ -44,9 +44,9 @@ mod tests {
 
     #[test]
     fn testvarioustokens_varietyoftokentypes_successful() {
-        assert_eq!(parser_helper("async "), Token::AsyncKeyword);
-        assert_eq!(parser_helper("{"), Token::OpenBrace);
-        assert_eq!(parser_helper("Customer "), Token::Identifier("Customer".to_string()));
-        assert_eq!(parser_helper("\"some string value\""), Token::StringValue("some string value".to_string()));
+        assert_eq!(parser_helper("async "), TokenKind::AsyncKeyword);
+        assert_eq!(parser_helper("{"), TokenKind::OpenBrace);
+        assert_eq!(parser_helper("Customer "), TokenKind::Identifier("Customer".to_string()));
+        assert_eq!(parser_helper("\"some string value\""), TokenKind::StringValue("some string value".to_string()));
     }
 }

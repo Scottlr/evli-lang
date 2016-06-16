@@ -1,5 +1,5 @@
 use super::super::slidingwindow::SlidingWindow;
-use super::super::token::Token;
+use super::super::token:: { Token, TokenKind };
 use super::lexemeparser::Parser;
 
 pub struct ComplexTokenParser;
@@ -22,10 +22,12 @@ impl ComplexTokenParser {
             source_code.increase_offset();
         }
         let phrase = source_code.get_slice();
-        match self.map_keyword(&phrase) {
+        let tokenkind = match self.map_keyword(&phrase) {
             Some(value) => value,
-            None        => Token::Identifier(phrase)
-        }
+            None        => TokenKind::Identifier(phrase)
+        };
+
+        Token::construct(tokenkind, source_code)
     }
     
     #[allow(unused_variables)]
@@ -34,7 +36,8 @@ impl ComplexTokenParser {
         while source_code.can_offset_peek() && source_code.offset_peek() != '\"' {
             source_code.increase_offset();
         }
-        Token::StringValue(source_code.get_slice())
+        let tokenkind = TokenKind::StringValue(source_code.get_slice());
+        Token::construct(tokenkind, source_code)
     }
 
     pub fn is_complex(&self, character: char) -> bool {
@@ -43,24 +46,24 @@ impl ComplexTokenParser {
         character == '\"'                               //Is a string
     }
     
-    fn map_keyword(&self, phrase: &str) -> Option<Token> {
+    fn map_keyword(&self, phrase: &str) -> Option<TokenKind> {
         match phrase {
-            "await" =>  Some(Token::AwaitKeyword),
-            "func" =>   Some(Token::FuncKeyword),
-            "pub" =>    Some(Token::PublicModifierKeyword),
-            "i32" =>    Some(Token::IntKeyword),
-            "float" =>  Some(Token::FloatKeyword),
-            "string" => Some(Token::StringKeyword),
-            "for" =>    Some(Token::ForKeyword),
-            "in" =>     Some(Token::InKeyword),
-            "is" =>     Some(Token::IsKeyword),
-            "where" =>  Some(Token::WhereKeyword),
-            "while" =>  Some(Token::WhileKeyword),
-            "uses" =>   Some(Token::UseKeyword),
-            "class" =>  Some(Token::ClassKeyword),
-            "struct" => Some(Token::StructKeyword),
-            "async" =>  Some(Token::AsyncKeyword),
-            "let" =>    Some(Token::LetKeyword),
+            "await" =>  Some(TokenKind::AwaitKeyword),
+            "func" =>   Some(TokenKind::FuncKeyword),
+            "pub" =>    Some(TokenKind::PublicModifierKeyword),
+            "i32" =>    Some(TokenKind::IntKeyword),
+            "float" =>  Some(TokenKind::FloatKeyword),
+            "string" => Some(TokenKind::StringKeyword),
+            "for" =>    Some(TokenKind::ForKeyword),
+            "in" =>     Some(TokenKind::InKeyword),
+            "is" =>     Some(TokenKind::IsKeyword),
+            "where" =>  Some(TokenKind::WhereKeyword),
+            "while" =>  Some(TokenKind::WhileKeyword),
+            "uses" =>   Some(TokenKind::UseKeyword),
+            "class" =>  Some(TokenKind::ClassKeyword),
+            "struct" => Some(TokenKind::StructKeyword),
+            "async" =>  Some(TokenKind::AsyncKeyword),
+            "let" =>    Some(TokenKind::LetKeyword),
             _ => None
         }
     }
@@ -102,34 +105,34 @@ mod tests {
     use super::ComplexTokenParser;
     use super::super::lexemeparser::Parser;
     use super::super::super::slidingwindow::SlidingWindow;
-    use super::super::super::token::Token;
+    use super::super::super::TokenKind::Token;
+    use super::super::super::TokenKind::TokenKind;
 
-    fn parser_helper(source: &str) -> Token {
+    fn parser_helper(source: &str) -> TokenKind {
         let parser = ComplexTokenParser;
         let mut phrase = SlidingWindow::new(source);
-        parser.parse(&mut phrase)
+        parser.parse(&mut phrase).kind
     }
     
     #[test]
     fn test_parser_keywords() {
-        //fuck off by one errors, is_eof doesn't seem to like offsets... so a space is npueeded to terminate
-        assert_eq!(parser_helper("pub "), Token::PublicModifierKeyword);
-        assert_eq!(parser_helper("i32 "), Token::IntKeyword);
-        assert_eq!(parser_helper("for "), Token::ForKeyword);
-        assert_eq!(parser_helper("await "), Token::AwaitKeyword);
-        assert_eq!(parser_helper("string "), Token::StringKeyword);
-        assert_eq!(parser_helper("uses "), Token::UseKeyword);
-        assert_eq!(parser_helper("while "), Token::WhileKeyword);
-        assert_eq!(parser_helper("class "), Token::ClassKeyword);
-        assert_eq!(parser_helper("where "), Token::WhereKeyword);
-        assert_eq!(parser_helper("async "), Token::AsyncKeyword);
-        assert_eq!(parser_helper("in "), Token::InKeyword);  
-        assert_eq!(parser_helper("struct "), Token::StructKeyword);
+        assert_eq!(parser_helper("pub "),       TokenKind::PublicModifierKeyword);
+        assert_eq!(parser_helper("i32 "),       TokenKind::IntKeyword);
+        assert_eq!(parser_helper("for "),       TokenKind::ForKeyword);
+        assert_eq!(parser_helper("await "),     TokenKind::AwaitKeyword);
+        assert_eq!(parser_helper("string "),    TokenKind::StringKeyword);
+        assert_eq!(parser_helper("uses "),      TokenKind::UseKeyword);
+        assert_eq!(parser_helper("while "),     TokenKind::WhileKeyword);
+        assert_eq!(parser_helper("class "),     TokenKind::ClassKeyword);
+        assert_eq!(parser_helper("where "),     TokenKind::WhereKeyword);
+        assert_eq!(parser_helper("async "),     TokenKind::AsyncKeyword);
+        assert_eq!(parser_helper("in "),        TokenKind::InKeyword);  
+        assert_eq!(parser_helper("struct "),    TokenKind::StructKeyword);
     }
 
     #[test]
     fn test_parser_stringvalues() {
-        assert_eq!(parser_helper("\"some string value\""), Token::StringValue("some string value".to_string()));
+        assert_eq!(parser_helper("\"some string value\""), TokenKind::StringValue("some string value".to_string()));
     }
 
 }

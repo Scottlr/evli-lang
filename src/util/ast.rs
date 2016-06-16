@@ -1,4 +1,4 @@
-use super::token::Token;
+use super::TokenKind::Token;
 
 struct SyntaxNode {
     token: Token,

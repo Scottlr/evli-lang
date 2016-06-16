@@ -1,6 +1,25 @@
+use super::slidingwindow::SlidingWindow;
+
+#[derive(PartialEq, Clone, Debug)]
+pub struct Token {
+    pub line_parsed: usize,
+    pub line_offset_parsed: usize,
+    pub kind: TokenKind
+}
+
+impl Token {
+    pub fn construct(token_kind: TokenKind, source_code: &mut SlidingWindow) -> Token {
+        Token {
+            line_parsed: source_code.current_line,
+            line_offset_parsed: source_code.relative_line_pos,
+            kind: token_kind 
+        }
+    }
+}
+
 #[derive(PartialEq, Clone, Debug)]
 #[allow(dead_code)]
-pub enum Token {
+pub enum TokenKind {
     SemiColon,
     OpenParen,
     CloseParen,

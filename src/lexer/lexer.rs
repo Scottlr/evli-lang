@@ -1,6 +1,6 @@
 use super::slidingwindow::SlidingWindow;
 use super::parsers::LexemeParser;
-use super::token::Token;
+use super::token::{ Token, TokenKind };
 
 pub struct Lexer;
 impl Lexer {    
@@ -12,7 +12,7 @@ impl Lexer {
         let mut tokens = vec![];
         while !source_code_window.is_eof() {
             let lexed_token = lexeme_parser.parse(&mut source_code_window);
-            if self.is_ignorable(&lexed_token) {
+            if self.is_ignorable(&lexed_token.kind) {
                 continue;
             }
             tokens.push(lexed_token);
@@ -20,9 +20,9 @@ impl Lexer {
         tokens
     }
 
-    fn is_ignorable(&self, token: &Token) -> bool {
+    fn is_ignorable(&self, token: &TokenKind) -> bool {
         match *token {
-            Token::Whitespace | Token::NewLine | Token::CarraigeReturn
+            TokenKind::Whitespace | TokenKind::NewLine | TokenKind::CarraigeReturn
                 => true,
             _   => false
         }
@@ -34,7 +34,7 @@ impl Lexer {
 #[cfg(test)]
 mod tests {
     use super::Lexer;
-    use super::super::token::Token;
+    use super::super::TokenKind::Token;
 
     #[test]
     fn lexer_tokenize_standardcode() {
@@ -47,16 +47,16 @@ mod tests {
         let tokens = text_lexer.tokenize(&source_code);
         assert_eq!(tokens.len(), 10);
         assert_eq!(tokens, [
-            Token::PublicModifierKeyword,
-            Token::FuncKeyword,
-            Token::OpenParen,
-            Token::CloseParen,
-            Token::PointerArrow,
-            Token::IntKeyword,
-            Token::OpenBrace,
-            Token::IntKeyword,
-            Token::IncrementOperator,
-            Token::SemiColon]);
+            TokenKind::PublicModifierKeyword,
+            TokenKind::FuncKeyword,
+            TokenKind::OpenParen,
+            TokenKind::CloseParen,
+            TokenKind::PointerArrow,
+            TokenKind::IntKeyword,
+            TokenKind::OpenBrace,
+            TokenKind::IntKeyword,
+            TokenKind::IncrementOperator,
+            TokenKind::SemiColon]);
     }
 
     #[test]
@@ -68,10 +68,10 @@ mod tests {
         let tokens = text_lexer.tokenize(&source_code);
         assert_eq!(tokens.len(), 5);
         assert_eq!(tokens, [
-            Token::PublicModifierKeyword,
-            Token::FuncKeyword,
-            Token::IncrementOperator,
-            Token::SemiColon,
-            Token::OpenParen]);
+            TokenKind::PublicModifierKeyword,
+            TokenKind::FuncKeyword,
+            TokenKind::IncrementOperator,
+            TokenKind::SemiColon,
+            TokenKind::OpenParen]);
     }
 }
