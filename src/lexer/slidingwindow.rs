@@ -1,13 +1,13 @@
 use std::iter::FromIterator;
-
+use super::token::TokenMetaData;
 
 pub struct SlidingWindow {
     characters: Vec<char>,
     current_pos: usize,
     offset: usize,
     file_len: usize,
-    pub mut current_line: usize,
-    pub mut relative_line_pos: usize
+    current_line: usize,
+    relative_line_pos: usize
 }
 
 impl SlidingWindow {
@@ -34,7 +34,7 @@ impl SlidingWindow {
     pub fn increase_offset(&mut self) {
         self.offset += 1;
     }
-    pub fn current_character(&self) -> char {
+    pub fn current_character(&mut self) -> char {
         let current_char = self.characters[self.current_pos].to_owned();
         if current_char == '\n' {
             self.current_line += 1;
@@ -71,4 +71,10 @@ impl SlidingWindow {
         converted_slice
     }
 
+    pub fn get_metadata(&self) -> TokenMetaData {
+        TokenMetaData {
+            parsed_on_line: self.current_line,
+            relative_line_pos: self.relative_line_pos
+        }
+    }
 }
