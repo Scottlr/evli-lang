@@ -105,8 +105,8 @@ mod tests {
     use super::ComplexTokenParser;
     use super::super::lexemeparser::Parser;
     use super::super::super::slidingwindow::SlidingWindow;
-    use super::super::super::TokenKind::Token;
-    use super::super::super::TokenKind::TokenKind;
+    use super::super::super::token::Token;
+    use super::super::super::token::TokenKind;
 
     fn parser_helper(source: &str) -> TokenKind {
         let parser = ComplexTokenParser;

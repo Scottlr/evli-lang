@@ -33,13 +33,13 @@ impl LexemeParser {
 #[cfg(test)]
 mod tests {
     use super::LexemeParser;
-    use super::super::super::TokenKind::Token;
+    use super::super::super::token::{ Token, TokenKind };
     use super::super::super::slidingwindow::SlidingWindow;
 
-    fn parser_helper(source: &str) -> Token {
+    fn parser_helper(source: &str) -> TokenKind {
         let parser = LexemeParser::new();
         let mut phrase = SlidingWindow::new(source);
-        parser.parse(&mut phrase)
+        parser.parse(&mut phrase).kind
     }
 
     #[test]

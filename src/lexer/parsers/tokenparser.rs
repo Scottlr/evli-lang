@@ -65,9 +65,8 @@ mod tests {
     use super::TokenParser;
     use super::super::lexemeparser::Parser;
     use super::super::super::slidingwindow::SlidingWindow;
-    use super::super::super::TokenKind::Token;
-    use super::super::super::TokenKind::TokenKind;
-   
+    use super::super::super::token::{ Token, TokenKind };
+    
     fn parser_helper(source: &str) -> TokenKind {
         let parser = TokenParser;
         let mut phrase = SlidingWindow::new(source);
