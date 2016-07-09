@@ -40,6 +40,14 @@ impl ComplexTokenParser {
         Token::construct(tokenkind, source_code)
     }
 
+    fn parse_numerical_value(&self, source_code: &mut SlidingWindow) -> Token {
+         while source_code.can_offset_peek() && self.valid_numerical_character(source_code.offset_peek())  {
+            source_code.increase_offset();
+        }
+        let tokenkind = TokenKind::NumericalValue(source_code.get_slice());
+        Token::construct(tokenkind, source_code)
+    }
+
     pub fn is_complex(&self, character: char) -> bool {
         self.valid_alphabetical_character(character) || //Is a type/identifier/keyword
         self.valid_numerical_character(character) ||    //Is numerical type
@@ -89,6 +97,7 @@ impl ComplexTokenParser {
             _   => false
         }
     }
+
     fn valid_numerical_character(&self, character: char) -> bool {
         match character {
             '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'

@@ -49,7 +49,7 @@ pub enum TokenKind {
     DecrementOperator,
     PointerArrow,
 
-    //Travia
+    //Trivia
     Whitespace,
     NewLine,
     CarraigeReturn,
@@ -58,6 +58,7 @@ pub enum TokenKind {
     //Identifier and it's value.
     Identifier(String),
     StringValue(String),
+    NumericalValue(String),
     
     //Keywords
     AwaitKeyword,
