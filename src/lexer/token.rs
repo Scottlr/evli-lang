@@ -54,7 +54,6 @@ pub enum TokenKind {
     NewLine,
     CarraigeReturn,
 
-
     //Identifier and it's value.
     Identifier(String),
     StringValue(String),

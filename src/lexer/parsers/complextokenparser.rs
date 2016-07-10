@@ -9,6 +9,7 @@ impl Parser for ComplexTokenParser {
         let current_char = source_code.current_character();
         match current_char {
             '\"'    => self.parse_string(source_code, false),
+            '#' | _ if  self.valid_numerical_character(source_code.offset_peek()) => self.parse_numerical_value(source_code),
             _       => self.parse_keyword_or_identifier(source_code)
         }
     }
@@ -47,6 +48,8 @@ impl ComplexTokenParser {
         let tokenkind = TokenKind::NumericalValue(source_code.get_slice());
         Token::construct(tokenkind, source_code)
     }
+
+
 
     pub fn is_complex(&self, character: char) -> bool {
         self.valid_alphabetical_character(character) || //Is a type/identifier/keyword
@@ -100,9 +103,9 @@ impl ComplexTokenParser {
 
     fn valid_numerical_character(&self, character: char) -> bool {
         match character {
-            '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'
+            '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' 
                 => true,
-            _   => false
+            _   => false        
         }
     }
 
