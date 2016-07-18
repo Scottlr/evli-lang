@@ -8,9 +8,12 @@ impl Parser for ComplexTokenParser {
     fn parse(&self, source_code: &mut SlidingWindow) -> Token {
         let current_char = source_code.current_character();
         match current_char {
-            '\"'    => self.parse_string(source_code, false),
-            '#' | _ if  self.valid_numerical_character(source_code.offset_peek()) => self.parse_numerical_value(source_code),
-            _       => self.parse_keyword_or_identifier(source_code)
+            '\"'    
+                => self.parse_string(source_code, false),
+            '#' | _ if  self.valid_numerical_character(source_code.offset_peek()) 
+                => self.parse_numerical_value(source_code),
+            _       
+                => self.parse_keyword_or_identifier(source_code)
         }
     }
 
@@ -49,7 +52,11 @@ impl ComplexTokenParser {
         Token::construct(tokenkind, source_code)
     }
 
-
+    fn conditional_slider<T, F>(&self,source_code: &mut SlidingWindow, loop_condtion: F)  where   F : Fn() -> bool
+        while F() {
+            source_code.increase_offset();
+        }
+    }
 
     pub fn is_complex(&self, character: char) -> bool {
         self.valid_alphabetical_character(character) || //Is a type/identifier/keyword
@@ -145,6 +152,11 @@ mod tests {
     #[test]
     fn test_parser_stringvalues() {
         assert_eq!(parser_helper("\"some string value\""), TokenKind::StringValue("some string value".to_string()));
+    }
+
+    #[test]
+    fn test_parser_numericalvalues() {
+        //assert_eq!(parser_helper("02322 "), TokenKind::NumericalValue("02322"));
     }
 
 }
