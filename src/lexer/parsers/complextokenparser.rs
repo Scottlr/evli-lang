@@ -45,17 +45,23 @@ impl ComplexTokenParser {
     }
 
     fn parse_numerical_value(&self, source_code: &mut SlidingWindow) -> Token {
-         while source_code.can_offset_peek() && self.valid_numerical_character(source_code.offset_peek())  {
-            source_code.increase_offset();
-        }
+        self.slide_until(
+            |source_code| source_code.can_offset_peek() && self.valid_numerical_character(source_code.offset_peek()));
+
+
+
+        //  while source_code.can_offset_peek() && self.valid_numerical_character(source_code.offset_peek())  {
+        //     source_code.increase_offset();
+        // }
         let tokenkind = TokenKind::NumericalValue(source_code.get_slice());
         Token::construct(tokenkind, source_code)
     }
 
-    fn conditional_slider<T, F>(&self,source_code: &mut SlidingWindow, loop_condtion: F)  where   F : Fn() -> bool
-        while F() {
-            source_code.increase_offset();
-        }
+    fn slide_until<F>(&self, source_code: &mut SlidingWindow, loop_condtion: F)  
+        where F : Fn(&mut SlidingWindow) -> bool {
+            while loop_condtion(source_code) {
+                source_code.increase_offset();
+            }
     }
 
     pub fn is_complex(&self, character: char) -> bool {

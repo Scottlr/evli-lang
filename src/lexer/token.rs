@@ -76,6 +76,7 @@ pub enum TokenKind {
     ClassKeyword,
     UseKeyword,
     LetKeyword,
+    
     //Conditionals
     ConditionalEquals
 }
