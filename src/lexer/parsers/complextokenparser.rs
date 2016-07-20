@@ -35,14 +35,14 @@ impl ComplexTokenParser {
     }
     
     #[allow(unused_variables)]
-    fn parse_string(&self, source_code: &mut SlidingWindow, string_literal: bool) -> Token {
-        source_code.advance();
-        self.slide_until(source_code,|source_)
-        while source_code.can_offset_peek() && source_code.offset_peek() != '\"' {
-            source_code.increase_offset();
+    fn parse_string(&self, src_code: &mut SlidingWindow, string_literal: bool) -> Token {
+        src_code.advance();
+        //self.slide_until(source_code,|source_)
+        while src_code.can_offset_peek() && src_code.offset_peek() != '\"' {
+            src_code.increase_offset();
         }
-        let tokenkind = TokenKind::StringValue(source_code.get_slice());
-        Token::construct(tokenkind, source_code)
+        let tokenkind = TokenKind::StringValue(src_code.get_slice());
+        Token::construct(tokenkind, src_code)
     }
 
     fn parse_numerical_value(&self, src_code: &mut SlidingWindow) -> Token {
@@ -51,10 +51,10 @@ impl ComplexTokenParser {
         Token::construct(tokenkind, src_code)
     }
 
-    fn slide_until<F>(&self, source_code: &mut SlidingWindow, loop_condtion: F)  
+    fn slide_until<F>(&self, src_code: &mut SlidingWindow, loop_condtion: F)  
         where F : Fn(&mut SlidingWindow) -> bool {
-            while loop_condtion(source_code) {
-                source_code.increase_offset();
+            while loop_condtion(src_code) {
+                src_code.increase_offset();
             }
     }
 
