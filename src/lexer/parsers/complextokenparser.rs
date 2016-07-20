@@ -5,62 +5,52 @@ use super::lexemeparser::Parser;
 pub struct ComplexTokenParser;
 
 impl Parser for ComplexTokenParser {
-    fn parse(&self, source_code: &mut SlidingWindow) -> Token {
-        let current_char = source_code.current_character();
-        match current_char {
+    fn parse(&self, src_code: &mut SlidingWindow) -> Token {
+        let current_char = src_code.current_character();
+        let token_kind =match current_char {
             '\"'    
-                => self.parse_string(source_code, false),
-            '#' | _ if  self.valid_numerical_character(source_code.offset_peek()) 
-                => self.parse_numerical_value(source_code),
+                => self.parse_string(src_code, false),
+            '#' | _ if  self.valid_numeral_char(src_code.offset_peek()) 
+                => self.parse_numerical_value(src_code),
             _       
-                => self.parse_keyword_or_identifier(source_code)
-        }
+                => self.parse_keyword_or_identifier(src_code)
+        };
+        Token::construct(token_kind, src_code)
     }
 
 }
 
 impl ComplexTokenParser {
-    fn parse_keyword_or_identifier(&self, source_code: &mut SlidingWindow) -> Token {
-        while source_code.can_offset_peek() && self.valid_keyword_identifier_character(source_code.offset_peek()) {
-            println!("Value from offset_peek(): {}", source_code.offset_peek());
-            source_code.increase_offset();
-        }
-        let phrase = source_code.get_slice();
-        let tokenkind = match self.map_keyword(&phrase) {
+    fn parse_keyword_or_identifier(&self, src_code: &mut SlidingWindow) -> TokenKind {
+        self.slide_until(src_code, |src_code| src_code.can_offset_peek() && self.valid_char_sequence(src_code.offset_peek()));
+        let phrase = src_code.get_slice();
+        match self.map_keyword(&phrase) {
             Some(value) => value,
             None        => TokenKind::Identifier(phrase)
-        };
-
-        Token::construct(tokenkind, source_code)
+        }        
     }
     
     #[allow(unused_variables)]
-    fn parse_string(&self, src_code: &mut SlidingWindow, string_literal: bool) -> Token {
+    fn parse_string(&self, src_code: &mut SlidingWindow, string_literal: bool) -> TokenKind {
         src_code.advance();
-        //self.slide_until(source_code,|source_)
-        while src_code.can_offset_peek() && src_code.offset_peek() != '\"' {
+        self.slide_until(src_code,|src_code| src_code.can_offset_peek() && src_code.offset_peek() != '\"');
+        TokenKind::StringValue(src_code.get_slice())
+    }
+
+    fn parse_numerical_value(&self, src_code: &mut SlidingWindow) -> TokenKind {
+        self.slide_until(src_code, |src_code| src_code.can_offset_peek() && self.valid_numeral_char(src_code.offset_peek()));
+        TokenKind::NumericalValue(src_code.get_slice())
+    }
+
+    fn slide_until<F>(&self, src_code: &mut SlidingWindow, loop_condtion: F) where F : Fn(&mut SlidingWindow) -> bool {
+        while loop_condtion(src_code) {
             src_code.increase_offset();
         }
-        let tokenkind = TokenKind::StringValue(src_code.get_slice());
-        Token::construct(tokenkind, src_code)
-    }
-
-    fn parse_numerical_value(&self, src_code: &mut SlidingWindow) -> Token {
-        self.slide_until(src_code, |src_code| src_code.can_offset_peek() && self.valid_numerical_character(src_code.offset_peek()));
-        let tokenkind = TokenKind::NumericalValue(src_code.get_slice());
-        Token::construct(tokenkind, src_code)
-    }
-
-    fn slide_until<F>(&self, src_code: &mut SlidingWindow, loop_condtion: F)  
-        where F : Fn(&mut SlidingWindow) -> bool {
-            while loop_condtion(src_code) {
-                src_code.increase_offset();
-            }
     }
 
     pub fn is_complex(&self, character: char) -> bool {
         self.valid_alphabetical_character(character) || //Is a type/identifier/keyword
-        self.valid_numerical_character(character) ||    //Is numerical type
+        self.valid_numeral_char(character) ||    //Is numerical type
         character == '\"'                               //Is a string
     }
     
@@ -88,9 +78,9 @@ impl ComplexTokenParser {
 
     // Returns a boolean flag indicating whether or not the passed character is
     // a valid character allowed in types/identifiers/keywords
-    fn valid_keyword_identifier_character(&self, character: char) -> bool {
+    fn valid_char_sequence(&self, character: char) -> bool {
         self.valid_alphabetical_character(character) || 
-        self.valid_numerical_character(character) || 
+        self.valid_numeral_char(character) || 
         character == '_' || character == '-'
     }
 
@@ -108,7 +98,7 @@ impl ComplexTokenParser {
         }
     }
 
-    fn valid_numerical_character(&self, character: char) -> bool {
+    fn valid_numeral_char(&self, character: char) -> bool {
         match character {
             '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' 
                 => true,
