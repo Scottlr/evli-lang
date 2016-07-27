@@ -7,9 +7,6 @@ pub struct TokenParser;
 
 impl Parser for TokenParser {
     fn parse(&self, source_code: &mut SlidingWindow) -> Token {
-        println!("trying to parse character: {}", source_code.current_character());
-        
-        //A token should always be returned... wishful thinking?
         let mut tokenkind = self.map_token(source_code.current_character()).unwrap();
         if source_code.can_peek() {
             let next_character = source_code.peek();
@@ -28,14 +25,15 @@ impl Parser for TokenParser {
 impl TokenParser {
     pub fn map_compound_token(&self, current_token: TokenKind, next_token: TokenKind) -> Option<TokenKind> {
         match (current_token, next_token) {
-            (TokenKind::Plus, TokenKind::Equals) =>         Some(TokenKind::PlusEquals),
-            (TokenKind::Hyphen, TokenKind::Equals) =>       Some(TokenKind::MinusEquals),
-            (TokenKind::Asterix, TokenKind::Equals) =>      Some(TokenKind::MultiplicationEquals),
-            (TokenKind::ForwardSlash, TokenKind::Equals) => Some(TokenKind::DivideEquals),
-            (TokenKind::Equals, TokenKind::Equals) =>       Some(TokenKind::ConditionalEquals),
-            (TokenKind::Plus, TokenKind::Plus) =>           Some(TokenKind::IncrementOperator),
-            (TokenKind::Hyphen, TokenKind::Hyphen) =>       Some(TokenKind::DecrementOperator),
-            (TokenKind::Hyphen, TokenKind::RightAngle) =>   Some(TokenKind::PointerArrow),
+            (TokenKind::Plus, TokenKind::Equals) =>             Some(TokenKind::PlusEquals),
+            (TokenKind::Hyphen, TokenKind::Equals) =>           Some(TokenKind::MinusEquals),
+            (TokenKind::Asterix, TokenKind::Equals) =>          Some(TokenKind::MultiplicationEquals),
+            (TokenKind::ForwardSlash, TokenKind::Equals) =>     Some(TokenKind::DivideEquals),
+            (TokenKind::Equals, TokenKind::Equals) =>           Some(TokenKind::ConditionalEquals),
+            (TokenKind::Plus, TokenKind::Plus) =>               Some(TokenKind::IncrementOperator),
+            (TokenKind::Hyphen, TokenKind::Hyphen) =>           Some(TokenKind::DecrementOperator),
+            (TokenKind::Hyphen, TokenKind::RightAngle) =>       Some(TokenKind::PointerArrow),
+            (TokenKind::CarraigeReturn, TokenKind::NewLine)=>   Some(TokenKind::NewLine),
             _ => None
         }
     }

@@ -22,7 +22,7 @@ impl Lexer {
 
     fn is_ignorable(&self, token: &TokenKind) -> bool {
         match *token {
-            TokenKind::Whitespace | TokenKind::NewLine | TokenKind::CarraigeReturn
+            TokenKind::Whitespace | TokenKind::NewLine
                 => true,
             _   => false
         }
