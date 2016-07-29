@@ -8,12 +8,10 @@ impl Parser for ComplexTokenParser {
     fn parse(&self, src_code: &mut SlidingWindow) -> Token {
         let current_char = src_code.current_character();
         let token_kind = match current_char {
-            '\"'    
-                => self.parse_string(src_code, false),
-            '#' | _ if  self.valid_numeral_char(src_code.offset_peek()) 
+            '\"' => self.parse_string(src_code, false),
+            '#' | _ if  self.valid_numeral_char(src_code.offset_peek())  
                 => self.parse_numerical_value(src_code),
-            _       
-                => self.parse_keyword_or_identifier(src_code)
+            _  => self.parse_keyword_or_identifier(src_code)
         };
         Token::construct(token_kind, src_code)
     }
@@ -44,8 +42,16 @@ impl ComplexTokenParser {
 
     pub fn is_complex(&self, character: char) -> bool {
         self.valid_alphabetical_character(character) || //Is a type/identifier/keyword
-        self.valid_numeral_char(character) ||    //Is numerical type
-        character == '\"'                               //Is a string
+            self.valid_numeral_char(character) ||    //Is numerical type
+            character == '\"'                               //Is a string
+    }
+
+     // Returns a boolean flag indicating whether or not the passed character is
+    // a valid character allowed in types/identifiers/keywords
+    fn valid_char_sequence(&self, character: char) -> bool {
+        self.valid_alphabetical_character(character) || 
+            self.valid_numeral_char(character) || 
+            character == '_' || character == '-'
     }
     
     fn map_keyword(&self, phrase: &str) -> Option<TokenKind> {
@@ -68,14 +74,6 @@ impl ComplexTokenParser {
             "let" =>    Some(TokenKind::LetKeyword),
             _ => None
         }
-    }
-
-    // Returns a boolean flag indicating whether or not the passed character is
-    // a valid character allowed in types/identifiers/keywords
-    fn valid_char_sequence(&self, character: char) -> bool {
-        self.valid_alphabetical_character(character) || 
-        self.valid_numeral_char(character) || 
-        character == '_' || character == '-'
     }
 
     //Needs rewrite to calculate if character or not rather that 
