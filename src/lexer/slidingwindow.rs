@@ -12,7 +12,6 @@ pub struct SlidingWindow {
 
 impl SlidingWindow {
     pub fn new(source_code: &str) -> SlidingWindow {
-     //   let chopped_source_code = source_code.chars().collect();
         SlidingWindow {
             characters: source_code.chars().collect(),
             current_pos: 0,
@@ -49,13 +48,11 @@ impl SlidingWindow {
         self.current_pos += 1;
     }
     
-    //REWRITE, more meaningful name which applies to peeking & eof
     pub fn is_eof(&self) -> bool {
         !self.can_peek()
     }
 
     pub fn can_peek(&self) -> bool {
-        println!("## Current pos: {}, file length: {}", self.current_pos, self.file_len);
         self.current_pos != self.file_len - 1
     }
 
@@ -75,14 +72,6 @@ impl SlidingWindow {
         TokenMetaData {
             parsed_on_line: self.current_line,
             relative_line_pos: self.relative_line_pos
-        }
-    }
-
-    pub fn slide_until<F>(&mut self, loop_condtion: F) 
-        where F : Fn(&mut SlidingWindow) -> bool 
-    {
-        while loop_condtion(self) {
-            self.increase_offset();
         }
     }
 
