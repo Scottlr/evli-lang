@@ -86,4 +86,14 @@ impl SlidingWindow {
         }
     }
 
+    pub fn conditional_slice<F>(&mut self, condition: F) -> String
+        where F : Fn(&mut SlidingWindow) -> bool
+    {
+        while condition(self)
+        {
+            self.increase_offset();
+        }
+        self.get_slice()
+    }
+
 }
