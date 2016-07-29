@@ -77,4 +77,13 @@ impl SlidingWindow {
             relative_line_pos: self.relative_line_pos
         }
     }
+
+    pub fn slide_until<F>(&mut self, loop_condtion: F) 
+        where F : Fn(&mut SlidingWindow) -> bool 
+    {
+        while loop_condtion(self) {
+            self.increase_offset();
+        }
+    }
+
 }

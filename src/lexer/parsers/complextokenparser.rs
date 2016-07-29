@@ -7,7 +7,7 @@ pub struct ComplexTokenParser;
 impl Parser for ComplexTokenParser {
     fn parse(&self, src_code: &mut SlidingWindow) -> Token {
         let current_char = src_code.current_character();
-        let token_kind =match current_char {
+        let token_kind = match current_char {
             '\"'    
                 => self.parse_string(src_code, false),
             '#' | _ if  self.valid_numeral_char(src_code.offset_peek()) 
@@ -22,7 +22,7 @@ impl Parser for ComplexTokenParser {
 
 impl ComplexTokenParser {
     fn parse_keyword_or_identifier(&self, src_code: &mut SlidingWindow) -> TokenKind {
-        self.slide_until(src_code, |src_code| src_code.can_offset_peek() && self.valid_char_sequence(src_code.offset_peek()));
+        src_code.slide_until(|src| src.can_offset_peek() && self.valid_char_sequence(src.offset_peek()));
         let phrase = src_code.get_slice();
         match self.map_keyword(&phrase) {
             Some(value) => value,
@@ -33,19 +33,13 @@ impl ComplexTokenParser {
     #[allow(unused_variables)]
     fn parse_string(&self, src_code: &mut SlidingWindow, string_literal: bool) -> TokenKind {
         src_code.advance();
-        self.slide_until(src_code,|src_code| src_code.can_offset_peek() && src_code.offset_peek() != '\"');
+        src_code.slide_until(|src| src.can_offset_peek() && src.offset_peek() != '\"' );
         TokenKind::StringValue(src_code.get_slice())
     }
 
     fn parse_numerical_value(&self, src_code: &mut SlidingWindow) -> TokenKind {
-        self.slide_until(src_code, |src_code| src_code.can_offset_peek() && self.valid_numeral_char(src_code.offset_peek()));
+         src_code.slide_until(|src| src.can_offset_peek() && self.valid_numeral_char(src.offset_peek()));
         TokenKind::NumericalValue(src_code.get_slice())
-    }
-
-    fn slide_until<F>(&self, src_code: &mut SlidingWindow, loop_condtion: F) where F : Fn(&mut SlidingWindow) -> bool {
-        while loop_condtion(src_code) {
-            src_code.increase_offset();
-        }
     }
 
     pub fn is_complex(&self, character: char) -> bool {
