@@ -137,7 +137,7 @@ mod tests {
 
     #[test]
     fn test_parser_numericalvalues() {
-        //assert_eq!(parser_helper("02322 "), TokenKind::NumericalValue("02322"));
+        assert_eq!(parser_helper("02322 "), TokenKind::NumericalValue("02322".to_string()));
     }
 
 }
