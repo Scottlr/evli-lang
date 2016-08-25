@@ -1,6 +1,7 @@
 use super::super::slidingwindow::SlidingWindow;
 use super::super::token:: { Token, TokenKind };
 use super::lexemeparser::Parser;
+use super::tokenvalidator::TokenValidator;
 
 pub struct ComplexTokenParser;
 
@@ -9,7 +10,7 @@ impl Parser for ComplexTokenParser {
         let current_char = src_code.current_character();
         let token_kind = match current_char {
             '\"' => self.parse_string(src_code, false),
-            '#' | _ if  self.valid_numeral_char(src_code.offset_peek())  
+            '#' | _ if  TokenValidator::valid_numeral_char(src_code.offset_peek())  
                 => self.parse_numerical_value(src_code),
             _  => self.parse_keyword_or_identifier(src_code)
         };
@@ -35,21 +36,21 @@ impl ComplexTokenParser {
     }
 
     fn parse_numerical_value(&self, src_code: &mut SlidingWindow) -> TokenKind {
-        let slice = src_code.conditional_slice(|src| src.can_offset_peek() && self.valid_numeral_char(src.offset_peek()));
+        let slice = src_code.conditional_slice(|src| src.can_offset_peek() && TokenValidator::valid_numeral_char(src.offset_peek()));
         TokenKind::NumericalValue(slice)
     }
 
     pub fn is_complex(&self, character: char) -> bool {
-        self.valid_alphabetical_character(character) || //Is a type/identifier/keyword
-            self.valid_numeral_char(character) ||    //Is numerical type
+        TokenValidator::valid_alphabetical_character(character) || //Is a type/identifier/keyword
+            TokenValidator::valid_numeral_char(character) ||    //Is numerical type
             character == '\"'                               //Is a string
     }
 
      // Returns a boolean flag indicating whether or not the passed character is
     // a valid character allowed in types/identifiers/keywords
     fn valid_char_sequence(&self, character: char) -> bool {
-        self.valid_alphabetical_character(character) || 
-            self.valid_numeral_char(character) || 
+        TokenValidator::valid_alphabetical_character(character) || 
+            TokenValidator::valid_numeral_char(character) || 
             character == '_' || character == '-'
     }
     
@@ -72,28 +73,6 @@ impl ComplexTokenParser {
             "async" =>  Some(TokenKind::AsyncKeyword),
             "let" =>    Some(TokenKind::LetKeyword),
             _ => None
-        }
-    }
-
-    //Needs rewrite to calculate if character or not rather that 
-    //matching on all characters. Will do for now.
-    fn valid_alphabetical_character(&self, character: char) -> bool {
-        let lowered_phrase = character.to_lowercase().next().unwrap();
-         match lowered_phrase {
-             'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g' |
-             'h' | 'i' | 'j' | 'k' | 'l' | 'm' | 'n' |
-             'o' | 'p' | 'q' | 'r' | 's' | 't' | 'u' |
-             'v' | 'w' | 'x' | 'y' | 'z' 
-                => true,
-            _   => false
-        }
-    }
-
-    fn valid_numeral_char(&self, character: char) -> bool {
-        match character {
-            '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' 
-                => true,
-            _   => false        
         }
     }
 

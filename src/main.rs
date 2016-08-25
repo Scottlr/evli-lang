@@ -19,6 +19,7 @@ fn main() {
     for token in tokens.clone() {
         println!("{:?}", token);
     }
+    
     println!("Parsed tokens: {}", tokens.clone().len());
    
 }
