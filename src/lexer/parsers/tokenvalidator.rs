@@ -23,4 +23,12 @@ impl TokenValidator {
             _   => false
         }
     } 
+
+     // Returns a boolean flag indicating whether or not the passed character is
+    // a valid character allowed in types/identifiers/keywords
+    pub fn valid_char_sequence(character: char) -> bool {
+        TokenValidator::valid_alphabetical_character(character) || 
+        TokenValidator::valid_numeral_char(character) ||  
+        character == '_' || character == '-'
+    }
 }

@@ -4,7 +4,6 @@ use super::token::{ Token, TokenKind };
 
 pub struct Lexer;
 impl Lexer {    
-
     //Produce a vector of tokens with a given source code obtained from the constructor.u
     pub fn tokenize(&self, source_code: &str) -> Vec<Token> {
         let lexeme_parser = LexemeParser::new();
@@ -28,8 +27,6 @@ impl Lexer {
         }
     }
 }
-
-
 
 #[cfg(test)]
 mod tests {
