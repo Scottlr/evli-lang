@@ -71,11 +71,11 @@ impl ComplexTokenParser {
 
 
 #[cfg(test)]
+#[allow(non_snake_case)]
 mod tests {
     use super::ComplexTokenParser;
     use super::super::lexemeparser::Parser;
     use super::super::super::slidingwindow::SlidingWindow;
-    use super::super::super::token::Token;
     use super::super::super::token::TokenKind;
 
     fn parser_helper(source: &str) -> TokenKind {

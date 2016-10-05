@@ -24,7 +24,7 @@ fn main() {
    
 }
 
-
+#[allow(dead_code)]
 fn read_file<P: AsRef<Path>>(path: P) -> Result<String, String> {	
     File::open(path)
         .map_err(|err| err.to_string())

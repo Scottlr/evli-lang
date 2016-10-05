@@ -31,9 +31,10 @@ impl LexemeParser {
 
 
 #[cfg(test)]
+#[allow(non_snake_case)]
 mod tests {
     use super::LexemeParser;
-    use super::super::super::token::{ Token, TokenKind };
+    use super::super::super::token::TokenKind;
     use super::super::super::slidingwindow::SlidingWindow;
 
     fn parser_helper(source: &str) -> TokenKind {
@@ -43,6 +44,7 @@ mod tests {
     }
 
     #[test]
+
     fn testvarioustokens_varietyoftokentypes_successful() {
         assert_eq!(parser_helper("async "), TokenKind::AsyncKeyword);
         assert_eq!(parser_helper("{"), TokenKind::OpenBrace);

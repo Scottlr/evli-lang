@@ -35,6 +35,7 @@ impl TokenValidator {
 
 
 #[cfg(test)]
+#[allow(non_snake_case)]
 mod tests {
     use super::TokenValidator;
 

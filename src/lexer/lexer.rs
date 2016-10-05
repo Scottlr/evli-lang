@@ -29,9 +29,9 @@ impl Lexer {
 }
 
 #[cfg(test)]
+#[allow(non_snake_case)]
 mod tests {
     use super::Lexer;
-    use super::super::token::{ TokenKind, Token };
 
     #[test]
     fn lexer_tokenize_standardcode() {
@@ -40,7 +40,7 @@ mod tests {
             i32++;
         }";
             
-        let mut text_lexer = Lexer;
+        let text_lexer = Lexer;
         let tokens = text_lexer.tokenize(&source_code);
         assert_eq!(tokens.len(), 10);
     }
@@ -50,7 +50,7 @@ mod tests {
         let source_code = 
         "pub func++;()";
             
-        let mut text_lexer = Lexer;
+        let text_lexer = Lexer;
         let tokens = text_lexer.tokenize(&source_code);
         assert_eq!(tokens.len(), 5);
 

@@ -59,17 +59,19 @@ impl TokenParser {
 
 
 #[cfg(test)]
+#[allow(non_snake_case)]
 mod tests {
     use super::TokenParser;
     use super::super::lexemeparser::Parser;
     use super::super::super::slidingwindow::SlidingWindow;
-    use super::super::super::token::{ Token, TokenKind };
+    use super::super::super::token::TokenKind;
     
     fn parser_helper(source: &str) -> TokenKind {
         let parser = TokenParser;
         let mut phrase = SlidingWindow::new(source);
         parser.parse(&mut phrase).kind
     }
+
 
     #[test]
     fn test_parser_singletokens() {
