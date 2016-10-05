@@ -28,7 +28,28 @@ impl TokenValidator {
     // a valid character allowed in types/identifiers/keywords
     pub fn valid_char_sequence(character: char) -> bool {
         TokenValidator::valid_alphabetical_character(character) || 
-        TokenValidator::valid_numeral_char(character) ||  
-        character == '_' || character == '-'
+            TokenValidator::valid_numeral_char(character) ||  
+            character == '_' || character == '-'
+        }
+}
+
+
+#[cfg(test)]
+mod tests {
+    use super::TokenValidator;
+
+    #[test]
+    fn validcharsequence_validSequence_returnsTrue() {
+        let validCharacterSequence = 'a';
+        let validCharacterSequenceNumerical = '2';
+        assert_eq!(TokenValidator::valid_char_sequence(validCharacterSequence), true);
+        assert_eq!(TokenValidator::valid_char_sequence(validCharacterSequenceNumerical), true);
     }
+
+    #[test]
+    fn validcharsequence_invalidSequence_returnsFalse() {
+        let invalidCharacterSequence = '#';
+        assert_eq!(TokenValidator::valid_char_sequence(invalidCharacterSequence), false);
+    }
+ 
 }
