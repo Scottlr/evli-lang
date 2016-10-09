@@ -101,7 +101,29 @@ mod tests {
 
     #[test]
     fn peek_peekForSecondCharacterInSequence_returnsU() {
-        
+        let actual = setup_sliding_window().peek();
+        let expected = "u";
+
+        assert_eq!(expected, actual);
     }
 
+    #[test]
+    fn canPeek_canPeekOnFirstCharacter_returnsTrue() {
+        let actual = setup_sliding_window().can_peek();
+        let expected = true;
+
+        assert_eq!(expected, actual);
+    }
+
+    #[test]
+    fn increaseOffgetSlice_offsetToGrabPubKeyword_returnsPub() {
+        let sliding_window = setup_sliding_window();
+        sliding_window.increase_offset();
+        sliding_window.increase_offset();
+        
+        let actual = sliding_window.get_slice();
+        let expected = true;
+
+        assert_eq!(expected, actual);
+    }
 }
