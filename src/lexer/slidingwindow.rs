@@ -40,7 +40,6 @@ impl SlidingWindow {
             self.relative_line_pos = 0;
         }
         current_char
-        
     }
 
     pub fn advance(&mut self)  {
@@ -50,7 +49,6 @@ impl SlidingWindow {
 
     pub fn can_peek(&self) -> bool {
         self.current_pos != self.file_len - 1
-        
     }
 
     pub fn can_offset_peek(&self) -> bool {

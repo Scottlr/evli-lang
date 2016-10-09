@@ -21,7 +21,8 @@ impl Parser for ComplexTokenParser {
 
 impl ComplexTokenParser {
     fn parse_keyword_or_identifier(&self, src_code: &mut SlidingWindow) -> TokenKind {
-        let slice = src_code.conditional_slice(|src| src.can_offset_peek() && TokenValidator::valid_char_sequence(src.offset_peek()));
+        let slice = src_code.conditional_slice(|src| src.can_offset_peek() 
+            && TokenValidator::valid_char_sequence(src.offset_peek()));
         match self.map_keyword(&slice) {
             Some(value) => value,
             None        => TokenKind::Identifier(slice)
