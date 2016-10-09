@@ -90,5 +90,18 @@ impl SlidingWindow {
 #[cfg(test)]
 #[allow(non_snake_case)]
 mod tests {
+    use super::SlidingWindow;
+
+    fn setup_sliding_window() -> SlidingWindow {
+        SlidingWindow::new(
+            "pub fn() {
+                let age = 222;
+            }")
+    }
+
+    #[test]
+    fn peek_peekForSecondCharacterInSequence_returnsU() {
+        
+    }
 
 }
