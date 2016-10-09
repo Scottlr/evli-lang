@@ -47,10 +47,6 @@ impl SlidingWindow {
         self.offset = 0;
         self.current_pos += 1;
     }
-    
-    pub fn is_eof(&self) -> bool {
-        !self.can_peek()
-    }
 
     pub fn can_peek(&self) -> bool {
         self.current_pos != self.file_len - 1
@@ -127,4 +123,5 @@ mod tests {
 
         assert_eq!(expected, actual);
     }
+
 }
