@@ -30,7 +30,7 @@ impl SlidingWindow {
         self.characters[self.current_pos + self.offset].to_owned()
     }
 
-    pub fn increase_offset(&mut self) {
+    pub fn increase_window_size(&mut self) {
         self.offset += 1;
     }
     pub fn current_character(&mut self) -> char {
@@ -70,12 +70,12 @@ impl SlidingWindow {
         }
     }
 
-    pub fn conditional_slice<F>(&mut self, condition: F) -> String
-        where F : Fn(&mut SlidingWindow) -> bool
-    {
-        while condition(self)
-        {
-            self.increase_offset();
+    pub fn conditional_slice<F>(&mut self, condition: F) -> String where F : Fn(&mut SlidingWindow) -> bool {
+        while condition(self) {
+            if !self.can_offset_peek() {
+                break;
+            }
+            self.increase_window_size();
         }
         self.get_slice()
     }
@@ -113,9 +113,9 @@ mod tests {
     #[test]
     fn increaseOffgetSlice_offsetToGrabPubKeyword_returnsPub() {
         let mut sliding_window = setup_sliding_window();
-        sliding_window.increase_offset();
-        sliding_window.increase_offset();
-        sliding_window.increase_offset();
+        sliding_window.increase_window_size();
+        sliding_window.increase_window_size();
+        sliding_window.increase_window_size();
 
         let actual = sliding_window.get_slice();
         let expected = "pub";
