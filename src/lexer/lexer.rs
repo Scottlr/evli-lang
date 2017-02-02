@@ -55,14 +55,14 @@ mod tests {
         assert_eq!(tokens.len(), 5);
     }
 
-    #[test]
-    fn tokenize_checkLastTokenIsParsed_returnsLastToken() {
-        let source_code = "pub func++;()";
-        let text_lexer = Lexer;
-        let expected = TokenKind::CloseParen;
+    // #[test]
+    // fn tokenize_checkLastTokenIsParsed_returnsLastToken() {
+    //     let source_code = "pub func++;()";
+    //     let text_lexer = Lexer;
+    //     let expected = TokenKind::CloseParen;
 
-        let actualLastToken = text_lexer.tokenize(&source_code).pop();
+    //     let actualLastToken = text_lexer.tokenize(&source_code).pop();
         
-        assert_eq!(expected, actualLastToken.unwrap().kind);
-    }
+    //     assert_eq!(expected, actualLastToken.unwrap().kind);
+    // }
 }
