@@ -21,22 +21,25 @@ impl Parser for ComplexTokenParser {
 
 impl ComplexTokenParser {
     fn parse_keyword_or_identifier(&self, src_code: &mut SlidingWindow) -> TokenKind {
-        let slice = src_code.conditional_slice(|src| TokenValidator::valid_char_sequence(src.offset_peek()));
+        let slice = src_code.conditional_slice(
+            |src| TokenValidator::valid_char_sequence(src.offset_peek()));
         match self.map_keyword(&slice) {
             Some(value) => value,
             None        => TokenKind::Identifier(slice)
-        }        
+        }       
     }
     
     #[allow(unused_variables)]
     fn parse_string(&self, src_code: &mut SlidingWindow, string_literal: bool) -> TokenKind {
         src_code.advance();
-        let slice = src_code.conditional_slice(|src| src.offset_peek() != '\"' );
+        let slice = src_code.conditional_slice(
+            |src| src.offset_peek() != '\"' );
         TokenKind::StringValue(slice)
     }
 
     fn parse_numerical_value(&self, src_code: &mut SlidingWindow) -> TokenKind {
-        let slice = src_code.conditional_slice(|src| TokenValidator::valid_numeral_char(src.offset_peek()));
+        let slice = src_code.conditional_slice(
+            |src| TokenValidator::valid_numeral_char(src.offset_peek()));
         TokenKind::NumericalValue(slice)
     }
 

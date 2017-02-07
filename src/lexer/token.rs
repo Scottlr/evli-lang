@@ -80,3 +80,4 @@ pub enum TokenKind {
     //Conditionals
     ConditionalEquals
 }
+
