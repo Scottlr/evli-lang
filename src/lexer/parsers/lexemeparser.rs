@@ -44,7 +44,6 @@ mod tests {
     }
 
     #[test]
-
     fn testvarioustokens_varietyoftokentypes_successful() {
         assert_eq!(parser_helper("async"), TokenKind::AsyncKeyword);
         assert_eq!(parser_helper("{"), TokenKind::OpenBrace);
