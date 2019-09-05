@@ -47,7 +47,7 @@ impl SlidingWindow {
         self.current_pos += 1;
     }
 
-    pub fn can_peek(&self) -> bool {
+    pub fn can_peek(&self) -> bool {    
         self.current_pos != self.file_len - 1
     }
 
@@ -73,6 +73,7 @@ impl SlidingWindow {
     pub fn conditional_slice<F>(&mut self, condition: F) -> String where F : Fn(&mut SlidingWindow) -> bool {
         while condition(self) {
             if !self.can_offset_peek() {
+                self.increase_window_size();
                 break;
             }
             self.increase_window_size();

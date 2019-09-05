@@ -21,8 +21,8 @@ impl Parser for ComplexTokenParser {
 
 impl ComplexTokenParser {
     fn parse_keyword_or_identifier(&self, src_code: &mut SlidingWindow) -> TokenKind {
-        let slice = src_code.conditional_slice(
-            |src| TokenValidator::valid_char_sequence(src.offset_peek()));
+        let slice = src_code.conditional_slice(|src| TokenValidator::valid_char_sequence(src.offset_peek()));
+
         match self.map_keyword(&slice) {
             Some(value) => value,
             None        => TokenKind::Identifier(slice)
@@ -32,8 +32,7 @@ impl ComplexTokenParser {
     #[allow(unused_variables)]
     fn parse_string(&self, src_code: &mut SlidingWindow, string_literal: bool) -> TokenKind {
         src_code.advance();
-        let slice = src_code.conditional_slice(
-            |src| src.offset_peek() != '\"' );
+        let slice = src_code.conditional_slice(|src| src.offset_peek() != '\"' );
         TokenKind::StringValue(slice)
     }
 
@@ -44,9 +43,9 @@ impl ComplexTokenParser {
     }
 
     pub fn is_complex(&self, character: char) -> bool {
-        TokenValidator::valid_alphabetical_character(character) || //Is a type/identifier/keyword
-            TokenValidator::valid_numeral_char(character) ||    //Is numerical type
-            character == '\"'                               //Is a string
+        TokenValidator::valid_alphabetical_character(character) ||  //Is a type/identifier/keyword
+            TokenValidator::valid_numeral_char(character) ||        //Is numerical type
+            character == '\"'                                       //Is a string
     }
 
     fn map_keyword(&self, phrase: &str) -> Option<TokenKind> {
@@ -89,18 +88,18 @@ mod tests {
     
     #[test]
     fn test_parser_keywords() {
-        assert_eq!(parser_helper("pub "),       TokenKind::PublicModifierKeyword);
-        assert_eq!(parser_helper("i32 "),       TokenKind::IntKeyword);
-        assert_eq!(parser_helper("for "),       TokenKind::ForKeyword);
-        assert_eq!(parser_helper("await "),     TokenKind::AwaitKeyword);
-        assert_eq!(parser_helper("string "),    TokenKind::StringKeyword);
-        assert_eq!(parser_helper("uses "),      TokenKind::UseKeyword);
-        assert_eq!(parser_helper("while "),     TokenKind::WhileKeyword);
-        assert_eq!(parser_helper("class "),     TokenKind::ClassKeyword);
-        assert_eq!(parser_helper("where "),     TokenKind::WhereKeyword);
-        assert_eq!(parser_helper("async "),     TokenKind::AsyncKeyword);
-        assert_eq!(parser_helper("in "),        TokenKind::InKeyword);  
-        assert_eq!(parser_helper("struct "),    TokenKind::StructKeyword);
+        assert_eq!(parser_helper("pub"),       TokenKind::PublicModifierKeyword);
+        assert_eq!(parser_helper("i32"),       TokenKind::IntKeyword);
+        assert_eq!(parser_helper("for"),       TokenKind::ForKeyword);
+        assert_eq!(parser_helper("await"),     TokenKind::AwaitKeyword);
+        assert_eq!(parser_helper("string"),    TokenKind::StringKeyword);
+        assert_eq!(parser_helper("uses"),      TokenKind::UseKeyword);
+        assert_eq!(parser_helper("while"),     TokenKind::WhileKeyword);
+        assert_eq!(parser_helper("class"),     TokenKind::ClassKeyword);
+        assert_eq!(parser_helper("where"),     TokenKind::WhereKeyword);
+        assert_eq!(parser_helper("async"),     TokenKind::AsyncKeyword);
+        assert_eq!(parser_helper("in"),        TokenKind::InKeyword);  
+        assert_eq!(parser_helper("struct"),    TokenKind::StructKeyword);
     }
 
     #[test]
@@ -110,7 +109,7 @@ mod tests {
 
     #[test]
     fn test_parser_numericalvalues() {
-        assert_eq!(parser_helper("02322 "), TokenKind::NumericalValue("02322".to_string()));
+        assert_eq!(parser_helper("02322"), TokenKind::NumericalValue("02322".to_string()));
     }
 
 }

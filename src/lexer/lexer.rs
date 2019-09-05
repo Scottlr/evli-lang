@@ -4,15 +4,20 @@ use super::token::{ Token, TokenKind };
 
 pub struct Lexer;
 impl Lexer {    
-    //Produce a vector of tokens with a given source code obtained from the constructor.u
+
     pub fn tokenize(&self, source_code: &str) -> Vec<Token> {
         let lexeme_parser = LexemeParser::new();
         let mut source_code_window = SlidingWindow::new(source_code);
         let mut tokens = vec![];
-        while source_code_window.can_peek() {
+        
+        while true {
+            let canPeek = source_code_window.can_peek();
             let lexed_token = lexeme_parser.parse(&mut source_code_window);
             if !self.is_ignorable(&lexed_token.kind) {
                 tokens.push(lexed_token);
+            }
+            if !canPeek {
+                break;
             }
         }
         tokens
@@ -41,7 +46,7 @@ mod tests {
             
         let text_lexer = Lexer;
         let tokens = text_lexer.tokenize(&source_code);
-        assert_eq!(tokens.len(), 10);
+        assert_eq!(tokens.len(), 11);
     }
 
     #[test]
@@ -51,7 +56,7 @@ mod tests {
 
         let tokens = text_lexer.tokenize(&source_code);
 
-        assert_eq!(tokens.len(), 5);
+        assert_eq!(tokens.len(), 6);
     }
 
     #[test]

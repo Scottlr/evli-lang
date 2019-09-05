@@ -82,7 +82,6 @@ mod tests {
         assert_eq!(parser_helper("}"), TokenKind::CloseBrace);
         assert_eq!(parser_helper("\\"), TokenKind::BackSlash);
         assert_eq!(parser_helper("\""), TokenKind::QoutationMark);
-        assert_eq!(parser_helper(" "), TokenKind::Whitespace);
         assert_eq!(parser_helper("\r"), TokenKind::CarraigeReturn);
         assert_eq!(parser_helper("\n"), TokenKind::NewLine);
     }
