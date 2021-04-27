@@ -111,7 +111,7 @@ mod tests {
     #[should_panic]
     fn test_maptokenparser_invalidsequenceshouldfail() {
         let parser = TokenParser;
-        parser.map_token('f');;
+        parser.map_token('f');
         assert!(false);
     }
 }

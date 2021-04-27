@@ -10,13 +10,13 @@ impl Lexer {
         let mut source_code_window = SlidingWindow::new(source_code);
         let mut tokens = vec![];
         
-        while true {
-            let canPeek = source_code_window.can_peek();
+        loop {
+            let can_peek = source_code_window.can_peek();
             let lexed_token = lexeme_parser.parse(&mut source_code_window);
             if !self.is_ignorable(&lexed_token.kind) {
                 tokens.push(lexed_token);
             }
-            if !canPeek {
+            if !can_peek {
                 break;
             }
         }
