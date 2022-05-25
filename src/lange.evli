@@ -1,3 +1,20 @@
+
+
+public passive main {
+    hold array = [12, 14, 2, 122, 3, 6] = number[];
+    
+    hold [
+        first = 12, 
+        second 14
+    ] = number
+    
+    hold added = add first second;
+    
+    hold fancy_function = |num: number| -> number { (num * 12) / 20 }
+    
+    hold subtract_one_and_execute array fancy_function
+}
+
 public add [
     arg1: number, 
     arg2: number
@@ -24,10 +41,10 @@ private exists [array: number[], value: number] -> bool {
 
 private subtract_one_and_execute [
     array: number[], 
-    func: |input: number| -> ||
-] -> {
+    func: |input: number| -> nothing
+] {
     per item in array {
         item = item - 1;
-        func item;
+        item = func item;
     }
 }
