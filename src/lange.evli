@@ -1,0 +1,33 @@
+public add [
+    arg1: number, 
+    arg2: number
+] -> number {
+    arg1 + arg2
+}
+
+private remove [array: number[], value: number] {
+    per item in array {
+        if [item > 0 and item eq value] {
+            array.remove value;
+        }
+    }
+}
+
+private exists [array: number[], value: number] -> bool {
+    per item in array {
+        if [item eq value] 
+            true
+    }
+    
+    false
+}
+
+private subtract_one_and_execute [
+    array: number[], 
+    func: |input: number| -> ||
+] -> {
+    per item in array {
+        item = item - 1;
+        func item;
+    }
+}
