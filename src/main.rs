@@ -13,7 +13,7 @@ fn main() {
     };
 	
     println!("{}", file_contents);
-    let lexer = lexer::Lexer;
+    let lexer = lexer::Lexer::new();
     let tokens = lexer.tokenize(&file_contents);
 
     for token in tokens.clone() {
