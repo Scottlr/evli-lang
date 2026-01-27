@@ -21,11 +21,17 @@ impl LexemeParser {
     }
 
     pub fn parse(&self, sliding_window: &mut SlidingWindow) -> Token {
-        let is_complex = self.complex_token_parser.is_complex(sliding_window.current_character());
-        match is_complex {
-            true => self.complex_token_parser.parse(sliding_window),
-            false => self.token_parser.parse(sliding_window)
+        if self.complex_token_parser.is_complex(sliding_window.current_character()) {
+            self.complex_token_parser.parse(sliding_window)
+        } else {
+            self.token_parser.parse(sliding_window)
         }
+    }
+}
+
+impl Default for LexemeParser {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
