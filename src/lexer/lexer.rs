@@ -7,7 +7,6 @@ pub struct Lexer {
 }
 
 impl Lexer {
-
     pub fn new() -> Self {
         Self {
             parser: LexemeParser::new()
@@ -18,27 +17,21 @@ impl Lexer {
         let mut source_code_window = SlidingWindow::new(source_code);
         let mut tokens = vec![];
         
-        loop {
-            let can_peek = source_code_window.can_peek();
+        while source_code_window.can_peek() {
             let lexed_token = self.parser.parse(&mut source_code_window);
-            if !self.is_ignorable(&lexed_token.kind) {
-                tokens.push(lexed_token);
+            if self.is_ignorable(&lexed_token.kind) {
+                continue;
             }
-            if !can_peek {
-                break;
-            }
+            tokens.push(lexed_token);
         }
-        
+
         tokens
     }
 
     fn is_ignorable(&self, token: &TokenKind) -> bool {
-        match *token {
-            TokenKind::Whitespace | TokenKind::NewLine
-                => true,
-            _   => false
-        }
+        matches!(*token, TokenKind::Whitespace | TokenKind::NewLine)
     }
+
 }
 
 impl Default for Lexer {
