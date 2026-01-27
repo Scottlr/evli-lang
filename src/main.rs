@@ -5,7 +5,6 @@ use std::path::Path;
 
 mod lexer;
 
-#[cfg(not(test))]
 fn main() {
     let file_contents = match read_file("lange.fir") {
         Ok(contents) => contents,
@@ -28,10 +27,12 @@ fn main() {
 fn read_file<P: AsRef<Path>>(path: P) -> Result<String, String> {	
     File::open(path)
         .map_err(|err| err.to_string())
-        .and_then(|mut file| {
-            let mut contents = String::new();
-            file.read_to_string(&mut contents)
-                .map_err(|err| err.to_string())
-                .map(|_| contents.to_string())
-        })
+        .and_then(|file| read_file_contents(file))
+}
+
+fn read_file_contents(mut file: File) -> Result<String, String> {
+    let mut contents = String::new();
+    file.read_to_string(&mut contents)
+        .map_err(|err| err.to_string())
+        .map(|_| contents.to_string())
 }
